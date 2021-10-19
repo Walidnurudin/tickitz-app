@@ -10,18 +10,17 @@ class Navbar extends Component {
   }
 
   handleLogout = () => {
-    console.log("Logout");
     this.props.history.push("/login");
   };
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
     return (
       <>
         <h1>Navbar component</h1>
         <h2>{this.props.name}</h2>
-        <Link to="/detail">Detail</Link> | <button onClick={this.handleLogout}>Logout</button>
+        <Link to="/">Home</Link> | <Link to="/movie-detail">Detail</Link> |{" "}
+        <Link to="/order">Order</Link> | <Link to="/payment">Payment</Link> |{" "}
+        <button onClick={this.handleLogout}>Logout</button>
       </>
     );
   }
