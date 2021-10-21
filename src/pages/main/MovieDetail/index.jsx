@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
 import Footer from "../../../components/Footer";
-import { spiderman } from "../../../assets/img";
 import axios from "../../../utils/axios";
 
 class MovieDetail extends Component {
@@ -39,7 +38,15 @@ class MovieDetail extends Component {
           <div className="row detail__movie">
             <div className="col-12 col-md-4 text-center">
               <div className="detail__movie--img">
-                <img src={spiderman} alt="spiderman" width="237px" />
+                <img
+                  src={
+                    data.image
+                      ? `http://localhost:3001/uploads/movie/${data.image}`
+                      : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
+                  }
+                  alt="spiderman"
+                  width="237px"
+                />
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import { login, tickitz1, tickitz2, google, fb } from "../../../assets/img";
+import { Eye } from "react-bootstrap-icons";
 import axios from "../../../utils/axios";
 
 class Login extends Component {
@@ -107,7 +108,8 @@ class Login extends Component {
                     <label htmlFor="password" className="mulish-400 text-secondary">
                       Password
                     </label>
-                    <i className="bi bi-eye text-secondary icon__eye"></i>
+                    <Eye className="text-secondary icon__eye" />
+                    {/* <i className="bi bi-eye text-secondary icon__eye"></i> */}
                     <input
                       type="password"
                       name="password"

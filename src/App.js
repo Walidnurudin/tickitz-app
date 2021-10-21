@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
 
         <Switch>
           {/* BASIC */}
