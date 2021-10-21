@@ -1,0 +1,93 @@
+/* MOVIE DETAIL */
+.detail__movie {
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+
+.detail__movie--img {
+  padding: 48px;
+  border: 2px solid #dedede;
+  border-radius: 16px;
+  display: inline-block;
+}
+
+.detail__header {
+  margin-bottom: 32px;
+}
+
+.showtimes__tickets {
+  padding-top: 70px;
+  padding-bottom: 64px;
+}
+
+.detail__header--title {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.detail__header--category {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .detail__header {
+    text-align: center;
+    margin: 32px 0px;
+  }
+
+  .detail__line {
+    margin: 40px 0px 24px 0px;
+  }
+
+  .date__location__comp {
+    margin-top: 12px;
+  }
+}
+
+.detail__line {
+  border: 1px solid #dedede;
+}
+
+.date__location {
+  margin-top: 40px;
+  margin-bottom: 72px;
+}
+
+.date__location__comp {
+  padding: 14px 26px;
+  width: 284px;
+  background-color: #eff0f6;
+  color: #4e4b66;
+}
+
+.ticket__seat {
+  background-color: white;
+  display: inline-block;
+  padding: 24px 35px;
+  margin: 15px;
+  border-radius: 8px;
+}
+
+.book__now--btn {
+  padding: 10px 0px;
+  margin-top: 32px;
+}
+
+.line {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #dedede;
+  margin-top: 25px;
+  text-align: center;
+}
+
+.line h2 {
+  font-size: 15px;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  padding: 0 15px;
+  display: inline-block;
+  background: #f5f6f8;
+  margin: 0;
+}

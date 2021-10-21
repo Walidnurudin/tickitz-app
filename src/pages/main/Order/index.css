@@ -1,0 +1,48 @@
+/* ORDER */
+.movie__selected {
+  margin-top: 56px;
+}
+
+.movie__selected--card {
+  margin-top: 24px;
+  padding: 36px 48px;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.choose__seat {
+  margin-top: 56px;
+  margin-bottom: 40px;
+}
+
+.choose__seat--card {
+  margin-top: 24px;
+  background-color: white;
+  padding: 56px 48px;
+  border-radius: 6px;
+}
+
+.choose__btn {
+  width: 300px;
+  height: 56px;
+  margin-bottom: 72px;
+}
+
+@media (max-width: 768px) {
+  .choose__btn {
+    width: 100%;
+    margin-top: 63px;
+  }
+}
+
+.order__info {
+  margin-top: 56px;
+}
+
+.order__info--card {
+  margin-top: 24px;
+  padding: 24px 24px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0px 8px 16px rgba(186, 186, 186, 0.24);
+}

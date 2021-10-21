@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../../components/Navbar";
 import { Button, Modal } from "react-bootstrap";
+import CardMovie from "../../../components/Card";
 
 class BasicReact extends Component {
   constructor() {
@@ -58,6 +59,10 @@ class BasicReact extends Component {
     this.setState({
       show: false
     });
+  };
+
+  handleUpdateMovie = (data) => {
+    console.log("UPDATE MOVIE", data);
   };
 
   render() {
@@ -124,6 +129,11 @@ class BasicReact extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <hr />
+
+        {/* COMPONENT COMUNICATION */}
+        <CardMovie handleUpdate={this.handleUpdateMovie} />
       </>
     );
   }
