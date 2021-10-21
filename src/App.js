@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
 
         <Switch>
           {/* BASIC */}
@@ -31,7 +31,7 @@ class App extends Component {
           {/* PROJECT */}
           <Route path="/login" exact component={Login} />
           <Route path="/" exact component={Home} />
-          <Route path="/movie-detail" exact component={MovieDetail} />
+          <Route path="/movie-detail/:id" exact component={MovieDetail} />
           <Route path="/order" exact component={Order} />
           <Route path="/payment" exact component={Payment} />
           <Route path="/profile" exact component={Profile} />

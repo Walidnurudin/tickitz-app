@@ -1,9 +1,37 @@
 import React, { Component } from "react";
 import "./index.css";
 import Footer from "../../../components/Footer";
+import { spiderman } from "../../../assets/img";
+import axios from "../../../utils/axios";
 
 class MovieDetail extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    this.getDataMovieById();
+  }
+
+  getDataMovieById = () => {
+    axios
+      .get(`/movie/${this.props.match.params.id}`)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          data: res.data.data[0]
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
+    const { data } = this.state;
     return (
       <>
         {/* <!-- DETAIL MOVIE --> */}
@@ -11,16 +39,16 @@ class MovieDetail extends Component {
           <div className="row detail__movie">
             <div className="col-12 col-md-4 text-center">
               <div className="detail__movie--img">
-                <img src="assets/img/project/spiderman.png" alt="spiderman" width="237px" />
+                <img src={spiderman} alt="spiderman" width="237px" />
               </div>
             </div>
 
             <div className="col-12 col-md-8">
               <div className="row detail__header">
                 <div className="col">
-                  <h1 className="mulish-700 detail__header--title">Spider-Man: Homecoming</h1>
+                  <h1 className="mulish-700 detail__header--title">{data.name}</h1>
                   <span className="mulish-400 text-secondary detail__header--category">
-                    Adventure, Action, Sci-Fi
+                    {data.category}
                   </span>
                 </div>
               </div>
@@ -30,23 +58,21 @@ class MovieDetail extends Component {
                   <div className="row" style={{ marginBottom: "16px" }}>
                     <div className="col">
                       <span className="mulish-400 text-secondary d-block">Release date</span>
-                      <span className="mulish-400">June 28, 2017</span>
+                      <span className="mulish-400">{data.releaseDate}</span>
                     </div>
                     <div className="col">
                       <span className="mulish-400 text-secondary d-block">Directed by</span>
-                      <span className="mulish-400">Jon Watss</span>
+                      <span className="mulish-400">{data.director}</span>
                     </div>
                   </div>
                   <div className="row" style={{ marginBottom: "24px" }}>
                     <div className="col">
                       <span className="mulish-400 text-secondary d-block">Duration</span>
-                      <span className="mulish-400">2 hours 13 minutes</span>
+                      <span className="mulish-400">{data.duration}</span>
                     </div>
                     <div className="col">
                       <span className="mulish-400 text-secondary d-block">Casts</span>
-                      <span className="mulish-400">
-                        Tom Holland, Michael Keaton, Robert Downey Jr., ...
-                      </span>
+                      <span className="mulish-400">{data.cast}</span>
                     </div>
                   </div>
                 </div>
@@ -69,12 +95,7 @@ class MovieDetail extends Component {
                         lineHeight: "32px"
                       }}
                     >
-                      Thrilled by his experience with the Avengers, Peter returns home, where he
-                      lives with his Aunt May, under the watchful eye of his new mentor Tony Stark,
-                      Peter tries to fall back into his normal daily routine - distracted by
-                      thoughts of proving himself to be more than just your friendly neighborhood
-                      Spider-Man - but when the Vulture emerges as a new villain, everything that
-                      Peter holds most important will be threatened.
+                      {data.synopsis}
                     </p>
                   </div>
                 </div>
@@ -91,9 +112,7 @@ class MovieDetail extends Component {
             </h1>
 
             <div
-              className="
-            d-flex
-            justify-content-center
+              className="d-flex justify-content-center
             flex-column flex-md-row
             align-items-center
             date__location"
@@ -111,9 +130,9 @@ class MovieDetail extends Component {
               </select>
             </div>
 
-            <div className="row">
-              <div className="col-12 col-md-4">
-                <div className="ticket__seat">
+            {/* <div className="row">
+              <div className="col-12 col-md-4"> */}
+            {/* <div className="ticket__seat">
                   <div className="row">
                     <div className="col d-flex justify-content-center align-items-center">
                       <img
@@ -196,7 +215,7 @@ class MovieDetail extends Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <span className="line">
               <h2 className="text-primary mulish-600">view more</h2>

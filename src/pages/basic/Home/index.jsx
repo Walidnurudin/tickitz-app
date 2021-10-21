@@ -27,7 +27,6 @@ class Home extends Component {
         `/movie?page=${this.state.page}&limit=${this.state.limit}&search=${this.state.search}&sort=${this.state.sort}`
       )
       .then((res) => {
-        // console.log(res);
         this.setState({
           data: res.data.data,
           pageInfo: res.data.pagination

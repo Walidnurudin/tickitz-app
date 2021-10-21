@@ -1,8 +1,55 @@
 import React, { Component } from "react";
 import "./index.css";
 import { login, tickitz1, tickitz2, google, fb } from "../../../assets/img";
+import axios from "../../../utils/axios";
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      form: {
+        email: "",
+        password: ""
+      },
+      isError: false,
+      msg: ""
+    };
+  }
+
+  handleChangeForm = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("auth/login", this.state.form)
+      .then((res) => {
+        console.log(res.data.data.token);
+        localStorage.setItem("token", res.data.data.token);
+        this.props.history.push("/");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        this.setState({
+          isError: true,
+          msg: err.response.data.msg
+        });
+
+        setTimeout(() => {
+          this.setState({
+            isError: false,
+            msg: ""
+          });
+        }, 2000);
+      });
+  };
+
   render() {
     return (
       <>
@@ -42,13 +89,15 @@ class Login extends Component {
                   </p>
                 </div>
 
-                <form>
+                <form onSubmit={this.handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="email" className="mulish-400 text-secondary">
                       Email
                     </label>
                     <input
                       type="text"
+                      name="email"
+                      onChange={this.handleChangeForm}
                       className="form-control form__input"
                       placeholder="Write your email"
                     />
@@ -60,15 +109,20 @@ class Login extends Component {
                     </label>
                     <i className="bi bi-eye text-secondary icon__eye"></i>
                     <input
-                      type="text"
+                      type="password"
+                      name="password"
+                      onChange={this.handleChangeForm}
                       className="form-control form__input"
                       placeholder="Write your password"
                     />
                   </div>
                   <div className="d-grid">
-                    <button className="btn btn-primary form__btn" type="button">
+                    <button className="btn btn-primary form__btn" type="submit">
                       Sign In
                     </button>
+                    {this.state.isError && (
+                      <div className="alert alert-danger">{this.state.msg}</div>
+                    )}
                   </div>
                 </form>
 

@@ -76,7 +76,7 @@
 .line {
   display: block;
   width: 100%;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid #f30909;
   margin-top: 25px;
   text-align: center;
 }
@@ -88,6 +88,6 @@
   top: 10px;
   padding: 0 15px;
   display: inline-block;
-  background: #f5f6f8;
+  background-color: red;
   margin: 0;
 }
