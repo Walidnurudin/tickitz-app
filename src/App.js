@@ -11,6 +11,7 @@ import Home from "./pages/main/Home";
 import MovieDetail from "./pages/main/MovieDetail";
 import Order from "./pages/main/Order";
 import Payment from "./pages/main/Payment";
+import Profile from "./pages/main/Profile";
 
 import Navbar from "./components/Navbar";
 
@@ -18,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
 
         <Switch>
           {/* BASIC */}
@@ -33,6 +34,7 @@ class App extends Component {
           <Route path="/movie-detail" exact component={MovieDetail} />
           <Route path="/order" exact component={Order} />
           <Route path="/payment" exact component={Payment} />
+          <Route path="/profile" exact component={Profile} />
         </Switch>
       </Router>
     );

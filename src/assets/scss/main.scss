@@ -1,0 +1,16 @@
+// MENGUBAH VALUE VARIABLE BOOTSTRAP
+$primary: #5f2eea;
+$secondary: #6e7191;
+$light: #f5f6f8;
+
+// MENAMBAH VARIABLE BOOTSTRAP
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+$costum-theme-colors: (
+  "black": #000000
+);
+
+$theme-colors: map-merge($costum-theme-colors, $theme-colors);
+
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
