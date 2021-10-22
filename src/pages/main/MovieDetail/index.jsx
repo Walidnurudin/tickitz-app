@@ -4,22 +4,40 @@ import Footer from "../../../components/Footer";
 import axios from "../../../utils/axios";
 
 class MovieDetail extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      data: []
+      movieId: this.props.match.params.id,
+      data: [],
+      schedule: [],
+      scheduleId: "",
+      timeSchedule: "",
+      dateSchedule: new Date().toISOString().split("T")[0]
     };
   }
 
   componentDidMount() {
     this.getDataMovieById();
+    this.getDataScheduleByMovieId();
   }
+
+  getDataScheduleByMovieId = async () => {
+    await axios
+      .get(`/schedule/movie-id/${this.state.movieId}`)
+      .then((res) => {
+        this.setState({
+          schedule: res.data.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   getDataMovieById = () => {
     axios
-      .get(`/movie/${this.props.match.params.id}`)
+      .get(`/movie/${this.state.movieId}`)
       .then((res) => {
-        console.log(res);
         this.setState({
           data: res.data.data[0]
         });
@@ -29,8 +47,48 @@ class MovieDetail extends Component {
       });
   };
 
+  handleChangeDate = (e) => {
+    // if (condition jika user memilih tanggal hari sebelumnya) {
+    //   console.log("tanggal tidak bisa di akses");
+    // }
+    this.setState(
+      {
+        dateSchedule: e.target.value
+      },
+      () => {
+        // proses function get schedule
+      }
+    );
+  };
+
+  handleTimeSchedule = (time) => {
+    // console.log(time);
+    alert("You Click Time " + time);
+    this.setState({
+      timeSchedule: time
+    });
+  };
+
+  handleBooking = (id) => {
+    this.setState(
+      {
+        scheduleId: id
+      },
+      () => {
+        const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
+        console.log(movieId, scheduleId, timeSchedule, dateSchedule);
+        this.props.history.push("/order", {
+          movieId,
+          scheduleId,
+          timeSchedule,
+          dateSchedule
+        });
+      }
+    );
+  };
+
   render() {
-    const { data } = this.state;
+    const { data, schedule } = this.state;
     return (
       <>
         {/* <!-- DETAIL MOVIE --> */}
@@ -137,92 +195,66 @@ class MovieDetail extends Component {
               </select>
             </div>
 
-            {/* <div className="row">
-              <div className="col-12 col-md-4"> */}
-            {/* <div className="ticket__seat">
-                  <div className="row">
-                    <div className="col d-flex justify-content-center align-items-center">
-                      <img
-                        src="assets/img/project/ebv.id 2.png"
-                        alt="ebv.id"
-                        width="106px"
-                        height="40px"
-                      />
+            <div className="row">
+              {schedule.map((item) => (
+                <div className="col-12 col-md-4" key={item}>
+                  <div className="ticket__seat">
+                    <div className="row">
+                      <div className="col d-flex justify-content-center align-items-center">
+                        <img
+                          src="assets/img/project/ebv.id 2.png"
+                          alt="ebv.id"
+                          width="106px"
+                          height="40px"
+                        />
+                      </div>
+                      <div className="col">
+                        <span className="mulish-600" style={{ fontSize: "24px" }}>
+                          {item.premiere}
+                        </span>
+                        <p className="mulish-400 text-secondary" style={{ marginTop: "4px" }}>
+                          {item.location}
+                        </p>
+                      </div>
                     </div>
-                    <div className="col">
-                      <span className="mulish-600" style={{ fontSize: "24px" }}>
-                        ebv.id
+
+                    <hr />
+
+                    <div className="d-flex flex-wrap">
+                      {item.time.map((itemTime, index) => (
+                        <span
+                          onClick={() => this.handleTimeSchedule(itemTime)}
+                          key={index}
+                          className="mulish-600 text-secondary"
+                          style={{ margin: "8px 12px", fontSize: "13px" }}
+                        >
+                          {itemTime}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="d-flex justify-content-between" style={{ marginTop: "24px" }}>
+                      <span className="mulish-400 text-secondary" style={{ fontSize: "16px" }}>
+                        Price
                       </span>
-                      <p className="mulish-400 text-secondary" style={{ marginTop: "4px" }}>
-                        Whatever street No.12, South Purwokerto
-                      </p>
+                      <span className="mulish-600" style={{ fontSize: "16px" }}>
+                        ${item.price}/seat
+                      </span>
                     </div>
-                  </div>
 
-                  <hr />
-
-                  <div>
-                    <span
-                      className="mulish-600 text-secondary"
-                      style={{ margin: "8px 16px", fontSize: "13px" }}
-                    >
-                      08:30am
-                    </span>
-                    <span className="mulish-600" style={{ margin: "8px 16px", fontSize: "13px" }}>
-                      10:00am
-                    </span>
-                    <span
-                      className="mulish-600 text-secondary"
-                      style={{ margin: "8px 16px", fontSize: "13px" }}
-                    >
-                      12:00am
-                    </span>
-                    <span
-                      className="mulish-600 text-secondary"
-                      style={{ margin: "8px 16px", fontSize: "13px" }}
-                    >
-                      02:00pm
-                    </span>
-                    <span
-                      className="mulish-600 text-secondary"
-                      style={{ margin: "8px 16px", fontSize: "13px" }}
-                    >
-                      04:00pm
-                    </span>
-                    <span className="mulish-600" style={{ margin: "8px 16px", fontSize: "13px" }}>
-                      18:30pm
-                    </span>
-                    <span className="mulish-600" style={{ margin: "8px 16px", fontSize: "13px" }}>
-                      20:30pm
-                    </span>
-                    <span
-                      className="mulish-600 text-secondary"
-                      style={{ margin: "8px 16px", fontSize: "13px" }}
-                    >
-                      22:30pm
-                    </span>
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{ marginTop: "24px" }}>
-                    <span className="mulish-400 text-secondary" style={{ fontSize: "16px" }}>
-                      Price
-                    </span>
-                    <span className="mulish-600" style={{ fontSize: "16px" }}>
-                      $10.00/seat
-                    </span>
-                  </div>
-
-                  <div className="d-grid">
-                    <button
-                      className="btn btn-primary mulish-700 book__now--btn"
-                      style={{ fontSize: "14px" }}
-                    >
-                      Book now
-                    </button>
+                    <div className="d-grid">
+                      <button
+                        onClick={() => this.handleBooking(item.id)}
+                        className="btn btn-primary mulish-700 book__now--btn"
+                        style={{ fontSize: "14px" }}
+                      >
+                        Book now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div> */}
+              ))}
+            </div>
 
             <span className="line">
               <h2 className="text-primary mulish-600">view more</h2>

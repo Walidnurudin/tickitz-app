@@ -5,7 +5,12 @@ class Profile extends Component {
   render() {
     return (
       <>
-        <div>Profile</div>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-3">1</div>
+            <div className="col-12 col-md-9">2</div>
+          </div>
+        </div>
         <Footer />
       </>
     );
