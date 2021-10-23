@@ -21,8 +21,8 @@ class MovieDetail extends Component {
     this.getDataScheduleByMovieId();
   }
 
-  getDataScheduleByMovieId = async () => {
-    await axios
+  getDataScheduleByMovieId = () => {
+    axios
       .get(`/schedule/movie-id/${this.state.movieId}`)
       .then((res) => {
         this.setState({
