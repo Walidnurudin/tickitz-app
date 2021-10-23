@@ -11,10 +11,143 @@ import {
   bri,
   ovo
 } from "../../../assets/img";
+import axios from "../../../utils/axios";
 import Footer from "../../../components/Footer";
 
 class Payment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataPaymentMethods: [
+        {
+          id: 1,
+          name: "Google Pay",
+          image: google_pay
+        },
+        {
+          id: 2,
+          name: "Visa",
+          image: visa
+        },
+        {
+          id: 3,
+          name: "Gopay",
+          image: gopay
+        },
+        {
+          id: 4,
+          name: "Paypal",
+          image: paypal
+        },
+        {
+          id: 5,
+          name: "Dana",
+          image: dana
+        },
+        {
+          id: 6,
+          name: "Bca",
+          image: bca
+        },
+        {
+          id: 7,
+          name: "Bri",
+          image: bri
+        },
+        {
+          id: 8,
+          name: "Ovo",
+          image: ovo
+        }
+      ],
+
+      // DATA
+      dataMovie: {},
+      dataSchedule: {},
+
+      // PAYLOAD DATA
+      movieId: props.location.state ? props.location.state.movieId : "",
+      scheduleId: props.location.state ? props.location.state.scheduleId : "",
+      timeSchedule: props.location.state ? props.location.state.timeSchedule : "",
+      dateSchedule: props.location.state ? props.location.state.dateSchedule : "",
+      seat: props.location.state ? props.location.state.seat : "",
+      paymentMethod: ""
+    };
+  }
+
+  getMovieById = () => {
+    axios
+      .get(`/movie/${this.state.movieId}`)
+      .then((res) => {
+        this.setState({
+          dataMovie: res.data.data[0]
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getScheduleById = () => {
+    axios
+      .get(`/schedule/${this.state.scheduleId}`)
+      .then((res) => {
+        this.setState({
+          dataSchedule: res.data.data[0]
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  componentDidMount() {
+    this.checkingData();
+    this.getMovieById();
+    this.getScheduleById();
+  }
+
+  checkingData = () => {
+    const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
+    if (!movieId || !scheduleId || !timeSchedule || !dateSchedule) {
+      alert("Select Movie !");
+      this.props.history.push("/");
+    }
+  };
+
+  handlePaymentMethod = (name) => {
+    this.setState({
+      paymentMethod: name
+    });
+  };
+
+  handlePayYourOrder = () => {
+    const { scheduleId, timeSchedule, dateSchedule, seat, paymentMethod } = this.state;
+    if (!paymentMethod) {
+      alert("Select payment method !");
+    } else {
+      axios
+        .post("/booking", {
+          scheduleId,
+          timeBooking: timeSchedule,
+          dateBooking: dateSchedule,
+          paymentMethod,
+          seat
+        })
+        .then((res) => {
+          console.log(res);
+          this.props.history.push("/profile");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   render() {
+    console.log(this.state);
+    const { dataPaymentMethods, dataMovie, dataSchedule, timeSchedule, dateSchedule, seat } =
+      this.state;
     return (
       <>
         <div className="bg-light">
@@ -28,8 +161,7 @@ class Payment extends Component {
                 Total payment
               </span>
               <span className="mulish-600" style={{ fontSize: "20px" }}>
-                {" "}
-                $30,00{" "}
+                {seat.length > 0 ? `$${seat.length * dataSchedule.price}` : "$0"}
               </span>
             </div>
           </div>
@@ -54,7 +186,7 @@ class Payment extends Component {
                         Date & time
                       </span>
                       <span className="mulish-400" style={{ fontSize: "20px" }}>
-                        Tuesday, 07 July 2020 at 02:00pm
+                        {dateSchedule} at {timeSchedule}
                       </span>
                     </div>
 
@@ -71,7 +203,7 @@ class Payment extends Component {
                         Movie title
                       </span>
                       <span className="mulish-400" style={{ fontSize: "20px" }}>
-                        Spider-Man: Homecoming
+                        {dataMovie.name}
                       </span>
                     </div>
 
@@ -88,7 +220,7 @@ class Payment extends Component {
                         Cinema name
                       </span>
                       <span className="mulish-400" style={{ fontSize: "20px" }}>
-                        CineOne21 Cinema
+                        {dataSchedule.premiere} Cinema
                       </span>
                     </div>
 
@@ -105,7 +237,7 @@ class Payment extends Component {
                         Number of tickets
                       </span>
                       <span className="mulish-400" style={{ fontSize: "20px" }}>
-                        3 pieces
+                        {seat.length} pieces
                       </span>
                     </div>
 
@@ -122,7 +254,7 @@ class Payment extends Component {
                         Total payment
                       </span>
                       <span className="mulish-600" style={{ fontSize: "20px" }}>
-                        $30,00
+                        ${seat.length * dataSchedule.price}
                       </span>
                     </div>
                   </div>
@@ -134,44 +266,23 @@ class Payment extends Component {
                   </h1>
                   <div className="payment__method--card">
                     <div className="payment__method--wrap">
-                      <div className="payment__method--card--item">
-                        <img src={google_pay} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={visa} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={gopay} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={paypal} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={dana} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={bca} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={bri} alt="logo google pay" />
-                      </div>
-
-                      <div className="payment__method--card--item">
-                        <img src={ovo} alt="logo google pay" />
-                      </div>
+                      {dataPaymentMethods.map((item) => (
+                        <div
+                          className="payment__method--card--item"
+                          style={{ cursor: "pointer" }}
+                          key={item.id}
+                          onClick={() => this.handlePaymentMethod(item.name)}
+                        >
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                      ))}
                     </div>
                     <span className="line">
                       <h2>or</h2>
                     </span>
 
                     <div className="text-center" style={{ marginTop: "24px" }}>
-                      <span className="mulish-400 text-secondary">Pay via cash. span </span>
+                      <span className="mulish-400 text-secondary">Pay via cash. </span>
                       <span className="mulish-600 text-primary">See how it work</span>
                     </div>
                   </div>
@@ -260,7 +371,12 @@ class Payment extends Component {
                 >
                   Previus step
                 </button>
-                <button className="btn btn-primary mulish-700 payment__btn">Pay your order</button>
+                <button
+                  className="btn btn-primary mulish-700 payment__btn"
+                  onClick={this.handlePayYourOrder}
+                >
+                  Pay your order
+                </button>
               </div>
 
               <div className="col-0 col-md-5"></div>
