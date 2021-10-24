@@ -13,14 +13,10 @@ import Order from "./pages/main/Order";
 import Payment from "./pages/main/Payment";
 import Profile from "./pages/main/Profile";
 
-import Navbar from "./components/Navbar";
-
 class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar />
-
         <Switch>
           {/* BASIC */}
           <Route path="/basic-react" exact component={BasicReact} />

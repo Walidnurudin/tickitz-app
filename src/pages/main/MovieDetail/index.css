@@ -1,6 +1,6 @@
 /* MOVIE DETAIL */
 .detail__movie {
-  margin-top: 40px;
+  margin-top: 40px !important;
   margin-bottom: 80px;
 }
 
@@ -73,7 +73,7 @@
   margin-top: 32px;
 }
 
-.line {
+.line__detail {
   display: block;
   width: 100%;
   border-bottom: 1px solid #dedede;
@@ -81,13 +81,13 @@
   text-align: center;
 }
 
-.line h2 {
+.line__detail h2 {
   font-size: 15px;
   text-align: center;
   position: relative;
   top: 10px;
   padding: 0 15px;
   display: inline-block;
-  background-color: #f5f6f8 !important;
+  background: #f5f6f8 !important;
   margin: 0;
 }

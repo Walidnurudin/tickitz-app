@@ -1,25 +1,47 @@
 import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
-import { hero, spiderman } from "../../../assets/img";
+import { hero } from "../../../assets/img";
 import Footer from "../../../components/Footer";
+import Navbar from "../../../components/Navbar";
+import JoinNow from "../../../components/JoinNow";
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
+      dataUser: {},
       data: [],
       page: 1,
-      limit: 3,
+      limit: 0,
       search: "",
       sort: "name ASC",
       pageInfo: {}
     };
   }
 
+  checkToken = () => {
+    if (!localStorage.getItem("token")) {
+      this.props.history.push("/login");
+    }
+  };
+
   componentDidMount() {
+    this.checkToken();
+    this.getDataUser();
     this.getDataMovie();
   }
+
+  getDataUser = () => {
+    axios
+      .get("/user")
+      .then((res) => {
+        this.setState({
+          dataUser: res.data.data[0]
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   getDataMovie = () => {
     axios
@@ -40,8 +62,16 @@ class Home extends Component {
   };
 
   render() {
+    const { dataUser, data } = this.state;
     return (
       <>
+        <Navbar
+          imageProfile={
+            dataUser.image
+              ? `http://localhost:3001/uploads/user/${dataUser.image}`
+              : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
+          }
+        />
         {/* <!-- HERO --> */}
         <section className="container">
           <div className="row hero__home">
@@ -66,7 +96,7 @@ class Home extends Component {
             </div>
 
             <div className="now__showing--movie">
-              {this.state.data.map((item) => (
+              {data.map((item) => (
                 <div className="now__showing--img" key={item.id}>
                   <img
                     src={
@@ -130,7 +160,7 @@ class Home extends Component {
             </div>
 
             <div className="up__coming--movie">
-              {this.state.data.map((item) => (
+              {data.map((item) => (
                 <div className="up__coming--img" key={item.id}>
                   <img
                     src={
@@ -169,31 +199,7 @@ class Home extends Component {
         </div>
 
         {/* <!-- JOIN NOW --> */}
-        <div className="container">
-          <div className="join__now">
-            <div className="join__now--title">
-              <span className="mulish-400 join__now--satu">Be the vanguard of the</span>
-              <span className="mulish-700 text-primary join__now--dua">Moviegoers</span>
-            </div>
-
-            <div className="join__now--form">
-              <input
-                type="email"
-                placeholder="Type your email"
-                className="join__now--input mulish-600"
-              />
-              <button className="btn btn-primary join__now--btn mt-3 m-md-0">join now</button>
-            </div>
-
-            <div className="join__now--desc">
-              <span className="mulish-400 text-secondary">
-                By joining you as a Tickitz member,
-                <br />
-                we will always send you the latest updates via email .
-              </span>
-            </div>
-          </div>
-        </div>
+        <JoinNow />
 
         <Footer />
       </>

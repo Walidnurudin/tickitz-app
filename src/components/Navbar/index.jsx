@@ -48,13 +48,13 @@ class Navbar extends Component {
             <div className="collapse navbar-collapse navbar__app--list" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item navbar__app--list--item">
-                  <a
+                  <Link
                     className="nav-link mulish-600 text-black"
                     style={{ fontSize: "16px" }}
-                    href="#"
+                    to="/"
                   >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item navbar__app--list--item">
                   <a
@@ -66,13 +66,13 @@ class Navbar extends Component {
                   </a>
                 </li>
                 <li className="nav-item navbar__app--list--item">
-                  <a
+                  <Link
                     className="nav-link mulish-600 text-black"
                     style={{ fontSize: "16px" }}
-                    href="#"
+                    to="/profile"
                   >
                     Profile
-                  </a>
+                  </Link>
                 </li>
               </ul>
 
@@ -115,14 +115,10 @@ class Navbar extends Component {
                 />
                 <Search className="mx-5 my-auto navbar__search" />
                 {/* <i className="bi bi-search mx-5 my-auto navbar__search"></i> */}
-                <button className="btn btn-primary btn__sign_in" type="button">
+                {/* <button className="btn btn-primary btn__sign_in" type="button">
                   Sign Up
-                </button>
-                {/* <img
-              src="assets/img/project/profile.png"
-              alt="profile"
-              class="navbar__profile"
-            /> */}
+                </button> */}
+                <img src={this.props.imageProfile} alt="profile" className="navbar__profile" />
               </div>
             </div>
           </div>

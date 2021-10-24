@@ -3,16 +3,21 @@ import axios from "../../../utils/axios";
 import "./index.css";
 import Footer from "../../../components/Footer";
 import Seat from "../../../components/Seat";
-import { cineone21 } from "../../../assets/img";
+import Navbar from "../../../components/Navbar";
+import { cineone21, noImage } from "../../../assets/img";
 
 class Order extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataUser: {},
+
       // [SEAT]
-      listSeat: ["A", "B", "C"],
+      listSeat: ["A", "B", "C", "D", "E", "F", "G"],
       selectedSeat: [],
       reservedSeat: ["A1", "C7"],
+      leftSideSeatNum: [1, 2, 3, 4, 5, 6, 7],
+      rightSideSeatNum: [8, 9, 10, 11, 12, 13, 14],
 
       // DATA
       dataMovie: {},
@@ -25,6 +30,17 @@ class Order extends Component {
       dateSchedule: props.location.state ? props.location.state.dateSchedule : ""
     };
   }
+
+  getDataUser = () => {
+    axios
+      .get("/user")
+      .then((res) => {
+        this.setState({
+          dataUser: res.data.data[0]
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   getMovieById = () => {
     axios
@@ -53,11 +69,18 @@ class Order extends Component {
   };
 
   componentDidMount() {
+    this.checkToken();
+    this.getDataUser();
     this.checkingData();
     this.getMovieById();
     this.getScheduleById();
-    console.log(this.state);
   }
+
+  checkToken = () => {
+    if (!localStorage.getItem("token")) {
+      this.props.history.push("/login");
+    }
+  };
 
   checkingData = () => {
     const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
@@ -105,10 +128,25 @@ class Order extends Component {
   };
 
   render() {
-    console.log(this.state);
-    const { dataMovie, dataSchedule, dateSchedule, timeSchedule, selectedSeat } = this.state;
+    const {
+      listSeat,
+      leftSideSeatNum,
+      rightSideSeatNum,
+      dataUser,
+      dataMovie,
+      dataSchedule,
+      dateSchedule,
+      timeSchedule,
+      selectedSeat
+    } = this.state;
     return (
       <>
+        <Navbar
+          imageProfile={
+            dataUser.image ? `http://localhost:3001/uploads/user/${dataUser.image}` : noImage
+          }
+        />
+
         <section className="bg-light">
           <div className="container">
             <div className="row">
@@ -144,7 +182,7 @@ class Order extends Component {
                     Choose Your Seat
                   </h1>
                   <div className="choose__seat--card">
-                    {this.state.listSeat.map((item, index) => (
+                    {listSeat.map((item, index) => (
                       <div key={index}>
                         <Seat
                           seatAlphabhet={item}
@@ -154,6 +192,79 @@ class Order extends Component {
                         />
                       </div>
                     ))}
+
+                    <div className="row" style={{ flexWrap: "nowrap" }}>
+                      <div className="col"></div>
+                      {leftSideSeatNum.map((item, index) => (
+                        <div className="col" key={index}>
+                          <span style={{ paddingRight: "10px" }}>{item}</span>
+                        </div>
+                      ))}
+
+                      <div className="col"></div>
+
+                      {rightSideSeatNum.map((item, index) => (
+                        <div className="col" key={index}>
+                          <span style={{ paddingLeft: "3px" }}>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div>
+                      <p className="mulish-600" style={{ marginTop: "32px", marginBottom: "21px" }}>
+                        Seating key
+                      </p>
+                      <div className="d-flex justify-content-evenly">
+                        <div className="mulish-600 text-secondary d-flex">
+                          <div
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              borderRadius: "25%",
+                              marginRight: "16px",
+                              backgroundColor: "#d6d8e7"
+                            }}
+                          ></div>
+                          <span>Available</span>
+                        </div>
+                        <div className="mulish-600 text-secondary d-flex">
+                          <div
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              borderRadius: "25%",
+                              marginRight: "16px",
+                              backgroundColor: "#5F2EEA"
+                            }}
+                          ></div>
+                          <span>Selected</span>
+                        </div>
+                        <div className="mulish-600 text-secondary d-flex">
+                          <div
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              borderRadius: "25%",
+                              marginRight: "16px",
+                              backgroundColor: "#F589D7"
+                            }}
+                          ></div>
+                          <span>Love nest</span>
+                        </div>
+                        <div className="mulish-600 text-secondary d-flex">
+                          <div
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              borderRadius: "25%",
+                              marginRight: "16px",
+                              backgroundColor: "#6e7191"
+                            }}
+                          ></div>
+                          <span>Sold</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -249,6 +360,7 @@ class Order extends Component {
                 mulish-700
                 choose__btn
               "
+                  onClick={this.changeMovie}
                 >
                   Change your movie
                 </button>

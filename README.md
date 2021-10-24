@@ -61,7 +61,7 @@ cd tickitz-app
 npm install
 ```
 
-3. Start the server
+3. Start the project
 
 ```sh
 npm start
