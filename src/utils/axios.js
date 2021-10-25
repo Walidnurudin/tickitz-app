@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosApiIntaces = axios.create({
-  baseURL: process.env.REACT_APP_API
+  // baseURL: process.env.REACT_APP_API
+  baseURL: process.env.REACT_APP_LOCAL
 });
 
 // Add a request interceptor

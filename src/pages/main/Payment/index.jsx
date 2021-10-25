@@ -82,6 +82,7 @@ class Payment extends Component {
     axios
       .get("/user")
       .then((res) => {
+        console.log(res.data.data[0]);
         this.setState({
           dataUser: res.data.data[0]
         });
@@ -116,11 +117,18 @@ class Payment extends Component {
   };
 
   componentDidMount() {
+    this.checkToken();
     this.getDataUser();
     this.checkingData();
     this.getMovieById();
     this.getScheduleById();
   }
+
+  checkToken = () => {
+    if (!localStorage.getItem("token")) {
+      this.props.history.push("/login");
+    }
+  };
 
   checkingData = () => {
     const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
@@ -137,12 +145,15 @@ class Payment extends Component {
   };
 
   handlePayYourOrder = () => {
-    const { scheduleId, timeSchedule, dateSchedule, seat, paymentMethod } = this.state;
+    const { dataUser, scheduleId, timeSchedule, dateSchedule, seat, paymentMethod } = this.state;
+    console.log("DATA USER ID", dataUser);
     if (!paymentMethod) {
       alert("Select payment method !");
     } else {
       axios
         .post("/booking", {
+          userId: dataUser.id,
+          statusPayment: "success",
           scheduleId,
           timeBooking: timeSchedule,
           dateBooking: dateSchedule,
@@ -157,6 +168,10 @@ class Payment extends Component {
           console.log(err);
         });
     }
+  };
+
+  handlePrevius = () => {
+    this.props.history.goBack();
   };
 
   render() {
@@ -334,6 +349,8 @@ class Payment extends Component {
                         type="text"
                         placeholder="fullname"
                         className="personal__info--input text-secondary mulish-400"
+                        value={`${dataUser.firstName} ${dataUser.lastName}`}
+                        disabled
                       />
                     </div>
                     <div style={{ marginBottom: "32px" }}>
@@ -348,6 +365,8 @@ class Payment extends Component {
                         type="text"
                         placeholder="email"
                         className="personal__info--input text-secondary mulish-400"
+                        value={dataUser.email}
+                        disabled
                       />
                     </div>
                     <div style={{ marginBottom: "32px" }}>
@@ -359,9 +378,11 @@ class Payment extends Component {
                         Phone Number
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="phone number"
                         className="personal__info--input text-secondary mulish-400"
+                        value={dataUser.phoneNumber ? dataUser.phoneNumber : "no phone number"}
+                        disabled
                       />
                     </div>
 
@@ -395,6 +416,7 @@ class Payment extends Component {
                 mulish-700
                 payment__btn
               "
+                  onClick={this.handlePrevius}
                 >
                   Previus step
                 </button>

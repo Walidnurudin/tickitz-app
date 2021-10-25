@@ -4,6 +4,7 @@ import Footer from "../../../components/Footer";
 import axios from "../../../utils/axios";
 import Navbar from "../../../components/Navbar";
 import { noImage, cineone21, ebvid, hiflix } from "../../../assets/img";
+import Pagination from "react-paginate";
 
 class MovieDetail extends Component {
   constructor(props) {
@@ -15,7 +16,10 @@ class MovieDetail extends Component {
       schedule: [],
       scheduleId: "",
       timeSchedule: "",
-      dateSchedule: ""
+      dateSchedule: "",
+      ticketInfo: [],
+      page: 1,
+      limit: 3
     };
   }
 
@@ -29,7 +33,7 @@ class MovieDetail extends Component {
     this.checkToken();
     this.getDataUser();
     this.getDataMovieById();
-    this.getDataScheduleByMovieId();
+    this.getDataSchedule();
   }
 
   getDataUser = () => {
@@ -43,32 +47,24 @@ class MovieDetail extends Component {
       .catch((err) => console.log(err));
   };
 
-  getDataScheduleByMovieId = () => {
+  getDataSchedule = (e) => {
     axios
-      .get(`/schedule/movie-id/${this.state.movieId}`)
+      .get(
+        `/schedule?page=${this.state.page}&limit=${this.state.limit}&searchLocation=${
+          e ? e.target.value : ""
+        }&searchMovieId=${this.state.movieId}`
+      )
       .then((res) => {
-        console.log(res.data.data);
+        console.log(res.data);
         this.setState({
-          schedule: res.data.data
+          schedule: res.data.data,
+          ticketInfo: res.data.pagination
         });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // getDataScheduleByMovieIdAndLocation = (e) => {
-  //   axios
-  //     .get(`/schedule?searchLocation=${e.target.value}&searchMovieId=${this.state.movieId}`)
-  //     .then((res) => {
-  //       this.setState({
-  //         schedule: res.data.data
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   getDataMovieById = () => {
     axios
@@ -94,7 +90,7 @@ class MovieDetail extends Component {
         },
         () => {
           // proses function get schedule
-          console.log(this.state.dateSchedule);
+          // console.log(this.state.dateSchedule);
         }
       );
     }
@@ -131,8 +127,20 @@ class MovieDetail extends Component {
     }
   };
 
+  handlePagination = (event) => {
+    const selectedPage = event.selected + 1;
+    this.setState(
+      {
+        page: selectedPage
+      },
+      () => {
+        this.getDataSchedule();
+      }
+    );
+  };
+
   render() {
-    const { dataUser, data, schedule } = this.state;
+    const { dataUser, data, schedule, ticketInfo } = this.state;
     return (
       <>
         <Navbar
@@ -239,7 +247,7 @@ class MovieDetail extends Component {
                 className="form-select date__location__comp"
                 aria-label="Default select example"
                 defaultValue=""
-                // onChange={this.getDataScheduleByMovieIdAndLocation}
+                onChange={this.getDataSchedule}
               >
                 <option value="">All location</option>
                 <option value="jakarta">Jakarta</option>
@@ -251,7 +259,7 @@ class MovieDetail extends Component {
             {schedule.length > 0 ? (
               <div className="row">
                 {schedule.map((item) => (
-                  <div className="col-12 col-md-4" key={item}>
+                  <div className="col-12 col-md-4" key={item.id}>
                     <div className="ticket__seat">
                       <div className="row">
                         <div className="col d-flex justify-content-center align-items-center">
@@ -314,9 +322,20 @@ class MovieDetail extends Component {
                     </div>
                   </div>
                 ))}
-                <span className="line__detail">
+                {/* <span className="line__detail">
                   <h2 className="text-primary mulish-600">view more</h2>
-                </span>
+                </span> */}
+
+                <Pagination
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={ticketInfo.totalPage}
+                  onPageChange={this.handlePagination}
+                  containerClassName={"pagination"}
+                  disabledClassName={"pagination__disabled"}
+                  activeClassName={"pagination__active"}
+                />
               </div>
             ) : (
               <div className="col-12 text-center text-secondary mulish-700">

@@ -15,7 +15,7 @@ class Order extends Component {
       // [SEAT]
       listSeat: ["A", "B", "C", "D", "E", "F", "G"],
       selectedSeat: [],
-      reservedSeat: ["A1", "C7"],
+      reservedSeat: [],
       leftSideSeatNum: [1, 2, 3, 4, 5, 6, 7],
       rightSideSeatNum: [8, 9, 10, 11, 12, 13, 14],
 
@@ -308,7 +308,7 @@ class Order extends Component {
                           Seat choosed
                         </span>
                         <span className="mulish-600" style={{ fontSize: "14px" }}>
-                          {selectedSeat.length > 0 ? `${selectedSeat}` : "not selected"}
+                          {selectedSeat.length > 0 ? selectedSeat.join(", ") : "not selected"}
                         </span>
                       </div>
                     </div>
