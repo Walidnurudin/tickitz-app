@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import { login, tickitz1, tickitz2, google, fb } from "../../../assets/img";
-import { Eye } from "react-bootstrap-icons";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 import axios from "../../../utils/axios";
 
 class Login extends Component {
@@ -13,9 +13,16 @@ class Login extends Component {
         password: ""
       },
       isError: false,
-      msg: ""
+      msg: "",
+      isPassword: true
     };
   }
+
+  handleEye = () => {
+    this.setState({
+      isPassword: !this.state.isPassword
+    });
+  };
 
   handleChangeForm = (e) => {
     this.setState({
@@ -107,10 +114,14 @@ class Login extends Component {
                     <label htmlFor="password" className="mulish-400 text-secondary">
                       Password
                     </label>
-                    <Eye className="text-secondary icon__eye" />
+                    {this.state.isPassword ? (
+                      <EyeSlash className="text-secondary icon__eye" onClick={this.handleEye} />
+                    ) : (
+                      <Eye className="text-secondary icon__eye" onClick={this.handleEye} />
+                    )}
                     {/* <i className="bi bi-eye text-secondary icon__eye"></i> */}
                     <input
-                      type="password"
+                      type={this.state.isPassword ? "password" : "text"}
                       name="password"
                       onChange={this.handleChangeForm}
                       className="form-control form__input"

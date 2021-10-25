@@ -1,6 +1,6 @@
 /* LOGIN */
 .header {
-  margin-top: 125px;
+  margin-top: 100px;
 }
 
 .header__title {
@@ -44,7 +44,7 @@ label {
 
 .icon__eye {
   position: absolute;
-  bottom: 12px;
+  bottom: 20px;
   right: 30px;
   font-size: x-large;
 }
@@ -81,7 +81,7 @@ label {
 
 .thrid__login {
   margin-top: 55px;
-  margin-bottom: 88px;
+  margin-bottom: 50px;
 }
 
 .thrid__login--card {
