@@ -96,10 +96,9 @@ class MovieDetail extends Component {
     }
   };
 
-  handleTimeSchedule = (time) => {
-    // console.log(time);
-    alert("You Click Time " + time);
+  handleTimeSchedule = (time, scheduleId) => {
     this.setState({
+      scheduleId,
       timeSchedule: time
     });
   };
@@ -140,7 +139,7 @@ class MovieDetail extends Component {
   };
 
   render() {
-    const { dataUser, data, schedule, ticketInfo } = this.state;
+    const { dataUser, data, schedule, scheduleId, timeSchedule, ticketInfo } = this.state;
     return (
       <>
         <Navbar
@@ -290,14 +289,18 @@ class MovieDetail extends Component {
 
                       <div className="d-flex flex-wrap">
                         {item.time.map((itemTime, index) => (
-                          <span
-                            onClick={() => this.handleTimeSchedule(itemTime)}
+                          <button
+                            onClick={() => this.handleTimeSchedule(itemTime, item.id)}
                             key={index}
-                            className="mulish-600 text-secondary"
+                            className={
+                              item.id === scheduleId && itemTime === timeSchedule
+                                ? "mulish-600 isActive__time fw-bold btn btn-primary"
+                                : "mulish-600 text-secondary btn btn-outline-primary"
+                            }
                             style={{ margin: "8px 12px", fontSize: "13px" }}
                           >
                             {itemTime}
-                          </span>
+                          </button>
                         ))}
                       </div>
 
@@ -315,6 +318,7 @@ class MovieDetail extends Component {
                           onClick={() => this.handleBooking(item.id)}
                           className="btn btn-primary mulish-700 book__now--btn"
                           style={{ fontSize: "14px" }}
+                          disabled={item.id !== scheduleId}
                         >
                           Book now
                         </button>

@@ -68,6 +68,11 @@
   border-radius: 8px;
 }
 
+.isActive__time {
+  border-radius: 2px;
+  background-color: cadetblue;
+}
+
 .book__now--btn {
   padding: 10px 0px;
   margin-top: 32px;

@@ -4,7 +4,7 @@ import "./index.css";
 import Footer from "../../../components/Footer";
 import Seat from "../../../components/Seat";
 import Navbar from "../../../components/Navbar";
-import { cineone21, noImage } from "../../../assets/img";
+import { cineone21, hiflix, ebvid, noImage } from "../../../assets/img";
 
 class Order extends Component {
   constructor(props) {
@@ -258,7 +258,17 @@ class Order extends Component {
                   </h1>
                   <div className="order__info--card">
                     <div className="text-center">
-                      <img src={cineone21} alt="logo" width="132px" />
+                      <img
+                        src={
+                          dataSchedule.premiere === "cineone21"
+                            ? cineone21
+                            : dataSchedule.premiere === "hiflix"
+                            ? hiflix
+                            : ebvid
+                        }
+                        alt="logo"
+                        width="132px"
+                      />
                       <span
                         className="d-block mulish-600"
                         style={{ fontSize: "24px", marginTop: "13px" }}
