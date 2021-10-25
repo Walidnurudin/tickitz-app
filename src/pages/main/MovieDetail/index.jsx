@@ -3,7 +3,7 @@ import "./index.css";
 import Footer from "../../../components/Footer";
 import axios from "../../../utils/axios";
 import Navbar from "../../../components/Navbar";
-import { noImage } from "../../../assets/img";
+import { noImage, cineone21, ebvid, hiflix } from "../../../assets/img";
 
 class MovieDetail extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class MovieDetail extends Component {
       schedule: [],
       scheduleId: "",
       timeSchedule: "",
-      dateSchedule: new Date().toISOString().split("T")[0]
+      dateSchedule: ""
     };
   }
 
@@ -47,6 +47,7 @@ class MovieDetail extends Component {
     axios
       .get(`/schedule/movie-id/${this.state.movieId}`)
       .then((res) => {
+        console.log(res.data.data);
         this.setState({
           schedule: res.data.data
         });
@@ -55,6 +56,19 @@ class MovieDetail extends Component {
         console.log(err);
       });
   };
+
+  // getDataScheduleByMovieIdAndLocation = (e) => {
+  //   axios
+  //     .get(`/schedule?searchLocation=${e.target.value}&searchMovieId=${this.state.movieId}`)
+  //     .then((res) => {
+  //       this.setState({
+  //         schedule: res.data.data
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   getDataMovieById = () => {
     axios
@@ -70,17 +84,20 @@ class MovieDetail extends Component {
   };
 
   handleChangeDate = (e) => {
-    // if (condition jika user memilih tanggal hari sebelumnya) {
-    //   console.log("tanggal tidak bisa di akses");
-    // }
-    this.setState(
-      {
-        dateSchedule: e.target.value
-      },
-      () => {
-        // proses function get schedule
-      }
-    );
+    const Now = new Date().toISOString().split("T")[0];
+    if (Now > e.target.value) {
+      alert("date cannot be accessed");
+    } else {
+      this.setState(
+        {
+          dateSchedule: e.target.value
+        },
+        () => {
+          // proses function get schedule
+          console.log(this.state.dateSchedule);
+        }
+      );
+    }
   };
 
   handleTimeSchedule = (time) => {
@@ -92,21 +109,26 @@ class MovieDetail extends Component {
   };
 
   handleBooking = (id) => {
-    this.setState(
-      {
-        scheduleId: id
-      },
-      () => {
-        const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
-        console.log(movieId, scheduleId, timeSchedule, dateSchedule);
-        this.props.history.push("/order", {
-          movieId,
-          scheduleId,
-          timeSchedule,
-          dateSchedule
-        });
-      }
-    );
+    const { movieId, timeSchedule, dateSchedule } = this.state;
+    if (!movieId || !timeSchedule || !dateSchedule) {
+      alert("complete the input all data");
+    } else {
+      this.setState(
+        {
+          scheduleId: id
+        },
+        () => {
+          const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
+          console.log(movieId, scheduleId, timeSchedule, dateSchedule);
+          this.props.history.push("/order", {
+            movieId,
+            scheduleId,
+            timeSchedule,
+            dateSchedule
+          });
+        }
+      );
+    }
   };
 
   render() {
@@ -205,28 +227,40 @@ class MovieDetail extends Component {
             align-items-center
             date__location"
             >
-              <input type="date" className="form-control mr-0 me-md-5 date__location__comp" />
+              <input
+                type="date"
+                className="form-control mr-0 me-md-5 date__location__comp"
+                onChange={this.handleChangeDate}
+              />
 
               <select
                 className="form-select date__location__comp"
                 aria-label="Default select example"
-                defaultValue="Location"
+                defaultValue=""
+                // onChange={this.getDataScheduleByMovieIdAndLocation}
               >
-                <option value="1">Jakarta</option>
-                <option value="2">Bandung</option>
-                <option value="3">Indramayu</option>
+                <option value="">All location</option>
+                <option value="jakarta">Jakarta</option>
+                <option value="bandung">Bandung</option>
+                <option value="indramayu">Indramayu</option>
               </select>
             </div>
 
-            <div className="row">
-              {schedule.length > 0 ? (
-                schedule.map((item) => (
+            {schedule.length > 0 ? (
+              <div className="row">
+                {schedule.map((item) => (
                   <div className="col-12 col-md-4" key={item}>
                     <div className="ticket__seat">
                       <div className="row">
                         <div className="col d-flex justify-content-center align-items-center">
                           <img
-                            src="assets/img/project/ebv.id 2.png"
+                            src={
+                              item.premiere === "cineone21"
+                                ? cineone21
+                                : item.premiere === "hiflix"
+                                ? hiflix
+                                : ebvid
+                            }
                             alt="ebv.id"
                             width="106px"
                             height="40px"
@@ -277,17 +311,16 @@ class MovieDetail extends Component {
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="col-12 text-center text-secondary mulish-700">
-                  <h1>No schedule</h1>
-                </div>
-              )}
-            </div>
-
-            <span className="line__detail">
-              <h2 className="text-primary mulish-600">view more</h2>
-            </span>
+                ))}
+                <span className="line__detail">
+                  <h2 className="text-primary mulish-600">view more</h2>
+                </span>
+              </div>
+            ) : (
+              <div className="col-12 text-center text-secondary mulish-700">
+                <h1>No schedule</h1>
+              </div>
+            )}
           </div>
         </section>
 

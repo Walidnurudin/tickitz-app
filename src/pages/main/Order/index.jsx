@@ -68,12 +68,28 @@ class Order extends Component {
       });
   };
 
+  getSeat = () => {
+    axios
+      .get("/seat/?scheduleId=5&movieId=9&dateBooking=2021-11-03&timeBooking=20:00")
+      .then((res) => {
+        const newReserved = [];
+        res.data.data.map((item) => newReserved.push(item.seat));
+        this.setState({
+          reservedSeat: newReserved
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
     this.checkToken();
     this.getDataUser();
     this.checkingData();
     this.getMovieById();
     this.getScheduleById();
+    this.getSeat();
   }
 
   checkToken = () => {
