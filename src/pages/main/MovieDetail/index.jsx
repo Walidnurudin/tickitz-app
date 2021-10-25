@@ -137,7 +137,7 @@ class MovieDetail extends Component {
       <>
         <Navbar
           imageProfile={
-            dataUser.image ? `http://localhost:3001/uploads/user/${dataUser.image}` : noImage
+            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
           }
         />
         {/* <!-- DETAIL MOVIE --> */}
@@ -146,7 +146,9 @@ class MovieDetail extends Component {
             <div className="col-12 col-md-4 text-center">
               <div className="detail__movie--img">
                 <img
-                  src={data.image ? `http://localhost:3001/uploads/movie/${data.image}` : noImage}
+                  src={
+                    data.image ? `${process.env.REACT_APP_API}uploads/movie/${data.image}` : noImage
+                  }
                   alt="spiderman"
                   width="237px"
                 />

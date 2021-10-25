@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import {
+  noImage,
   warningIcon,
   google_pay,
   visa,
@@ -13,11 +14,13 @@ import {
 } from "../../../assets/img";
 import axios from "../../../utils/axios";
 import Footer from "../../../components/Footer";
+import Navbar from "../../../components/Navbar";
 
 class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataUser: {},
       dataPaymentMethods: [
         {
           id: 1,
@@ -75,6 +78,17 @@ class Payment extends Component {
     };
   }
 
+  getDataUser = () => {
+    axios
+      .get("/user")
+      .then((res) => {
+        this.setState({
+          dataUser: res.data.data[0]
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
   getMovieById = () => {
     axios
       .get(`/movie/${this.state.movieId}`)
@@ -102,6 +116,7 @@ class Payment extends Component {
   };
 
   componentDidMount() {
+    this.getDataUser();
     this.checkingData();
     this.getMovieById();
     this.getScheduleById();
@@ -146,10 +161,22 @@ class Payment extends Component {
 
   render() {
     console.log(this.state);
-    const { dataPaymentMethods, dataMovie, dataSchedule, timeSchedule, dateSchedule, seat } =
-      this.state;
+    const {
+      dataUser,
+      dataPaymentMethods,
+      dataMovie,
+      dataSchedule,
+      timeSchedule,
+      dateSchedule,
+      seat
+    } = this.state;
     return (
       <>
+        <Navbar
+          imageProfile={
+            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
+          }
+        />
         <div className="bg-light">
           {/* <!-- mobile --> */}
           <div className="d-block d-md-none">

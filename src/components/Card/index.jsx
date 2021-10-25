@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
+import { noImage } from "../../assets/img";
 
 class CardMovie extends Component {
   handleSetUpdate = () => {
@@ -14,11 +15,7 @@ class CardMovie extends Component {
         <Card style={{ width: "18rem" }}>
           <Card.Img
             variant="top"
-            src={
-              image
-                ? `http://localhost:3001/uploads/movie/${image}`
-                : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
-            }
+            src={image ? `${process.env.REACT_APP_API}uploads/movie/${image}` : noImage}
           />
           <Card.Body>
             <Card.Title>{name}</Card.Title>

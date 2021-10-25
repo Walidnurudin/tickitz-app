@@ -61,7 +61,22 @@ cd tickitz-app
 npm install
 ```
 
-3. Start the project
+3. Setting `.env`
+
+- create `.env` file
+
+```sh
+touch .env
+```
+
+- Add configuration in `.env` file
+
+```
+REACT_APP_API=yourapi
+
+```
+
+4. Start the project
 
 ```sh
 npm start

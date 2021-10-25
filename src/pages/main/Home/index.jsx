@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
-import { hero } from "../../../assets/img";
+import { hero, noImage } from "../../../assets/img";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/Navbar";
 import JoinNow from "../../../components/JoinNow";
@@ -67,9 +67,7 @@ class Home extends Component {
       <>
         <Navbar
           imageProfile={
-            dataUser.image
-              ? `http://localhost:3001/uploads/user/${dataUser.image}`
-              : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
+            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
           }
         />
         {/* <!-- HERO --> */}
@@ -101,8 +99,8 @@ class Home extends Component {
                   <img
                     src={
                       item.image
-                        ? `http://localhost:3001/uploads/movie/${item.image}`
-                        : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
+                        ? `${process.env.REACT_APP_API}uploads/movie/${item.image}`
+                        : noImage
                     }
                     alt="spiderman"
                     width="160px"
@@ -165,8 +163,8 @@ class Home extends Component {
                   <img
                     src={
                       item.image
-                        ? `http://localhost:3001/uploads/movie/${item.image}`
-                        : "https://www.a1hosting.net/wp-content/themes/arkahost/assets/images/default.jpg"
+                        ? `${process.env.REACT_APP_API}uploads/movie/${item.image}`
+                        : noImage
                     }
                     alt="spiderman"
                     width="160px"

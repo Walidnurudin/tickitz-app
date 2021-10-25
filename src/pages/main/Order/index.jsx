@@ -159,7 +159,7 @@ class Order extends Component {
       <>
         <Navbar
           imageProfile={
-            dataUser.image ? `http://localhost:3001/uploads/user/${dataUser.image}` : noImage
+            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
           }
         />
 
@@ -209,11 +209,11 @@ class Order extends Component {
                       </div>
                     ))}
 
-                    <div className="row" style={{ flexWrap: "nowrap" }}>
+                    <div className="row row__num">
                       <div className="col"></div>
                       {leftSideSeatNum.map((item, index) => (
                         <div className="col" key={index}>
-                          <span style={{ paddingRight: "10px" }}>{item}</span>
+                          <div className="row__num--span--right">{item}</div>
                         </div>
                       ))}
 
@@ -221,62 +221,28 @@ class Order extends Component {
 
                       {rightSideSeatNum.map((item, index) => (
                         <div className="col" key={index}>
-                          <span style={{ paddingLeft: "3px" }}>{item}</span>
+                          <div className="row__num--span--right">{item}</div>
                         </div>
                       ))}
                     </div>
 
                     <div>
-                      <p className="mulish-600" style={{ marginTop: "32px", marginBottom: "21px" }}>
-                        Seating key
-                      </p>
-                      <div className="d-flex justify-content-evenly">
-                        <div className="mulish-600 text-secondary d-flex">
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "25%",
-                              marginRight: "16px",
-                              backgroundColor: "#d6d8e7"
-                            }}
-                          ></div>
+                      <p className="mulish-600 seating__key">Seating key</p>
+                      <div className="seating__key--wrap">
+                        <div className="mulish-600 text-secondary d-flex seating__key--item seating__key--available">
+                          <div></div>
                           <span>Available</span>
                         </div>
-                        <div className="mulish-600 text-secondary d-flex">
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "25%",
-                              marginRight: "16px",
-                              backgroundColor: "#5F2EEA"
-                            }}
-                          ></div>
+                        <div className="mulish-600 text-secondary d-flex seating__key--item seating__key--selected">
+                          <div></div>
                           <span>Selected</span>
                         </div>
-                        <div className="mulish-600 text-secondary d-flex">
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "25%",
-                              marginRight: "16px",
-                              backgroundColor: "#F589D7"
-                            }}
-                          ></div>
+                        <div className="mulish-600 text-secondary d-flex seating__key--item seating__key--lovenest">
+                          <div></div>
                           <span>Love nest</span>
                         </div>
-                        <div className="mulish-600 text-secondary d-flex">
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "25%",
-                              marginRight: "16px",
-                              backgroundColor: "#6e7191"
-                            }}
-                          ></div>
+                        <div className="mulish-600 text-secondary d-flex seating__key--item seating__key--sold">
+                          <div></div>
                           <span>Sold</span>
                         </div>
                       </div>
