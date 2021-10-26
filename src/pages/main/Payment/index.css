@@ -31,6 +31,10 @@
   margin-bottom: 40px;
 }
 
+.isActive__payment {
+  background-color: grey;
+}
+
 .payment__method--card {
   margin-top: 24px;
   background-color: white;

@@ -183,7 +183,8 @@ class Payment extends Component {
       dataSchedule,
       timeSchedule,
       dateSchedule,
-      seat
+      seat,
+      paymentMethod
     } = this.state;
     return (
       <>
@@ -310,7 +311,11 @@ class Payment extends Component {
                     <div className="payment__method--wrap">
                       {dataPaymentMethods.map((item) => (
                         <div
-                          className="payment__method--card--item"
+                          className={
+                            item.name === paymentMethod
+                              ? "payment__method--card--item isActive__payment"
+                              : "payment__method--card--item"
+                          }
                           style={{ cursor: "pointer" }}
                           key={item.id}
                           onClick={() => this.handlePaymentMethod(item.name)}
@@ -423,6 +428,7 @@ class Payment extends Component {
                 <button
                   className="btn btn-primary mulish-700 payment__btn"
                   onClick={this.handlePayYourOrder}
+                  disabled={!paymentMethod}
                 >
                   Pay your order
                 </button>
