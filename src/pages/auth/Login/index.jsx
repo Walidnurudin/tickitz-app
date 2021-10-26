@@ -18,6 +18,16 @@ class Login extends Component {
     };
   }
 
+  checkToken = () => {
+    if (localStorage.getItem("token")) {
+      this.props.history.push("/");
+    }
+  };
+
+  componentDidMount() {
+    this.checkToken();
+  }
+
   handleEye = () => {
     this.setState({
       isPassword: !this.state.isPassword
