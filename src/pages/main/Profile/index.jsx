@@ -188,6 +188,8 @@ class Profile extends Component {
                   </div> */}
 
                   <TicketOrderHistory />
+                  <TicketOrderHistory />
+                  <TicketOrderHistory />
                 </div>
               </div>
             </div>

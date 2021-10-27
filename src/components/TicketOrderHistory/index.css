@@ -4,3 +4,31 @@
   border-radius: 8px;
   padding: 40px 32px;
 }
+
+.ticket__oreder__history--top div {
+  align-self: center;
+}
+
+.ticket__oreder__history--top span {
+  font-size: 14px;
+}
+
+.ticket__oreder__history--top h1 {
+  font-size: 24px;
+  margin-top: 4px;
+}
+
+.ticket__oreder__history--bottom div {
+  margin-top: 32px;
+  align-self: center;
+}
+
+.ticket__oreder__history--bottom button {
+  background: #00ba88;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.75px;
+  width: 196px;
+  height: 40px;
+}
