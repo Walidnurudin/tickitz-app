@@ -133,7 +133,7 @@ class BasicReact extends Component {
         <hr />
 
         {/* COMPONENT COMUNICATION */}
-        <CardMovie handleUpdate={this.handleUpdateMovie} />
+        {/* <CardMovie handleUpdate={this.handleUpdateMovie} /> */}
       </>
     );
   }

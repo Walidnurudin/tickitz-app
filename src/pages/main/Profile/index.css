@@ -1,6 +1,7 @@
 /* PROFILE PAGE */
 .profile__page {
   margin-top: 56px !important;
+  margin-bottom: 20px;
 }
 
 /* profile info */
@@ -41,8 +42,57 @@
 .profile__info--point {
 }
 
+/* profile form */
 .profile__form {
   background-color: white;
   border-radius: 6px;
   box-shadow: 0px 8px 32px rgba(186, 186, 186, 0.08);
+  padding: 26px 32px;
+}
+
+.profile__form--navigate {
+  border-bottom: 1px solid #dedede;
+  display: flex;
+}
+
+.profile__form--navigate--link {
+  font-size: 18px;
+  margin-right: 56px;
+  padding-bottom: 24px;
+  color: #aaaaaa;
+}
+
+.isActive__profile--link {
+  border-bottom: 2px solid #5f2eea;
+  color: #14142b;
+}
+
+.profile__form--detail {
+  margin-top: 56px;
+  margin-bottom: 50px;
+}
+
+.profile__form--detail--header {
+  font-size: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dedede;
+}
+
+.profile__form--detail--item {
+  margin-top: 25px !important;
+}
+
+.profile__form--input {
+  padding: 22px 24px;
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  background: #fcfdfe;
+  outline: none;
+  width: 100%;
+}
+
+.btn__profile--update {
+  width: 360px;
+  height: 56px;
+  margin-top: 25px;
 }

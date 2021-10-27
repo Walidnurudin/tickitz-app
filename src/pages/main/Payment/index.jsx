@@ -20,6 +20,7 @@ class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isError: false,
       dataUser: {},
       dataPaymentMethods: [
         {
@@ -148,7 +149,14 @@ class Payment extends Component {
     const { dataUser, scheduleId, timeSchedule, dateSchedule, seat, paymentMethod } = this.state;
     console.log("DATA USER ID", dataUser);
     if (!paymentMethod) {
-      alert("Select payment method !");
+      this.setState({
+        isError: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isError: false
+        });
+      }, 3000);
     } else {
       axios
         .post("/booking", {
@@ -162,6 +170,7 @@ class Payment extends Component {
         })
         .then((res) => {
           console.log(res);
+          alert("Success booking movie");
           this.props.history.push("/profile");
         })
         .catch((err) => {
@@ -334,6 +343,10 @@ class Payment extends Component {
                     </div>
                   </div>
                 </div>
+
+                {this.state.isError && (
+                  <div className="alert alert-danger">Select your payment method !</div>
+                )}
               </div>
 
               <div className="col-12 col-md-5">

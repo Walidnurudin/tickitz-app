@@ -19,7 +19,9 @@ class MovieDetail extends Component {
       dateSchedule: "",
       ticketInfo: [],
       page: 1,
-      limit: 3
+      limit: 3,
+      isError: false,
+      isWarning: false
     };
   }
 
@@ -82,7 +84,14 @@ class MovieDetail extends Component {
   handleChangeDate = (e) => {
     const Now = new Date().toISOString().split("T")[0];
     if (Now > e.target.value) {
-      alert("date cannot be accessed");
+      this.setState({
+        isError: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isError: false
+        });
+      }, 3000);
     } else {
       this.setState(
         {
@@ -106,7 +115,14 @@ class MovieDetail extends Component {
   handleBooking = (id) => {
     const { movieId, timeSchedule, dateSchedule } = this.state;
     if (!movieId || !timeSchedule || !dateSchedule) {
-      alert("complete the input all data");
+      this.setState({
+        isWarning: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isWarning: false
+        });
+      }, 3000);
     } else {
       this.setState(
         {
@@ -229,7 +245,6 @@ class MovieDetail extends Component {
             <h1 className="text-center mulish-700" style={{ fontSize: "24px" }}>
               Showtimes and Tickets
             </h1>
-
             <div
               className="d-flex justify-content-center
             flex-column flex-md-row
@@ -254,6 +269,14 @@ class MovieDetail extends Component {
                 <option value="indramayu">Indramayu</option>
               </select>
             </div>
+
+            {this.state.isError && (
+              <div className="alert alert-danger">date cannot be accessed</div>
+            )}
+
+            {this.state.isWarning && (
+              <div className="alert alert-warning">complete the input date & time</div>
+            )}
 
             {schedule.length > 0 ? (
               <div className="row">

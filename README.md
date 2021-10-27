@@ -34,6 +34,7 @@ some technology used in this project.
 - [Bootstrap](https://https://getbootstrap.com)
 - [React paginate](https://www.npmjs.com/package/react-paginate)
 - [Axios](https://www.npmjs.com/package/axios)
+- [Redux](https://redux.js.org/)
 
 <!-- GETTING STARTED -->
 
