@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
-import Footer from "../../../components/Footer";
 import axios from "../../../utils/axios";
-import Navbar from "../../../components/Navbar";
+import { Navbar, Footer } from "../../../components";
 import { noImage, cineone21, ebvid, hiflix } from "../../../assets/img";
 import Pagination from "react-paginate";
 

@@ -46,35 +46,67 @@ class Navbar extends Component {
             {/* <!-- end icon --> */}
 
             <div className="collapse navbar-collapse navbar__app--list" id="navbarSupportedContent">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item navbar__app--list--item">
-                  <Link
-                    className="nav-link mulish-600 text-black"
-                    style={{ fontSize: "16px" }}
-                    to="/"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item navbar__app--list--item">
-                  <a
-                    className="nav-link mulish-600 text-black"
-                    style={{ fontSize: "16px" }}
-                    href="#"
-                  >
-                    Payment
-                  </a>
-                </li>
-                <li className="nav-item navbar__app--list--item">
-                  <Link
-                    className="nav-link mulish-600 text-black"
-                    style={{ fontSize: "16px" }}
-                    to="/profile"
-                  >
-                    Profile
-                  </Link>
-                </li>
-              </ul>
+              {this.props.isAdmin ? (
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/dashboard"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/manage-movie"
+                    >
+                      Manage Movie
+                    </Link>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/manage-schedule"
+                    >
+                      Manage Schedule
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <a
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      href="#"
+                    >
+                      Payment
+                    </a>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/profile"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                </ul>
+              )}
 
               <div className="d-flex flex-column flex-md-row">
                 <div className="nav-item navbar__app--list--item dropdown">

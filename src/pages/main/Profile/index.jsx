@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
 import { noImage, menuProfileIcon } from "../../../assets/img";
-import Footer from "../../../components/Footer";
-import Navbar from "../../../components/Navbar";
-import TicketOrderHistory from "../../../components/TicketOrderHistory";
+import { Footer, Navbar, TicketOrderHistory } from "../../../components";
 
 class Profile extends Component {
   constructor(props) {

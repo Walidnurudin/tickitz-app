@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../../utils/axios";
 import "./index.css";
-import Footer from "../../../components/Footer";
-import Seat from "../../../components/Seat";
-import Navbar from "../../../components/Navbar";
+import { Footer, Navbar, Seat } from "../../../components";
 import { cineone21, hiflix, ebvid, noImage } from "../../../assets/img";
 
 class Order extends Component {

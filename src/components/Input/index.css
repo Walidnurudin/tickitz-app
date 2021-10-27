@@ -1,0 +1,14 @@
+.input__component {
+  margin: 25px 0px;
+}
+
+label {
+  margin-bottom: 12px;
+}
+
+.form__input {
+  height: 64px;
+  outline: none;
+  padding: 22px 24px;
+  font-size: 16px;
+}

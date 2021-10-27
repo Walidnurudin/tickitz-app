@@ -13,6 +13,7 @@ import Order from "./pages/main/Order";
 import Payment from "./pages/main/Payment";
 import Profile from "./pages/main/Profile";
 import OrderHistory from "./pages/main/OrderHistory";
+import ManageMovie from "./pages/admin/ManageMovie";
 
 import PrivateRoute from "./helpers/routes/PrivateRoute";
 import PublicRoute from "./helpers/routes/PublicRoute";
@@ -52,6 +53,8 @@ class App extends Component {
             <Route path="/payment" exact component={Payment} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/order-history" exact component={OrderHistory} />
+
+            <Route path="/manage-movie" exact component={ManageMovie} />
           </Switch>
         </Router>
       </Provider>

@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
 import { hero, noImage } from "../../../assets/img";
-import Footer from "../../../components/Footer";
-import Navbar from "../../../components/Navbar";
-import JoinNow from "../../../components/JoinNow";
+import { Footer, Navbar, JoinNow } from "../../../components";
 
 class Home extends Component {
   constructor() {

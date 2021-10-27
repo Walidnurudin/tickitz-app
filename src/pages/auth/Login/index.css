@@ -38,19 +38,11 @@ form {
   margin-top: 50px;
 }
 
-label {
-  margin-bottom: 12px;
-}
-
 .icon__eye {
   position: absolute;
   bottom: 20px;
   right: 30px;
   font-size: x-large;
-}
-
-.form__input {
-  height: 64px;
 }
 
 .form__btn {
