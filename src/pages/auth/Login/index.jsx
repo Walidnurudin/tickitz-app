@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 import { login, tickitz1, tickitz2, google, fb } from "../../../assets/img";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { Input } from "../../../components";
 import axios from "../../../utils/axios";
 
 class Login extends Component {
@@ -13,8 +14,7 @@ class Login extends Component {
         password: ""
       },
       isError: false,
-      msg: "",
-      isPassword: true
+      msg: ""
     };
   }
 
@@ -27,12 +27,6 @@ class Login extends Component {
   componentDidMount() {
     this.checkToken();
   }
-
-  handleEye = () => {
-    this.setState({
-      isPassword: !this.state.isPassword
-    });
-  };
 
   handleChangeForm = (e) => {
     this.setState({
@@ -107,37 +101,22 @@ class Login extends Component {
                 </div>
 
                 <form onSubmit={this.handleSubmit}>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="mulish-400 text-secondary">
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      name="email"
-                      onChange={this.handleChangeForm}
-                      className="form-control form__input"
-                      placeholder="Write your email"
-                    />
-                  </div>
+                  <Input
+                    label="Email"
+                    type="text"
+                    name="email"
+                    placeholder="Write your email"
+                    handleChange={this.handleChangeForm}
+                  />
 
-                  <div className="mb-3 position-relative">
-                    <label htmlFor="password" className="mulish-400 text-secondary">
-                      Password
-                    </label>
-                    {this.state.isPassword ? (
-                      <EyeSlash className="text-secondary icon__eye" onClick={this.handleEye} />
-                    ) : (
-                      <Eye className="text-secondary icon__eye" onClick={this.handleEye} />
-                    )}
-                    {/* <i className="bi bi-eye text-secondary icon__eye"></i> */}
-                    <input
-                      type={this.state.isPassword ? "password" : "text"}
-                      name="password"
-                      onChange={this.handleChangeForm}
-                      className="form-control form__input"
-                      placeholder="Write your password"
-                    />
-                  </div>
+                  <Input
+                    label="Password"
+                    name="password"
+                    placeholder="Write your password"
+                    handleChange={this.handleChangeForm}
+                    inputPassword={true}
+                  />
+
                   <div className="d-grid">
                     <button className="btn btn-primary form__btn" type="submit">
                       Sign In

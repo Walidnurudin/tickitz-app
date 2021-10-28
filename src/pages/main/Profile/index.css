@@ -4,44 +4,6 @@
   margin-bottom: 20px;
 }
 
-/* profile info */
-.profile__info {
-  padding: 40px;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0px 8px 32px rgba(186, 186, 186, 0.08);
-}
-
-.profile__info--header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.profile__info--header span {
-  align-self: center;
-  font-size: 16px;
-}
-
-.profile__info--name {
-  margin-top: 32px;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.profile__info--name h6 {
-  color: black;
-  font-size: 20px;
-  margin-top: 32px;
-  margin-bottom: 4px;
-}
-
-.profile__info--name span {
-  font-size: 14px;
-}
-
-.profile__info--point {
-}
-
 /* profile form */
 .profile__form {
   background-color: white;
@@ -78,21 +40,8 @@
   border-bottom: 1px solid #dedede;
 }
 
-.profile__form--detail--item {
-  margin-top: 25px !important;
-}
-
-.profile__form--input {
-  padding: 22px 24px;
-  border-radius: 4px;
-  border: 1px solid #dedede;
-  background: #fcfdfe;
-  outline: none;
-  width: 100%;
-}
-
 .btn__profile--update {
   width: 360px;
   height: 56px;
-  margin-top: 25px;
+  margin-top: 50px;
 }

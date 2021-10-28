@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import axios from "../../../utils/axios";
+import { connect } from "react-redux";
+import { login } from "../../../stores/actions/auth";
 
 class Login extends Component {
   constructor() {
@@ -25,27 +26,11 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("auth/login", this.state.form)
-      .then((res) => {
-        console.log(res.data.data.token);
-        localStorage.setItem("token", res.data.data.token);
-        this.props.history.push("/basic-home");
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        this.setState({
-          isError: true,
-          msg: err.response.data.msg
-        });
-
-        setTimeout(() => {
-          this.setState({
-            isError: false,
-            msg: ""
-          });
-        }, 2000);
-      });
+    this.props.login(this.state.form).then((res) => {
+      console.log(res);
+      localStorage.setItem("token", res.value.data.data.token);
+      this.props.history.push("/basic-home");
+    });
   };
 
   handleReset = (e) => {
@@ -85,4 +70,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = {
+  login
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

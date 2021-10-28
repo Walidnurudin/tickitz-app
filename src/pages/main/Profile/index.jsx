@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
-import { noImage, menuProfileIcon } from "../../../assets/img";
-import { Footer, Navbar, TicketOrderHistory } from "../../../components";
+import { noImage } from "../../../assets/img";
+import { Footer, Navbar, ProfileCard, Input } from "../../../components";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataUser: {}
+      dataUser: {},
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: ""
+      },
+      formPassword: {
+        newPassword: "",
+        confirmPassword: ""
+      }
     };
   }
 
@@ -22,6 +32,42 @@ class Profile extends Component {
     this.checkToken();
     this.getDataUser();
   }
+
+  handleProfile = () => {
+    this.props.history.push("/profile");
+  };
+
+  handleOrderHistory = () => {
+    this.props.history.push("/order-history");
+  };
+
+  handleFormInfo = (e) => {
+    this.setState(
+      {
+        form: {
+          ...this.state.form,
+          [e.target.name]: e.target.value
+        }
+      },
+      () => {
+        console.log(this.state.form);
+      }
+    );
+  };
+
+  handleFormPassword = (e) => {
+    this.setState(
+      {
+        formPassword: {
+          ...this.state.formPassword,
+          [e.target.name]: e.target.value
+        }
+      },
+      () => {
+        console.log(this.state.formPassword);
+      }
+    );
+  };
 
   getDataUser = () => {
     axios
@@ -48,93 +94,75 @@ class Profile extends Component {
             <div className="row">
               {/* INFO */}
               <div className="col-12 col-md-3 profile__page">
-                <div className="profile__info mulish-400 text-secondary">
-                  <div className="profile__info--header">
-                    <span>INFO</span>
-                    <img src={menuProfileIcon} alt="menu" width="28px" />
-                  </div>
-
-                  <div className="profile__info--name">
-                    <img
-                      src={
-                        dataUser.image
-                          ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}`
-                          : noImage
-                      }
-                      alt="profile"
-                      width="136px"
-                    />
-                    <h6 className="mulish-600">
-                      {dataUser.firstName} {dataUser.lastName}
-                    </h6>
-                    <span className="mulish-400">{dataUser.role}</span>
-                  </div>
-
-                  <hr />
-
-                  <div className="profile__info--point">
-                    <h6>Loyalty Points</h6>
-                  </div>
-                </div>
+                <ProfileCard
+                  image={dataUser.image}
+                  firstName={dataUser.firstName}
+                  lastName={dataUser.lastName}
+                  role={dataUser.role}
+                />
               </div>
 
               {/* FORM */}
               <div className="col-12 col-md-9 profile__page">
                 <div className="profile__form">
                   <div className="profile__form--navigate">
-                    <div className="mulish-400 profile__form--navigate--link isActive__profile--link">
+                    <div
+                      className="mulish-400 profile__form--navigate--link isActive__profile--link"
+                      onClick={this.handleProfile}
+                    >
                       Account Settings
                     </div>
-                    <div className="mulish-400 profile__form--navigate--link">Order History</div>
+                    <div
+                      className="mulish-400 profile__form--navigate--link"
+                      onClick={this.handleOrderHistory}
+                    >
+                      Order History
+                    </div>
                   </div>
 
-                  {/* <div className="profile__form--detail">
+                  <div className="profile__form--detail">
                     <div className="mulish-400 profile__form--detail--header">
                       Details Information
                     </div>
 
                     <div className="row profile__form--detai--form">
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label htmlFor="First Name" className="d-block text-secondary mulish-400">
-                          First Name
-                        </label>
-                        <input
+                        <Input
+                          label="First Name"
                           type="text"
+                          name="firstName"
                           placeholder="First Name"
-                          className="profile__form--input text-secondary mulish-400"
+                          handleChange={this.handleFormInfo}
                         />
                       </div>
 
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label htmlFor="Last Name" className="d-block text-secondary mulish-400">
-                          Last Name
-                        </label>
-                        <input
+                        <Input
+                          label="Last Name"
                           type="text"
+                          name="lastName"
                           placeholder="Last Name"
-                          className="profile__form--input text-secondary mulish-400"
+                          handleChange={this.handleFormInfo}
                         />
                       </div>
 
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label htmlFor="Email" className="d-block text-secondary mulish-400">
-                          Email
-                        </label>
-                        <input
-                          type="email"
+                        <Input
+                          label="Email"
+                          type="text"
+                          name="email"
                           placeholder="email@domain.com"
-                          className="profile__form--input text-secondary mulish-400"
+                          handleChange={this.handleFormInfo}
                         />
                       </div>
 
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label htmlFor="Phone Number" className="d-block text-secondary mulish-400">
-                          Phone Number
-                        </label>
-                        <input
+                        <Input
+                          label="Phone Number"
                           type="number"
-                          placeholder="Phone Number"
-                          className="profile__form--input text-secondary mulish-400"
+                          name="phoneNumber"
+                          placeholder="phone number"
+                          handleChange={this.handleFormInfo}
                         />
                       </div>
 
@@ -153,27 +181,22 @@ class Profile extends Component {
 
                     <div className="row profile__form--detai--form">
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label htmlFor="New Password" className="d-block text-secondary mulish-400">
-                          New Password
-                        </label>
-                        <input
-                          type="password"
+                        <Input
+                          label="New Password"
+                          inputPassword={true}
                           placeholder="New Password"
-                          className="profile__form--input text-secondary mulish-400"
+                          name="newPassword"
+                          handleChange={this.handleFormPassword}
                         />
                       </div>
 
                       <div className="col-12 col-md-6 profile__form--detail--item">
-                        <label
-                          htmlFor="Confirm Password"
-                          className="d-block text-secondary mulish-400"
-                        >
-                          Confirm Password
-                        </label>
-                        <input
-                          type="password"
+                        <Input
+                          label="Confirm Password"
+                          inputPassword={true}
                           placeholder="Confirm Password"
-                          className="profile__form--input text-secondary mulish-400"
+                          name="confirmPassword"
+                          handleChange={this.handleFormPassword}
                         />
                       </div>
 
@@ -183,11 +206,7 @@ class Profile extends Component {
                         </button>
                       </div>
                     </div>
-                  </div> */}
-
-                  <TicketOrderHistory />
-                  <TicketOrderHistory />
-                  <TicketOrderHistory />
+                  </div>
                 </div>
               </div>
             </div>

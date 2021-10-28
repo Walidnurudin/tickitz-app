@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
 import { hero, noImage } from "../../../assets/img";
-import { Footer, Navbar, JoinNow } from "../../../components";
+import { Footer, Navbar, JoinNow, Hero } from "../../../components";
 
 class Home extends Component {
   constructor() {
@@ -68,18 +68,8 @@ class Home extends Component {
             dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
           }
         />
-        {/* <!-- HERO --> */}
-        <section className="container">
-          <div className="row hero__home">
-            <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
-              <h6 className="mulish-400 text-secondary">Nearest Cinema, Newest Movie,</h6>
-              <h1 className="mulish-700 text-primary">Find out now!</h1>
-            </div>
-            <div className="col-12 col-md-6 d-flex justify-content-center mt-5 mt-md-0">
-              <img src={hero} alt="hero image" width="370px" />
-            </div>
-          </div>
-        </section>
+
+        <Hero />
 
         {/* <!-- NOW SHOWING --> */}
         <div className="now__showing bg-light">
@@ -100,7 +90,7 @@ class Home extends Component {
                         ? `${process.env.REACT_APP_API}uploads/movie/${item.image}`
                         : noImage
                     }
-                    alt="spiderman"
+                    alt={item.name}
                     width="160px"
                   />
                   <div>

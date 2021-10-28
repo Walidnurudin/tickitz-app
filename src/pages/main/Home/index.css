@@ -1,18 +1,4 @@
 /* HOME */
-/* hero */
-.hero__home {
-  margin-top: 48px !important;
-  margin-bottom: 140px;
-}
-
-.hero__home h6 {
-  font-size: 24px;
-}
-
-.hero__home h1 {
-  font-size: 56px;
-}
-
 /* now showing */
 .now__showing {
   padding-top: 64px;

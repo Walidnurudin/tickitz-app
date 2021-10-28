@@ -38,13 +38,6 @@ form {
   margin-top: 50px;
 }
 
-.icon__eye {
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  font-size: x-large;
-}
-
 .form__btn {
   margin-top: 48px;
   margin-bottom: 32px;

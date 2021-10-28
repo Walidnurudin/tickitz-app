@@ -13,13 +13,69 @@ class Home extends Component {
       limit: 3,
       search: "",
       sort: "name ASC",
-      pageInfo: {}
+      pageInfo: {},
+      form: {
+        name: "",
+        category: "",
+        releaseDate: "",
+        synopsis: "",
+        cast: "",
+        director: "",
+        duration: "",
+        Image: null
+      }
     };
   }
 
   componentDidMount() {
     this.getDataMovie();
   }
+
+  changeText = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
+  changeFile = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.files[0]
+      }
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.form);
+    const formData = new FormData();
+    for (const data in this.state.form) {
+      formData.append(data, this.state.form[data]);
+    }
+
+    // cek data di formData
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    // axios.post("movie", formData);
+  };
+
+  setUpdate = () => {
+    console.log("setUpdate");
+  };
+
+  handleUpdate = () => {
+    console.log("hendleUpdate");
+  };
+
+  handleUpdate = () => {
+    console.log("handleDelete");
+  };
 
   getDataMovie = () => {
     axios
@@ -66,6 +122,62 @@ class Home extends Component {
         <Navbar />
         <hr />
 
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder="Input name ..."
+            name="name"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Input category ..."
+            name="category"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="date"
+            placeholder="Input release date ..."
+            name="releaseDate"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Input synopsis ..."
+            name="synopsis"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Input cast ..."
+            name="cast"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Input director ..."
+            name="derector"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Input duration ..."
+            name="duration"
+            onChange={(e) => this.changeText(e)}
+          />
+          <br />
+          <input type="file" name="image" onChange={(e) => this.changeFile(e)} />
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+
+        <hr />
         <div className="row">
           {data.map((item) => (
             <div className="col-md-4" key={item.id}>

@@ -13,8 +13,7 @@ import {
   ovo
 } from "../../../assets/img";
 import axios from "../../../utils/axios";
-import Footer from "../../../components/Footer";
-import Navbar from "../../../components/Navbar";
+import { Footer, Navbar, Input } from "../../../components";
 
 class Payment extends Component {
   constructor(props) {
@@ -355,54 +354,29 @@ class Payment extends Component {
                     Personal Info
                   </h1>
                   <div className="payment__info--card">
-                    <div style={{ marginBottom: "32px" }}>
-                      <label
-                        htmlFor="fullname"
-                        className="d-block text-secondary mulish-400"
-                        style={{ marginBottom: "14px" }}
-                      >
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="fullname"
-                        className="personal__info--input text-secondary mulish-400"
-                        value={`${dataUser.firstName} ${dataUser.lastName}`}
-                        disabled
-                      />
-                    </div>
-                    <div style={{ marginBottom: "32px" }}>
-                      <label
-                        htmlFor="email"
-                        className="d-block text-secondary mulish-400"
-                        style={{ marginBottom: "14px" }}
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="email"
-                        className="personal__info--input text-secondary mulish-400"
-                        value={dataUser.email}
-                        disabled
-                      />
-                    </div>
-                    <div style={{ marginBottom: "32px" }}>
-                      <label
-                        htmlFor="phonenumber"
-                        className="d-block text-secondary mulish-400"
-                        style={{ marginBottom: "14px" }}
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="phone number"
-                        className="personal__info--input text-secondary mulish-400"
-                        value={dataUser.phoneNumber ? dataUser.phoneNumber : "no phone number"}
-                        disabled
-                      />
-                    </div>
+                    <Input
+                      label="Full Name"
+                      type="text"
+                      placeholder="Fullname"
+                      value={`${dataUser.firstName} ${dataUser.lastName}`}
+                      disabled
+                    />
+
+                    <Input
+                      label="Email"
+                      type="email"
+                      placeholder="email"
+                      value={dataUser.email}
+                      disabled
+                    />
+
+                    <Input
+                      label="Phone Number"
+                      type="text"
+                      placeholder="phone number"
+                      value={dataUser.phoneNumber ? dataUser.phoneNumber : "no phone number"}
+                      disabled
+                    />
 
                     <div
                       style={{
