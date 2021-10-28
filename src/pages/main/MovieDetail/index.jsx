@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
-import { Navbar, Footer } from "../../../components";
-import { noImage, cineone21, ebvid, hiflix } from "../../../assets/img";
+import { Navbar, Footer, ScheduleCard } from "../../../components";
+import { noImage } from "../../../assets/img";
 import Pagination from "react-paginate";
 
 class MovieDetail extends Component {
@@ -281,71 +281,17 @@ class MovieDetail extends Component {
               <div className="row">
                 {schedule.map((item) => (
                   <div className="col-12 col-md-4" key={item.id}>
-                    <div className="ticket__seat">
-                      <div className="row">
-                        <div className="col d-flex justify-content-center align-items-center">
-                          <img
-                            src={
-                              item.premiere === "cineone21"
-                                ? cineone21
-                                : item.premiere === "hiflix"
-                                ? hiflix
-                                : ebvid
-                            }
-                            alt="ebv.id"
-                            width="106px"
-                            height="40px"
-                          />
-                        </div>
-                        <div className="col">
-                          <span className="mulish-600" style={{ fontSize: "24px" }}>
-                            {item.premiere}
-                          </span>
-                          <p className="mulish-400 text-secondary" style={{ marginTop: "4px" }}>
-                            {item.location}
-                          </p>
-                        </div>
-                      </div>
-
-                      <hr />
-
-                      <div className="d-flex flex-wrap">
-                        {item.time.map((itemTime, index) => (
-                          <button
-                            onClick={() => this.handleTimeSchedule(itemTime, item.id)}
-                            key={index}
-                            className={
-                              item.id === scheduleId && itemTime === timeSchedule
-                                ? "mulish-600 isActive__time fw-bold btn btn-primary"
-                                : "mulish-600 text-secondary btn btn-outline-primary"
-                            }
-                            style={{ margin: "8px 12px", fontSize: "13px" }}
-                          >
-                            {itemTime}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="d-flex justify-content-between" style={{ marginTop: "24px" }}>
-                        <span className="mulish-400 text-secondary" style={{ fontSize: "16px" }}>
-                          Price
-                        </span>
-                        <span className="mulish-600" style={{ fontSize: "16px" }}>
-                          ${item.price}/seat
-                        </span>
-                      </div>
-
-                      <div className="d-grid">
-                        <button
-                          onClick={() => this.handleBooking(item.id)}
-                          className="btn btn-primary mulish-700 book__now--btn"
-                          style={{ fontSize: "14px" }}
-                          disabled={item.id !== scheduleId}
-                        >
-                          Book now
-                        </button>
-                      </div>
-                    </div>
+                    <ScheduleCard
+                      premiere={item.premiere}
+                      location={item.location}
+                      time={item.time}
+                      itemId={item.id}
+                      scheduleId={scheduleId}
+                      timeSchedule={timeSchedule}
+                      price={item.price}
+                      handleTimeSchedule={this.handleTimeSchedule}
+                      handleBooking={() => this.handleBooking(item.id)}
+                    />
                   </div>
                 ))}
                 {/* <span className="line__detail">

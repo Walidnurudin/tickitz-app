@@ -60,24 +60,6 @@
   color: #4e4b66 !important;
 }
 
-.ticket__seat {
-  background-color: white;
-  display: block !important;
-  padding: 24px 35px;
-  margin: 15px;
-  border-radius: 8px;
-}
-
-.isActive__time {
-  border-radius: 2px;
-  background-color: cadetblue;
-}
-
-.book__now--btn {
-  padding: 10px 0px;
-  margin-top: 32px;
-}
-
 .line__detail {
   display: block;
   width: 100%;

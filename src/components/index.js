@@ -8,6 +8,9 @@ import Seat from "./Seat";
 import TicketOrderHistory from "./TicketOrderHistory";
 import Input from "./Input";
 import ProfileCard from "./ProfileCard";
+import NavbarProfile from "./NavbarProfile";
+import ScheduleCard from "./ScheduleCard";
+import MovieCard from "./MovieCard";
 
 export {
   CardMovie,
@@ -19,5 +22,8 @@ export {
   Seat,
   TicketOrderHistory,
   Input,
-  ProfileCard
+  ProfileCard,
+  NavbarProfile,
+  ScheduleCard,
+  MovieCard
 };

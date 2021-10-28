@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
-import { hero, noImage } from "../../../assets/img";
-import { Footer, Navbar, JoinNow, Hero } from "../../../components";
+import { noImage } from "../../../assets/img";
+import { Footer, Navbar, JoinNow, Hero, MovieCard } from "../../../components";
 
 class Home extends Component {
   constructor() {
@@ -147,38 +147,13 @@ class Home extends Component {
 
             <div className="up__coming--movie">
               {data.map((item) => (
-                <div className="up__coming--img" key={item.id}>
-                  <img
-                    src={
-                      item.image
-                        ? `${process.env.REACT_APP_API}uploads/movie/${item.image}`
-                        : noImage
-                    }
-                    alt="spiderman"
-                    width="160px"
-                  />
-                  <div>
-                    <span
-                      className="mulish-700"
-                      style={{ margin: "24px 0px 10px 0px", fontSize: "18px" }}
-                    >
-                      {item.name}
-                    </span>
-                    <span
-                      className="text-secondary"
-                      style={{ fontSize: "12px", marginBottom: "40px" }}
-                    >
-                      {item.category}
-                    </span>
-
-                    <button
-                      className="btn btn-outline-primary mulish-400"
-                      onClick={() => this.handleDetail(item.id)}
-                    >
-                      Details
-                    </button>
-                  </div>
-                </div>
+                <MovieCard
+                  key={item.id}
+                  name={item.name}
+                  image={item.image}
+                  category={item.category}
+                  handleDetail={() => this.handleDetail(item.id)}
+                />
               ))}
             </div>
           </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 import axios from "../../../utils/axios";
 import { noImage } from "../../../assets/img";
-import { Footer, Navbar, ProfileCard, Input } from "../../../components";
+import { Footer, Navbar, ProfileCard, Input, NavbarProfile } from "../../../components";
 
 class Profile extends Component {
   constructor(props) {
@@ -32,14 +32,6 @@ class Profile extends Component {
     this.checkToken();
     this.getDataUser();
   }
-
-  handleProfile = () => {
-    this.props.history.push("/profile");
-  };
-
-  handleOrderHistory = () => {
-    this.props.history.push("/order-history");
-  };
 
   handleFormInfo = (e) => {
     this.setState(
@@ -105,20 +97,7 @@ class Profile extends Component {
               {/* FORM */}
               <div className="col-12 col-md-9 profile__page">
                 <div className="profile__form">
-                  <div className="profile__form--navigate">
-                    <div
-                      className="mulish-400 profile__form--navigate--link isActive__profile--link"
-                      onClick={this.handleProfile}
-                    >
-                      Account Settings
-                    </div>
-                    <div
-                      className="mulish-400 profile__form--navigate--link"
-                      onClick={this.handleOrderHistory}
-                    >
-                      Order History
-                    </div>
-                  </div>
+                  <NavbarProfile />
 
                   <div className="profile__form--detail">
                     <div className="mulish-400 profile__form--detail--header">

@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { noImage } from "../../../assets/img";
 import axios from "../../../utils/axios";
-import { Navbar, Footer, TicketOrderHistory, ProfileCard } from "../../../components";
+import {
+  Navbar,
+  Footer,
+  TicketOrderHistory,
+  ProfileCard,
+  NavbarProfile
+} from "../../../components";
 
 function OrderHistory(props) {
   const [dataUser, setDataUser] = useState({});
@@ -18,14 +24,6 @@ function OrderHistory(props) {
   useEffect(() => {
     getDataUser();
   }, []);
-
-  const handleProfile = () => {
-    props.history.push("/profile");
-  };
-
-  const handleOrderHistory = () => {
-    props.history.push("/order-history");
-  };
 
   return (
     <>
@@ -51,20 +49,7 @@ function OrderHistory(props) {
             {/* FORM */}
             <div className="col-12 col-md-9 profile__page">
               <div className="profile__form">
-                <div className="profile__form--navigate">
-                  <div
-                    className="mulish-400 profile__form--navigate--link isActive__profile--link"
-                    onClick={handleProfile}
-                  >
-                    Account Settings
-                  </div>
-                  <div
-                    className="mulish-400 profile__form--navigate--link"
-                    onClick={handleOrderHistory}
-                  >
-                    Order History
-                  </div>
-                </div>
+                <NavbarProfile />
 
                 <TicketOrderHistory />
                 <TicketOrderHistory />

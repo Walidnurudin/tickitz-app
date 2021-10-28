@@ -1,13 +1,19 @@
 import React from "react";
 import "./index.css";
+import { noImage } from "../../assets/img";
 import { Input } from "../../components";
 
 function FormMovie() {
   return (
     <>
       <div className="container">
+        <h1 className="mulish-700 form__movie--tite">Form Movie</h1>
         <div className="row form__movie">
-          <div className="col-3">1</div>
+          <div className="col-3 d-flex justify-content-center align-items-center">
+            <div className="manage__movie--img">
+              <img src={noImage} alt="spiderman" width="177px" />
+            </div>
+          </div>
           <div className="col-9">
             <div className="row">
               <div className="col-6">

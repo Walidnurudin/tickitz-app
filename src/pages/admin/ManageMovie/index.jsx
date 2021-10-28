@@ -6,7 +6,7 @@ function ManageMovie() {
   return (
     <>
       <Navbar isAdmin={true} />
-      <div className="bg-light">
+      <div className="bg-light form__movie--wrap">
         <FormMovie />
       </div>
       <Footer />

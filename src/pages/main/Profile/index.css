@@ -5,29 +5,6 @@
 }
 
 /* profile form */
-.profile__form {
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0px 8px 32px rgba(186, 186, 186, 0.08);
-  padding: 26px 32px;
-}
-
-.profile__form--navigate {
-  border-bottom: 1px solid #dedede;
-  display: flex;
-}
-
-.profile__form--navigate--link {
-  font-size: 18px;
-  margin-right: 56px;
-  padding-bottom: 24px;
-  color: #aaaaaa;
-}
-
-.isActive__profile--link {
-  border-bottom: 2px solid #5f2eea;
-  color: #14142b;
-}
 
 .profile__form--detail {
   margin-top: 56px;

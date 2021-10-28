@@ -1,0 +1,14 @@
+.up__coming--img {
+  display: inline-block;
+  margin-right: 24px;
+  padding: 32px;
+  border: 0.5px solid #dedede;
+  border-radius: 8px;
+}
+
+.up__coming--img div {
+  width: 160px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
