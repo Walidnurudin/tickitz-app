@@ -18,7 +18,10 @@ function ManageMovie() {
               <h1 className="mulish-700 data__movie--title">Data Movie</h1>
 
               <div className="d-flex align-self-center">
-                <select className="input__sort--data--movie mulish-400" defaultValue="">
+                <select
+                  className="input__sort--data--movie text-secondary mulish-400"
+                  defaultValue=""
+                >
                   <option value="">Sort</option>
                   <option value="jakarta">Jakarta</option>
                   <option value="bandung">Bandung</option>

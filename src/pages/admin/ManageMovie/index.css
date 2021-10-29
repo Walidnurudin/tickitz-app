@@ -10,7 +10,7 @@
   background-color: white;
   border-radius: 6px;
   padding: 45px 72px;
-  margin-top: 15px;
+  margin-top: 15px !important;
 }
 
 .data__movie--title {
