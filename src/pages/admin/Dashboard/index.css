@@ -1,0 +1,32 @@
+.dashboard {
+  padding-top: 50px;
+  padding-bottom: 73px;
+}
+
+.dashboard__graphic h1 {
+  font-size: 24px;
+}
+
+.dashboard__graphic--comp {
+  padding: 34px 23px;
+  background-color: white;
+  border-radius: 4px;
+  margin-top: 27px;
+}
+
+.dashboard__filtered h1 {
+  font-size: 24px;
+}
+
+.dashboard__filtered--comp {
+  padding: 34px 23px;
+  background-color: white;
+  border-radius: 4px;
+  margin-top: 27px;
+}
+
+.dropdown__dashboard {
+  padding: 14px 26px !important;
+  width: 100%;
+  margin-bottom: 28px;
+}
