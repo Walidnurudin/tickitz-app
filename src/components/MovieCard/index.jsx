@@ -7,7 +7,7 @@ function MovieCard({ image, name, category, isAdmin, handleDetail, handleUpdate,
     <>
       <div className="up__coming--img">
         <img
-          src={image ? `${process.env.REACT_APP_API}uploads/movie/${image}` : noImage}
+          src={image ? `${process.env.REACT_APP_LOCAL}uploads/movie/${image}` : noImage}
           alt={name}
           width="160px"
         />

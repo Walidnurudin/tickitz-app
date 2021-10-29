@@ -5,5 +5,17 @@ import menuProfileIcon from "./menu_profile.png";
 import twIcon from "./tw.png";
 import warningIcon from "./warning.png";
 import ytIcon from "./yt.png";
+import download from "./download.png";
+import printer from "./printer.png";
 
-export { fbIcon, igIcon, menuIcon, menuProfileIcon, twIcon, warningIcon, ytIcon };
+export {
+  fbIcon,
+  igIcon,
+  menuIcon,
+  menuProfileIcon,
+  twIcon,
+  warningIcon,
+  ytIcon,
+  download,
+  printer
+};

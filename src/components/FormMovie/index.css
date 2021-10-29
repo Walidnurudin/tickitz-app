@@ -1,9 +1,12 @@
 .form__movie--tite {
   font-size: 24px;
+  margin-bottom: 24px;
 }
 
 .form__movie {
   background-color: white;
+  border-radius: 8px;
+  padding: 56px 40px;
 }
 
 .manage__movie--img {

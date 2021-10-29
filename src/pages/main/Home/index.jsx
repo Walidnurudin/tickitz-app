@@ -63,11 +63,7 @@ class Home extends Component {
     const { dataUser, data } = this.state;
     return (
       <>
-        <Navbar
-          imageProfile={
-            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
-          }
-        />
+        <Navbar imageProfile={dataUser.image} />
 
         <Hero />
 
@@ -87,7 +83,7 @@ class Home extends Component {
                   <img
                     src={
                       item.image
-                        ? `${process.env.REACT_APP_API}uploads/movie/${item.image}`
+                        ? `${process.env.REACT_APP_LOCAL}uploads/movie/${item.image}`
                         : noImage
                     }
                     alt={item.name}

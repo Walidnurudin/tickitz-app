@@ -15,7 +15,7 @@ class CardMovie extends Component {
         <Card style={{ width: "18rem" }}>
           <Card.Img
             variant="top"
-            src={image ? `${process.env.REACT_APP_API}uploads/movie/${image}` : noImage}
+            src={image ? `${process.env.REACT_APP_LOCAL}uploads/movie/${image}` : noImage}
           />
           <Card.Body>
             <Card.Title>{name}</Card.Title>

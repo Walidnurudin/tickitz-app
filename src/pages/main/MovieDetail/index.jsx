@@ -159,7 +159,9 @@ class MovieDetail extends Component {
       <>
         <Navbar
           imageProfile={
-            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
+            dataUser.image
+              ? `${process.env.REACT_APP_LOCAL}uploads/user/${dataUser.image}`
+              : noImage
           }
         />
         {/* <!-- DETAIL MOVIE --> */}
@@ -169,7 +171,9 @@ class MovieDetail extends Component {
               <div className="detail__movie--img">
                 <img
                   src={
-                    data.image ? `${process.env.REACT_APP_API}uploads/movie/${data.image}` : noImage
+                    data.image
+                      ? `${process.env.REACT_APP_LOCAL}uploads/movie/${data.image}`
+                      : noImage
                   }
                   alt="spiderman"
                   width="237px"

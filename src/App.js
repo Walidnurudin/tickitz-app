@@ -16,6 +16,7 @@ import OrderHistory from "./pages/main/OrderHistory";
 import Dashboard from "./pages/admin/Dashboard";
 import ManageMovie from "./pages/admin/ManageMovie";
 import ManageSchedule from "./pages/admin/ManageSchedule";
+import Ticket from "./pages/main/Ticket";
 
 import PrivateRoute from "./helpers/routes/PrivateRoute";
 import PublicRoute from "./helpers/routes/PublicRoute";
@@ -23,6 +24,7 @@ import PublicRoute from "./helpers/routes/PublicRoute";
 // TES REDUX
 import CounterClass from "./pages/basic/Counter/counter.class";
 import CounterFunc from "./pages/basic/Counter/counter.functional";
+import CounterFuncHooks from "./pages/basic/Counter/counter.func.hooks";
 
 // REDUX
 import { Provider } from "react-redux";
@@ -41,6 +43,7 @@ class App extends Component {
             <PublicRoute path="/basic-react" exact component={BasicReact} />
             <PublicRoute path="/basic-counter-class" exact component={CounterClass} />
             <PublicRoute path="/basic-counter-func" exact component={CounterFunc} />
+            <PublicRoute path="/basic-counter-func-hooks" exact component={CounterFuncHooks} />
 
             {/* <Route path="/basic-react" exact component={BasicReact} /> */}
             {/* <Route path="/basic-login" exact component={BasicLogin} /> */}
@@ -55,6 +58,7 @@ class App extends Component {
             <Route path="/payment" exact component={Payment} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/order-history" exact component={OrderHistory} />
+            <Route path="/ticket" exact component={Ticket} />
 
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/manage-movie" exact component={ManageMovie} />

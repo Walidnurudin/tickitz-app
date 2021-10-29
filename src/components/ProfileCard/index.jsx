@@ -13,7 +13,7 @@ function ProfileCard({ image, firstName, lastName, role }) {
 
         <div className="profile__info--name">
           <img
-            src={image ? `${process.env.REACT_APP_API}uploads/user/${image}` : noImage}
+            src={image ? `${process.env.REACT_APP_LOCAL}uploads/user/${image}` : noImage}
             alt="profile"
             width="136px"
           />

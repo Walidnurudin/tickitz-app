@@ -198,7 +198,9 @@ class Payment extends Component {
       <>
         <Navbar
           imageProfile={
-            dataUser.image ? `${process.env.REACT_APP_API}uploads/user/${dataUser.image}` : noImage
+            dataUser.image
+              ? `${process.env.REACT_APP_LOCAL}uploads/user/${dataUser.image}`
+              : noImage
           }
         />
         <div className="bg-light">

@@ -8,13 +8,15 @@ function FormMovie() {
     <>
       <div className="container">
         <h1 className="mulish-700 form__movie--tite">Form Movie</h1>
+
         <div className="row form__movie">
-          <div className="col-3 d-flex justify-content-center align-items-center">
+          <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
             <div className="manage__movie--img">
               <img src={noImage} alt="spiderman" width="177px" />
             </div>
           </div>
-          <div className="col-9">
+
+          <div className="col-12 col-md-9">
             <div className="row">
               <div className="col-6">
                 <Input
@@ -63,6 +65,7 @@ function FormMovie() {
               </div>
             </div>
           </div>
+
           <div className="col-12">
             <div className="textarea__component">
               <label htmlFor="Synopsis" className="mulish-400 text-secondary">
@@ -78,8 +81,8 @@ function FormMovie() {
 
           <div className="d-flex justify-content-end">
             <div>
-              <button>1</button>
-              <button>2</button>
+              <button className="btn btn-outline-primary px-5 mulish-700 me-3">Reset</button>
+              <button className="btn btn-primary px-5 mulish-700">Submit</button>
             </div>
           </div>
         </div>

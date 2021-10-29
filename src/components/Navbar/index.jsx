@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { tickitz2, menuIcon } from "../../assets/img";
+import { tickitz2, menuIcon, noImage } from "../../assets/img";
 import { Search } from "react-bootstrap-icons";
 import "./index.css";
 
@@ -150,7 +150,15 @@ class Navbar extends Component {
                 {/* <button className="btn btn-primary btn__sign_in" type="button">
                   Sign Up
                 </button> */}
-                <img src={this.props.imageProfile} alt="profile" className="navbar__profile" />
+                <img
+                  src={
+                    this.props.imageProfile
+                      ? `${process.env.REACT_APP_LOCAL}uploads/user/${this.props.imageProfile}`
+                      : noImage
+                  }
+                  alt="profile"
+                  className="navbar__profile"
+                />
               </div>
             </div>
           </div>
