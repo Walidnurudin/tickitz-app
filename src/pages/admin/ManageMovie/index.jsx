@@ -1,16 +1,113 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
+import { useSelector, useDispatch } from "react-redux";
+import { getMovie, postMovie } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
 
 function ManageMovie() {
-  const [dataMovie, setDataMovie] = useState([1, 2, 3, 4, 5, 6, 7]);
+  const [queryMovie, setQueryMovie] = useState({
+    page: 1,
+    limit: 8,
+    search: "",
+    month: "",
+    sort: "name ASC"
+  });
+
+  const [formMovie, setFormMovie] = useState({
+    name: "",
+    category: "",
+    releaseDate: "",
+    synopsis: "",
+    cast: "",
+    director: "",
+    durationHour: 0,
+    durationMinute: 0,
+    duration: "",
+    image: null
+  });
+
+  const movieState = useSelector((state) => state.movie);
+  const Dispath = useDispatch();
+
+  useEffect(() => {
+    Dispath(getMovie(queryMovie)).then((res) => {
+      console.log(res);
+    });
+  }, [queryMovie]);
+
+  // CREATE MOVIE
+  const changeText = (event) => {
+    setFormMovie({
+      ...formMovie,
+      duration: `${formMovie.durationHour}:${formMovie.durationMinute}`,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const changeFile = (event) => {
+    setFormMovie({
+      ...formMovie,
+      [event.target.name]: event.target.files[0]
+    });
+  };
+
+  const handleSubmit = () => {
+    console.log(formMovie);
+
+    const formData = new FormData();
+    for (const data in formMovie) {
+      formData.append(data, formMovie[data]);
+    }
+
+    // UNTUK MENGECEK DATA DI DALAM FORMDATA
+    for (const data of formData.entries()) {
+      // [
+      //   [property, value],
+      //   [],
+      // ]
+      console.log(data[0] + ", " + data[1]);
+    }
+
+    Dispath(postMovie(formMovie)).then((res) => {
+      console.log(res);
+    });
+  };
+
+  // PAGINATION
+  const handlePagination = (e) => {
+    const selectedPage = e.selected + 1;
+    setQueryMovie({
+      ...queryMovie,
+      page: selectedPage
+    });
+
+    Dispath(getMovie(queryMovie)).then((res) => {
+      console.log(res);
+    });
+  };
+
+  // SEARCH
+  const handleSearch = (e) => {
+    setQueryMovie({
+      ...queryMovie,
+      search: e.target.value
+    });
+
+    Dispath(getMovie(queryMovie)).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <>
       <Navbar isAdmin={true} />
       <div className="bg-light movie--wrap">
-        <FormMovie />
+        <FormMovie
+          handleChangeText={changeText}
+          handleChangeFile={changeFile}
+          handleSubmit={handleSubmit}
+        />
 
         <div className="data__movie--wrap">
           <div className="container">
@@ -31,22 +128,28 @@ function ManageMovie() {
                   placeholder="Seatch movie name ..."
                   type="text"
                   className="input__movie--data--movie mulish-400"
+                  onChange={handleSearch}
                 />
               </div>
             </div>
 
             <div className="row data__movie">
-              {dataMovie.map((item) => (
-                <div className="col-12 col-md-3 mb-4 d-flex justify-content-center" key={item}>
-                  <MovieCard
-                    name="sipderman"
-                    category="Action, Horror"
-                    isAdmin={true}
-                    handleDelete={() => alert("delete")}
-                    handleUpdate={() => alert("update")}
-                  />
-                </div>
-              ))}
+              {movieState.data.length > 0 ? (
+                movieState.data.map((item) => (
+                  <div className="col-12 col-md-3 mb-4 d-flex justify-content-center" key={item.id}>
+                    <MovieCard
+                      name={item.name}
+                      category={item.category}
+                      isAdmin={true}
+                      image={item.image}
+                      handleDelete={() => alert("delete")}
+                      handleUpdate={() => alert("update")}
+                    />
+                  </div>
+                ))
+              ) : (
+                <h1>Data not found</h1>
+              )}
             </div>
 
             <div className="pagination__data__movie">
@@ -54,8 +157,8 @@ function ManageMovie() {
                 previousLabel={"Previous"}
                 nextLabel={"Next"}
                 breakLabel={"..."}
-                // pageCount={ticketInfo.totalPage}
-                // onPageChange={this.handlePagination}
+                pageCount={movieState.pageInfo.totalPage}
+                onPageChange={handlePagination}
                 containerClassName={"pagination"}
                 disabledClassName={"pagination__disabled"}
                 activeClassName={"pagination__active"}

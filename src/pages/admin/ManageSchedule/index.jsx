@@ -132,8 +132,11 @@ function ManageSchedule() {
                 </div>
               </div>
 
-              <div className="d-flex justify-content-end">
-                <div>asu</div>
+              <div className="d-flex justify-content-end mt-4">
+                <div>
+                  <button className="btn btn-outline-primary px-5 mulish-700 me-3">Reset</button>
+                  <button className="btn btn-primary px-5 mulish-700">Submit</button>
+                </div>
               </div>
             </div>
           </div>

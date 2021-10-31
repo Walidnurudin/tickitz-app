@@ -3,7 +3,7 @@ import "./index.css";
 import { noImage } from "../../assets/img";
 import { Input } from "../../components";
 
-function FormMovie() {
+function FormMovie({ handleChangeText, handleChangeFile, handleSubmit }) {
   return (
     <>
       <div className="container">
@@ -13,6 +13,13 @@ function FormMovie() {
           <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
             <div className="manage__movie--img">
               <img src={noImage} alt="spiderman" width="177px" />
+              <Input
+                label="Movie Image"
+                name="image"
+                placeholder="Input Movie Image"
+                type="file"
+                handleChange={handleChangeFile}
+              />
             </div>
           </div>
 
@@ -21,26 +28,46 @@ function FormMovie() {
               <div className="col-6">
                 <Input
                   label="Movie Name"
-                  name="Movie Name"
+                  name="name"
                   placeholder="Input Movie Name"
                   type="text"
+                  handleChange={handleChangeText}
                 />
               </div>
               <div className="col-6">
-                <Input label="Category" name="Category" placeholder="Input Category" type="text" />
+                <Input
+                  label="Category"
+                  name="category"
+                  placeholder="Input Category"
+                  type="text"
+                  handleChange={handleChangeText}
+                />
               </div>
               <div className="col-6">
-                <Input label="Director" name="Director" placeholder="Input Director" type="text" />
+                <Input
+                  label="Director"
+                  name="director"
+                  placeholder="Input Director"
+                  type="text"
+                  handleChange={handleChangeText}
+                />
               </div>
               <div className="col-6">
-                <Input label="Casts" name="Casts" placeholder="Input Casts" type="text" />
+                <Input
+                  label="Casts"
+                  name="cast"
+                  placeholder="Input Casts"
+                  type="text"
+                  handleChange={handleChangeText}
+                />
               </div>
               <div className="col-6">
                 <Input
                   label="Release Date"
-                  name="Release Date"
+                  name="releaseDate"
                   placeholder="Input Release Date"
                   type="date"
+                  handleChange={handleChangeText}
                 />
               </div>
               <div className="col-6">
@@ -48,17 +75,19 @@ function FormMovie() {
                   <div className="col-6">
                     <Input
                       label="Duration Hour"
-                      name="Duration Hour"
+                      name="durationHour"
                       placeholder="Input Duration Hour"
                       type="number"
+                      handleChange={handleChangeText}
                     />
                   </div>
                   <div className="col-6">
                     <Input
                       label="Duration Minute"
-                      name="Duration Minute"
+                      name="durationMinute"
                       placeholder="Input Duration Minute"
                       type="number"
+                      handleChange={handleChangeText}
                     />
                   </div>
                 </div>
@@ -73,8 +102,9 @@ function FormMovie() {
               </label>
               <textarea
                 className="form-control textarea__input mulish-400"
-                name="Synopsis"
+                name="synopsis"
                 placeholder="Input Synopsis"
+                onChange={handleChangeText}
               />
             </div>
           </div>
@@ -82,7 +112,9 @@ function FormMovie() {
           <div className="d-flex justify-content-end">
             <div>
               <button className="btn btn-outline-primary px-5 mulish-700 me-3">Reset</button>
-              <button className="btn btn-primary px-5 mulish-700">Submit</button>
+              <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
+                Submit
+              </button>
             </div>
           </div>
         </div>
