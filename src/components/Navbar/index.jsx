@@ -52,6 +52,24 @@ class Navbar extends Component {
                     <Link
                       className="nav-link mulish-600 text-black"
                       style={{ fontSize: "16px" }}
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
+                      to="/"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li className="nav-item navbar__app--list--item">
+                    <Link
+                      className="nav-link mulish-600 text-black"
+                      style={{ fontSize: "16px" }}
                       to="/dashboard"
                     >
                       Dashboard
@@ -79,6 +97,24 @@ class Navbar extends Component {
               ) : (
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item navbar__app--list--item">
+                    <li className="nav-item navbar__app--list--item">
+                      <Link
+                        className="nav-link mulish-600 text-black"
+                        style={{ fontSize: "16px" }}
+                        to="/login"
+                      >
+                        Login
+                      </Link>
+                    </li>
+                    <li className="nav-item navbar__app--list--item">
+                      <Link
+                        className="nav-link mulish-600 text-black"
+                        style={{ fontSize: "16px" }}
+                        to="/dashboard"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
                     <Link
                       className="nav-link mulish-600 text-black"
                       style={{ fontSize: "16px" }}

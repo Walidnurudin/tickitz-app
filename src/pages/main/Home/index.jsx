@@ -3,12 +3,13 @@ import "./index.css";
 import axios from "../../../utils/axios";
 import { noImage } from "../../../assets/img";
 import { Footer, Navbar, JoinNow, Hero, MovieCard } from "../../../components";
+import { getUser } from "../../../stores/actions/user";
+import { connect } from "react-redux";
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      dataUser: {},
       data: [],
       page: 1,
       limit: 0,
@@ -26,20 +27,15 @@ class Home extends Component {
 
   componentDidMount() {
     this.checkToken();
-    this.getDataUser();
+    // this.getDataUser();
     this.getDataMovie();
   }
 
-  getDataUser = () => {
-    axios
-      .get("/user")
-      .then((res) => {
-        this.setState({
-          dataUser: res.data.data[0]
-        });
-      })
-      .catch((err) => console.log(err));
-  };
+  // getDataUser = () => {
+  //   this.props.getUser().then((res) => {
+  //     console.log(res);
+  //   });
+  // };
 
   getDataMovie = () => {
     axios
@@ -60,10 +56,10 @@ class Home extends Component {
   };
 
   render() {
-    const { dataUser, data } = this.state;
+    const { data } = this.state;
     return (
       <>
-        <Navbar imageProfile={dataUser.image} />
+        <Navbar imageProfile={this.props.user.data.image} />
 
         <Hero />
 
@@ -164,4 +160,12 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+const mapDispatchToProps = {
+  getUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

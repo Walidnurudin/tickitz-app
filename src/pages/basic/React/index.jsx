@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../../components/Navbar";
 import { Button, Modal } from "react-bootstrap";
-import CardMovie from "../../../components/Card";
+import Loader from "react-loader-spinner";
 
 class BasicReact extends Component {
   constructor() {
@@ -131,6 +131,8 @@ class BasicReact extends Component {
         </Modal>
 
         <hr />
+
+        <Loader type="BallTriangle" color="red" />
 
         {/* COMPONENT COMUNICATION */}
         {/* <CardMovie handleUpdate={this.handleUpdateMovie} /> */}

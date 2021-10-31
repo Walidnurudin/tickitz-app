@@ -39,7 +39,7 @@ axiosApiIntaces.interceptors.response.use(
     if (error.response.status === 403) {
       alert("ada kesalahan token");
       localStorage.clear();
-      window.location.href = "/basic-login";
+      window.location.href = "/login";
     }
 
     return Promise.reject(error);

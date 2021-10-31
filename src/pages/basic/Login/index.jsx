@@ -9,9 +9,7 @@ class Login extends Component {
       form: {
         email: "",
         password: ""
-      },
-      isError: false,
-      msg: ""
+      }
     };
   }
 
@@ -27,7 +25,6 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.login(this.state.form).then((res) => {
-      console.log(res);
       localStorage.setItem("token", res.value.data.data.token);
       this.props.history.push("/basic-home");
     });
@@ -42,7 +39,7 @@ class Login extends Component {
       <div className="container text-center">
         <h1>Login page</h1>
         <hr />
-        {this.state.isError && <div className="alert alert-danger">{this.state.msg}</div>}
+        {this.props.auth.isError && <div className="alert alert-danger">{this.props.auth.msg}</div>}
         <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
           <input
             type="text"

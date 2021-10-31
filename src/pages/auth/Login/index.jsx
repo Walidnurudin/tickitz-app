@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./index.css";
-import { login, tickitz1, tickitz2, google, fb } from "../../../assets/img";
-import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { loginImage, tickitz1, tickitz2, google, fb } from "../../../assets/img";
+import { connect } from "react-redux";
 import { Input } from "../../../components";
-import axios from "../../../utils/axios";
+import Loader from "react-loader-spinner";
+import { login } from "../../../stores/actions/auth";
+import { getUser } from "../../../stores/actions/user";
 
 class Login extends Component {
   constructor() {
@@ -12,9 +14,7 @@ class Login extends Component {
       form: {
         email: "",
         password: ""
-      },
-      isError: false,
-      msg: ""
+      }
     };
   }
 
@@ -39,26 +39,14 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("auth/login", this.state.form)
-      .then((res) => {
-        localStorage.setItem("token", res.data.data.token);
-        this.props.history.push("/");
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        this.setState({
-          isError: true,
-          msg: err.response.data.msg
-        });
-
-        setTimeout(() => {
-          this.setState({
-            isError: false,
-            msg: ""
-          });
-        }, 2000);
+    this.props.login(this.state.form).then((res) => {
+      localStorage.setItem("token", res.value.data.data.token);
+      this.props.getUser().then((res) => {
+        console.log(res.value.data.data[0].role);
+        if (res.value.data.data[0].role === "ADMIN") this.props.history.push("/dashboard");
+        else this.props.history.push("/");
       });
+    });
   };
 
   render() {
@@ -75,7 +63,7 @@ class Login extends Component {
                   <span className="banner__overlay--title inter-400">wait, watch, wow!</span>
                 </div>
 
-                <img src={login} alt="image login" className="banner__img" />
+                <img src={loginImage} alt="image login" className="banner__img" />
               </div>
             </div>
 
@@ -118,11 +106,16 @@ class Login extends Component {
                   />
 
                   <div className="d-grid">
-                    <button className="btn btn-primary form__btn" type="submit">
-                      Sign In
-                    </button>
-                    {this.state.isError && (
-                      <div className="alert alert-danger">{this.state.msg}</div>
+                    {this.props.auth.isLoading ? (
+                      <Loader type="Circles" color="#00BFFF" />
+                    ) : (
+                      <button className="btn btn-primary form__btn" type="submit">
+                        Sign In
+                      </button>
+                    )}
+
+                    {this.props.auth.isError && (
+                      <div className="alert alert-danger">{this.props.auth.msg}</div>
                     )}
                   </div>
                 </form>
@@ -177,4 +170,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = {
+  login,
+  getUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

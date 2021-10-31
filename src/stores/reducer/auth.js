@@ -18,7 +18,7 @@ const auth = (state = initialState, action) => {
     case "LOGIN_FULFILLED": {
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         isError: false,
         idUser: action.payload.data.data.id,
         msg: action.payload.data.msg
@@ -30,7 +30,7 @@ const auth = (state = initialState, action) => {
         isLoading: false,
         isError: true,
         idUser: "",
-        msg: action.response.data.msg
+        msg: action.payload.response.data.msg
       };
     }
     default: {

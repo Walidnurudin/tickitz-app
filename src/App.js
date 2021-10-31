@@ -20,6 +20,7 @@ import Ticket from "./pages/main/Ticket";
 
 import PrivateRoute from "./helpers/routes/PrivateRoute";
 import PublicRoute from "./helpers/routes/PublicRoute";
+import AdminRoute from "./helpers/routes/AdminRoute";
 
 // TES REDUX
 import CounterClass from "./pages/basic/Counter/counter.class";
@@ -28,42 +29,48 @@ import CounterFuncHooks from "./pages/basic/Counter/counter.func.hooks";
 
 // REDUX
 import { Provider } from "react-redux";
-import store from "./stores/store";
+import { store, persistor } from "./stores/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router>
-          <Switch>
-            {/* BASIC */}
-            <PrivateRoute path="/basic-home" exact component={BasicHome} />
+          <PersistGate persistor={persistor}>
+            <Switch>
+              {/* BASIC */}
+              <PrivateRoute path="/basic-home" exact component={BasicHome} />
 
-            <PublicRoute path="/basic-login" restricted={true} exact component={BasicLogin} />
-            <PublicRoute path="/basic-react" exact component={BasicReact} />
-            <PublicRoute path="/basic-counter-class" exact component={CounterClass} />
-            <PublicRoute path="/basic-counter-func" exact component={CounterFunc} />
-            <PublicRoute path="/basic-counter-func-hooks" exact component={CounterFuncHooks} />
+              <PublicRoute path="/basic-login" restricted={true} exact component={BasicLogin} />
+              <PublicRoute path="/basic-react" exact component={BasicReact} />
+              <PublicRoute path="/basic-counter-class" exact component={CounterClass} />
+              <PublicRoute path="/basic-counter-func" exact component={CounterFunc} />
+              <PublicRoute path="/basic-counter-func-hooks" exact component={CounterFuncHooks} />
 
-            {/* <Route path="/basic-react" exact component={BasicReact} /> */}
-            {/* <Route path="/basic-login" exact component={BasicLogin} /> */}
-            {/* <Route path="/basic-home" exact component={BasicHome} /> */}
-            <Route path="/basic-detail/:movieId" exact component={BasicMovieDetail} />
+              {/* <Route path="/basic-react" exact component={BasicReact} /> */}
+              {/* <Route path="/basic-login" exact component={BasicLogin} /> */}
+              {/* <Route path="/basic-home" exact component={BasicHome} /> */}
+              <Route path="/basic-detail/:movieId" exact component={BasicMovieDetail} />
 
-            {/* PROJECT */}
-            <Route path="/login" exact component={Login} />
-            <Route path="/" exact component={Home} />
-            <Route path="/movie-detail/:id" exact component={MovieDetail} />
-            <Route path="/order" exact component={Order} />
-            <Route path="/payment" exact component={Payment} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/order-history" exact component={OrderHistory} />
-            <Route path="/ticket" exact component={Ticket} />
+              {/* PROJECT */}
+              <PublicRoute path="/login" restricted={true} exact component={Login} />
 
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/manage-movie" exact component={ManageMovie} />
-            <Route path="/manage-schedule" exact component={ManageSchedule} />
-          </Switch>
+              {/* user */}
+              <PrivateRoute path="/" exact component={Home} />
+              <PrivateRoute path="/movie-detail/:id" exact component={MovieDetail} />
+              <PrivateRoute path="/order" exact component={Order} />
+              <PrivateRoute path="/payment" exact component={Payment} />
+              <PrivateRoute path="/profile" exact component={Profile} />
+              <PrivateRoute path="/order-history" exact component={OrderHistory} />
+              <PrivateRoute path="/ticket" exact component={Ticket} />
+
+              {/* admin */}
+              <AdminRoute path="/dashboard" exact component={Dashboard} />
+              <AdminRoute path="/manage-movie" exact component={ManageMovie} />
+              <AdminRoute path="/manage-schedule" exact component={ManageSchedule} />
+            </Switch>
+          </PersistGate>
         </Router>
       </Provider>
     );

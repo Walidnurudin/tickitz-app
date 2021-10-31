@@ -4,12 +4,12 @@ import axios from "../../../utils/axios";
 import { Navbar, Footer, ScheduleCard } from "../../../components";
 import { noImage } from "../../../assets/img";
 import Pagination from "react-paginate";
+import { connect } from "react-redux";
 
 class MovieDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataUser: {},
       movieId: this.props.match.params.id,
       data: [],
       schedule: [],
@@ -32,21 +32,9 @@ class MovieDetail extends Component {
 
   componentDidMount() {
     this.checkToken();
-    this.getDataUser();
     this.getDataMovieById();
     this.getDataSchedule();
   }
-
-  getDataUser = () => {
-    axios
-      .get("/user")
-      .then((res) => {
-        this.setState({
-          dataUser: res.data.data[0]
-        });
-      })
-      .catch((err) => console.log(err));
-  };
 
   getDataSchedule = (e) => {
     axios
@@ -154,16 +142,11 @@ class MovieDetail extends Component {
   };
 
   render() {
-    const { dataUser, data, schedule, scheduleId, timeSchedule, ticketInfo } = this.state;
+    const { data, schedule, scheduleId, timeSchedule, ticketInfo } = this.state;
+    console.log("USER PERSIST", this.props.user);
     return (
       <>
-        <Navbar
-          imageProfile={
-            dataUser.image
-              ? `${process.env.REACT_APP_LOCAL}uploads/user/${dataUser.image}`
-              : noImage
-          }
-        />
+        <Navbar imageProfile={this.props.user.data.image} />
         {/* <!-- DETAIL MOVIE --> */}
         <header className="container">
           <div className="row detail__movie">
@@ -327,4 +310,8 @@ class MovieDetail extends Component {
   }
 }
 
-export default MovieDetail;
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(MovieDetail);
