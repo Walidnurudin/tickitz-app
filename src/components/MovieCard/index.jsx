@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { noImage } from "../../assets/img";
 
@@ -26,7 +26,7 @@ function MovieCard({ image, name, category, isAdmin, handleDetail, handleUpdate,
               </button>
 
               <button className="btn btn-outline-danger mulish-400 mt-2" onClick={handleDelete}>
-                Update
+                Delete
               </button>
             </>
           ) : (

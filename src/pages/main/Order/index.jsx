@@ -67,8 +67,11 @@ class Order extends Component {
   };
 
   getSeat = () => {
+    const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
     axios
-      .get("/seat/?scheduleId=5&movieId=9&dateBooking=2021-11-03&timeBooking=20:00")
+      .get(
+        `/seat/?scheduleId=${scheduleId}&movieId=${movieId}&dateBooking=${dateSchedule}&timeBooking=${timeSchedule}`
+      )
       .then((res) => {
         const newReserved = [];
         res.data.data.map((item) => newReserved.push(item.seat));

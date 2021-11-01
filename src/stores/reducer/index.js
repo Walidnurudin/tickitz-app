@@ -6,6 +6,7 @@ import counter from "./counter";
 import auth from "./auth";
 import user from "./user";
 import movie from "./movie";
+import schedule from "./schedule";
 
 const persistConfig = {
   key: "root",
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   counter,
   auth,
   user,
-  movie
+  movie,
+  schedule
 });
 
 export default persistReducer(persistConfig, rootReducer);

@@ -34,9 +34,7 @@ const auth = (state = initialState, action) => {
       };
     }
     default: {
-      return {
-        ...state
-      };
+      return state;
     }
   }
 };

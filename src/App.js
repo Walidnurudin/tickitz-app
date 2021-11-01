@@ -12,7 +12,6 @@ import MovieDetail from "./pages/main/MovieDetail";
 import Order from "./pages/main/Order";
 import Payment from "./pages/main/Payment";
 import Profile from "./pages/main/Profile";
-import OrderHistory from "./pages/main/OrderHistory";
 import Dashboard from "./pages/admin/Dashboard";
 import ManageMovie from "./pages/admin/ManageMovie";
 import ManageSchedule from "./pages/admin/ManageSchedule";
@@ -62,7 +61,6 @@ class App extends Component {
               <PrivateRoute path="/order" exact component={Order} />
               <PrivateRoute path="/payment" exact component={Payment} />
               <PrivateRoute path="/profile" exact component={Profile} />
-              <PrivateRoute path="/order-history" exact component={OrderHistory} />
               <PrivateRoute path="/ticket" exact component={Ticket} />
 
               {/* admin */}

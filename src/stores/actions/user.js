@@ -6,3 +6,10 @@ export const getUser = () => {
     payload: axios.get("user")
   };
 };
+
+export const getUserBooking = () => {
+  return {
+    type: "GET_USER_BOOKING",
+    payload: axios.get("booking/user-id")
+  };
+};

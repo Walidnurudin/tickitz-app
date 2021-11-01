@@ -1,10 +1,12 @@
 const initialState = {
   data: {},
+  booking: {},
   msg: ""
 };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
+    // GET USER
     case "GET_USER_PENDING":
       return {
         ...state,
@@ -23,10 +25,30 @@ const user = (state = initialState, action) => {
         data: "",
         msg: action.payload.response.data.msg
       };
-    default: {
+
+    // GET USER BOOKING
+    case "GET_USER_BOOKING_PENDING":
       return {
-        ...state
+        ...state,
+        booking: "",
+        msg: ""
       };
+
+    case "GET_USER_BOOKING_FULFILLED":
+      return {
+        ...state,
+        booking: action.payload.data.data,
+        msg: action.payload.data.msg
+      };
+
+    case "GET_USER_BOOKING_REJECTED":
+      return {
+        ...state,
+        booking: "",
+        msg: action.payload.response.data.msg
+      };
+    default: {
+      return state;
     }
   }
 };

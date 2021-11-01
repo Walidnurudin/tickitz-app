@@ -1,33 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./index.css";
-import { useHistory, withRouter } from "react-router-dom";
 
-function NavbarProfile(props) {
-  const history = useHistory();
-
-  const linkActive = (path) => {
-    return props.location.pathname === path ? "isActive__profile--link" : "";
-  };
-
-  const handleProfile = () => {
-    history.push("/profile");
-  };
-
-  const handleOrderHistory = () => {
-    history.push("/order-history");
-  };
-
+function NavbarProfile({ isOrderComponent, handleProfile, handleOrderHistory }) {
   return (
     <>
       <div className="profile__form--navigate">
         <div
-          className={`mulish-400 profile__form--navigate--link ${linkActive("/profile")}`}
+          className={`mulish-400 profile__form--navigate--link ${
+            !isOrderComponent ? "isActive__profile--link" : ""
+          }`}
           onClick={handleProfile}
         >
           Account Settings
         </div>
         <div
-          className={`mulish-400 profile__form--navigate--link ${linkActive("/order-history")}`}
+          className={`mulish-400 profile__form--navigate--link ${
+            isOrderComponent ? "isActive__profile--link" : ""
+          }`}
           onClick={handleOrderHistory}
         >
           Order History
@@ -37,4 +26,4 @@ function NavbarProfile(props) {
   );
 }
 
-export default withRouter(NavbarProfile);
+export default NavbarProfile;

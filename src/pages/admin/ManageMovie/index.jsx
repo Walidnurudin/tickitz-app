@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovie, postMovie } from "../../../stores/actions/movie";
+import { getMovie, postMovie, deleteMovie } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
+import { Modal } from "react-bootstrap";
 
 function ManageMovie() {
   const [queryMovie, setQueryMovie] = useState({
@@ -74,6 +75,23 @@ function ManageMovie() {
     });
   };
 
+  // DELETE MOVIE
+  const handleDelete = (data) => {
+    if (window.confirm("Are you sure you want to delete this movie ?")) {
+      Dispath(deleteMovie(data)).then((res) => {
+        console.log(res);
+        Dispath(getMovie(queryMovie)).then((res) => {
+          console.log(res);
+        });
+      });
+    }
+  };
+
+  // UPDATE MOVIE
+  const handleUpdate = () => {
+    console.log(window.confirm("Yakin?"));
+  };
+
   // PAGINATION
   const handlePagination = (e) => {
     const selectedPage = e.selected + 1;
@@ -92,6 +110,18 @@ function ManageMovie() {
     setQueryMovie({
       ...queryMovie,
       search: e.target.value
+    });
+
+    Dispath(getMovie(queryMovie)).then((res) => {
+      console.log(res);
+    });
+  };
+
+  // SORT
+  const handleSort = (e) => {
+    setQueryMovie({
+      ...queryMovie,
+      sort: e.target.value
     });
 
     Dispath(getMovie(queryMovie)).then((res) => {
@@ -118,11 +148,11 @@ function ManageMovie() {
                 <select
                   className="input__sort--data--movie text-secondary mulish-400"
                   defaultValue=""
+                  onChange={handleSort}
                 >
                   <option value="">Sort</option>
-                  <option value="jakarta">Jakarta</option>
-                  <option value="bandung">Bandung</option>
-                  <option value="indramayu">Indramayu</option>
+                  <option value="name ASC">name ascending</option>
+                  <option value="name DESC">name descending</option>
                 </select>
                 <input
                   placeholder="Seatch movie name ..."
@@ -133,37 +163,47 @@ function ManageMovie() {
               </div>
             </div>
 
-            <div className="row data__movie">
-              {movieState.data.length > 0 ? (
-                movieState.data.map((item) => (
-                  <div className="col-12 col-md-3 mb-4 d-flex justify-content-center" key={item.id}>
-                    <MovieCard
-                      name={item.name}
-                      category={item.category}
-                      isAdmin={true}
-                      image={item.image}
-                      handleDelete={() => alert("delete")}
-                      handleUpdate={() => alert("update")}
-                    />
-                  </div>
-                ))
-              ) : (
-                <h1>Data not found</h1>
-              )}
-            </div>
+            {movieState.data.length > 0 ? (
+              <>
+                <div className="row data__movie">
+                  {movieState.data.map((item) => (
+                    <div
+                      className="col-12 col-md-3 mb-4 d-flex justify-content-center"
+                      key={item.id}
+                    >
+                      <MovieCard
+                        name={item.name}
+                        category={item.category}
+                        isAdmin={true}
+                        image={item.image}
+                        handleDelete={() => handleDelete(item.id)}
+                        handleUpdate={() => handleUpdate()}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="pagination__data__movie">
+                  <Pagination
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={movieState.pageInfo.totalPage}
+                    onPageChange={handlePagination}
+                    containerClassName={"pagination"}
+                    disabledClassName={"pagination__disabled"}
+                    activeClassName={"pagination__active"}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="data__movie">
+                  <h1 className="mulish-700 text-center text-secondary">Data not found</h1>
+                </div>
 
-            <div className="pagination__data__movie">
-              <Pagination
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                pageCount={movieState.pageInfo.totalPage}
-                onPageChange={handlePagination}
-                containerClassName={"pagination"}
-                disabledClassName={"pagination__disabled"}
-                activeClassName={"pagination__active"}
-              />
-            </div>
+                <div style={{ height: "100px" }}></div>
+              </>
+            )}
           </div>
         </div>
       </div>

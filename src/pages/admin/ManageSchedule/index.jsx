@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { noImage, cineone21, hiflix, ebvid } from "../../../assets/img";
 import { Navbar, Footer, ScheduleCard, Input } from "../../../components";
 import Pagination from "react-paginate";
+import { useSelector, useDispatch } from "react-redux";
+import { getSchedule } from "../../../stores/actions/schedule";
 
 function ManageSchedule() {
+  const scheduleState = useSelector((state) => state.schedule);
+  const dispatch = useDispatch();
+
+  const [scheduleParams, setScheduleParams] = useState({
+    page: 1,
+    limit: 9,
+    location: "",
+    movieId: "",
+    sort: "price ASC"
+  });
+
   const [dataSchedule, setDataSchedule] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [dataPremiere, setDataPremiere] = useState([
     { id: 1, name: "cineone21", image: cineone21 },
@@ -18,6 +31,12 @@ function ManageSchedule() {
   const handleDataPayment = (name) => {
     setPremiere(name);
   };
+
+  useEffect(() => {
+    dispatch(getSchedule(scheduleParams)).then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   return (
     <>
@@ -179,16 +198,15 @@ function ManageSchedule() {
               </div>
             </div>
             <div className="row data__schedule">
-              {dataSchedule.map((item) => (
-                <div className="col-12 col-md-4 mb-4 d-flex justify-content-center" key={item}>
+              {scheduleState.data.map((item) => (
+                <div className="col-12 col-md-4 mb-4 d-flex justify-content-center" key={item.id}>
                   <ScheduleCard
-                    premiere="cineone21"
-                    location="Indramayu"
-                    time={[1, 2, 3, 4, 5]}
-                    itemId="1"
-                    scheduleId="5"
-                    timeSchedule="10:00"
-                    price="1000"
+                    premiere={item.premiere}
+                    location={item.location}
+                    time={item.time}
+                    itemId={item.id}
+                    scheduleId={item.id}
+                    price={item.price}
                     isAdmin={true}
                   />
                 </div>
