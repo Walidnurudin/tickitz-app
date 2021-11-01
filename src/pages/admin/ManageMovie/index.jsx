@@ -69,7 +69,7 @@ function ManageMovie() {
       console.log(data[0] + ", " + data[1]);
     }
 
-    Dispath(postMovie(formMovie)).then((res) => {
+    Dispath(postMovie(formData)).then((res) => {
       console.log(res);
     });
   };
