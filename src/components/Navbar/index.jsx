@@ -55,24 +55,6 @@ function Navbar({ imageProfile, isAdmin }) {
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item navbar__app--list--item">
                   <Link
-                    className={"nav-link mulish-600 text-black"}
-                    style={{ fontSize: "16px" }}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item navbar__app--list--item">
-                  <Link
-                    className={`nav-link mulish-600 ${linkActive("/")}`}
-                    style={{ fontSize: "16px" }}
-                    to="/"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item navbar__app--list--item">
-                  <Link
                     className={`nav-link mulish-600 ${linkActive("/dashboard")}`}
                     style={{ fontSize: "16px" }}
                     to="/dashboard"
@@ -101,25 +83,7 @@ function Navbar({ imageProfile, isAdmin }) {
               </ul>
             ) : (
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item navbar__app--list--item">
-                  <li className="nav-item navbar__app--list--item">
-                    <Link
-                      className={"nav-link mulish-600 text-black"}
-                      style={{ fontSize: "16px" }}
-                      to="/login"
-                    >
-                      Login
-                    </Link>
-                  </li>
-                  <li className="nav-item navbar__app--list--item">
-                    <Link
-                      className={`nav-link mulish-600 ${linkActive("/dashboard")}`}
-                      style={{ fontSize: "16px" }}
-                      to="/dashboard"
-                    >
-                      Dashboard
-                    </Link>
-                  </li>
+                <li>
                   <Link
                     className={`nav-link mulish-600 ${linkActive("/")}`}
                     style={{ fontSize: "16px" }}

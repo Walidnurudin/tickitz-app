@@ -26,3 +26,31 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
+/* mobile */
+.ticket__component--mobile {
+  padding: 48px 40px 72px 40px;
+}
+
+.ticket__item--mobile {
+}
+
+.ticket__item--mobile--header {
+  background-color: white;
+  padding: 32px 55px 40px 55px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.ticket__item--mobile--content {
+  background-color: white;
+  padding: 65px 45px 32px 45px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.ticket__item--mobile--total {
+  border: 1px solid #dedede;
+  padding: 10px 24px;
+  border-radius: 4px;
+}

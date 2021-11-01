@@ -8,8 +8,52 @@ function Ticket() {
   return (
     <>
       <Navbar />
-      <div className="bg-primary ticket__component">
-        <div className="ticket__wrap">
+      {/* MOBILE */}
+      <div className="ticket__component--mobile d-flex d-md-none justify-content-center bg-primary">
+        <div className="ticket__item--mobile">
+          <div className="ticket__item--mobile--header row">
+            <div className="col-12 text-center">
+              <QRCode value="tes qr code" size={186} />
+            </div>
+          </div>
+          <div className="ticket__item--mobile--content row">
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Movie</span>
+              <p className="mulish-600">Spiderman</p>
+            </div>
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Category</span>
+              <p className="mulish-600">PG-13</p>
+            </div>
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Date</span>
+              <p className="mulish-600">07 Jul</p>
+            </div>
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Time</span>
+              <p className="mulish-600">02:00</p>
+            </div>
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Count</span>
+              <p className="mulish-600">3 pcs</p>
+            </div>
+            <div className="col-6 mb-3">
+              <span className="mulish-600 text-secondary">Seats</span>
+              <p className="mulish-600">C1, C2, C3</p>
+            </div>
+            <div className="col-12">
+              <div className="d-flex justify-content-between ticket__item--mobile--total">
+                <span className="mulish-600">Total</span>
+                <span className="mulish-600">$30.30</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-primary d-none d-md-block ticket__component">
+        <div className="ticket__wrap ">
+          {/* DESKTOP */}
           <h1 className="mulish-700 text-center">Proof of Payment</h1>
 
           <div className="ticket__item">
@@ -77,7 +121,7 @@ function Ticket() {
                 </div>
               </div>
               <div className="col-3 d-flex justify-content-center" style={{ padding: "50px 0px" }}>
-                <QRCode value="tes qr code" size="186" />
+                <QRCode value="tes qr code" size={186} />
               </div>
             </div>
           </div>

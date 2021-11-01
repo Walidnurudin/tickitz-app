@@ -42,18 +42,30 @@ function ScheduleCard({
 
         <div className="d-flex flex-wrap">
           {time.map((itemTime, index) => (
-            <button
-              onClick={() => handleTimeSchedule(itemTime, itemId)}
-              key={index}
-              className={
-                itemId === scheduleId && itemTime === timeSchedule
-                  ? "mulish-600 isActive__time fw-bold btn btn-primary"
-                  : "mulish-600 text-secondary btn btn-outline-primary"
-              }
-              style={{ margin: "8px 12px", fontSize: "13px" }}
-            >
-              {itemTime}
-            </button>
+            <>
+              {isAdmin ? (
+                <button
+                  key={index}
+                  className={"mulish-600 text-secondary btn btn-outline-primary"}
+                  style={{ margin: "8px 12px", fontSize: "13px" }}
+                >
+                  {itemTime}
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleTimeSchedule(itemTime, itemId)}
+                  key={index}
+                  className={
+                    itemId === scheduleId && itemTime === timeSchedule
+                      ? "mulish-600 isActive__time fw-bold btn btn-primary"
+                      : "mulish-600 text-secondary btn btn-outline-primary"
+                  }
+                  style={{ margin: "8px 12px", fontSize: "13px" }}
+                >
+                  {itemTime}
+                </button>
+              )}
+            </>
           ))}
         </div>
 

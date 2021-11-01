@@ -43,7 +43,7 @@ function ManageSchedule() {
       <Navbar isAdmin={true} />
       <div className="bg-light schedule--wrap">
         <div className="container">
-          <h1 className="mulish-700 form__schedule--title">Form movie</h1>
+          <h1 className="mulish-700 form__schedule--title">Form schedule</h1>
 
           <div className="row form__schedule">
             <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
@@ -164,7 +164,7 @@ function ManageSchedule() {
         <div className="data__schedule--wrap">
           <div className="container">
             <div className="d-flex flex-column flex-md-row justify-content-between">
-              <h1 className="mulish-700 data__schedule--title">Data movie</h1>
+              <h1 className="mulish-700 data__schedule--title">Data schedule</h1>
 
               <div className="d-flex align-self-center">
                 <select
@@ -204,7 +204,6 @@ function ManageSchedule() {
                     premiere={item.premiere}
                     location={item.location}
                     time={item.time}
-                    itemId={item.id}
                     scheduleId={item.id}
                     price={item.price}
                     isAdmin={true}

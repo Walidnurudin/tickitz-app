@@ -16,6 +16,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import ManageMovie from "./pages/admin/ManageMovie";
 import ManageSchedule from "./pages/admin/ManageSchedule";
 import Ticket from "./pages/main/Ticket";
+import Register from "./pages/auth/Register";
 
 import PrivateRoute from "./helpers/routes/PrivateRoute";
 import PublicRoute from "./helpers/routes/PublicRoute";
@@ -54,6 +55,7 @@ class App extends Component {
 
               {/* PROJECT */}
               <PublicRoute path="/login" restricted={true} exact component={Login} />
+              <PublicRoute path="/register" restricted={true} exact component={Register} />
 
               {/* user */}
               <PrivateRoute path="/" exact component={Home} />

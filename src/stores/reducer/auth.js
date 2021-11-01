@@ -7,6 +7,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
+    // LOGIN
     case "LOGIN_PENDING":
       return {
         ...state,
@@ -30,6 +31,31 @@ const auth = (state = initialState, action) => {
         isLoading: false,
         isError: true,
         idUser: "",
+        msg: action.payload.response.data.msg
+      };
+    }
+
+    // REGISTER
+    case "REGISTER_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      };
+    case "REGISTER_FULFILLED": {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        idUser: action.payload.data.data.id,
+        msg: action.payload.data.msg
+      };
+    }
+    case "REGISTER_REJECTED": {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
         msg: action.payload.response.data.msg
       };
     }

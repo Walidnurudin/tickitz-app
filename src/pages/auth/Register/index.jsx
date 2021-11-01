@@ -4,28 +4,19 @@ import { loginImage, tickitz1, tickitz2, google, fb } from "../../../assets/img"
 import { connect } from "react-redux";
 import { Input } from "../../../components";
 import Loader from "react-loader-spinner";
-import { login } from "../../../stores/actions/auth";
-import { getUser } from "../../../stores/actions/user";
+import { register } from "../../../stores/actions/auth";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       form: {
+        firstname: "",
+        lastname: "",
         email: "",
         password: ""
       }
     };
-  }
-
-  checkToken = () => {
-    if (localStorage.getItem("token")) {
-      this.props.history.push("/");
-    }
-  };
-
-  componentDidMount() {
-    this.checkToken();
   }
 
   handleChangeForm = (e) => {
@@ -39,13 +30,8 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.form).then((res) => {
-      localStorage.setItem("token", res.value.data.data.token);
-      this.props.getUser().then((res) => {
-        console.log(res.value.data.data[0].role);
-        if (res.value.data.data[0].role === "ADMIN") this.props.history.push("/dashboard");
-        else this.props.history.push("/");
-      });
+    this.props.register(this.state.form).then((res) => {
+      this.props.history.push("/login");
     });
   };
 
@@ -76,19 +62,38 @@ class Login extends Component {
                     <img src={tickitz2} alt="logo" width="130px" />
                   </div>
 
-                  <span className="header__title inter-600 d-none d-md-block">Sign In</span>
+                  <span className="header__title inter-600 d-none d-md-block">
+                    Fill your additional details
+                  </span>
                   <span
                     className="header__title mulish-600 d-block d-md-none"
                     style={{ fontSize: "40px", marginTop: "45px" }}
                   >
-                    Sign In
+                    Fill your additional details
                   </span>
-                  <p className="inter-400 text-secondary d-none d-md-block">
-                    Sign in with your data that you entered during your registration
-                  </p>
                 </div>
 
                 <form onSubmit={this.handleSubmit}>
+                  <div className="row">
+                    <div className="col-6">
+                      <Input
+                        label="First name"
+                        type="text"
+                        name="firstName"
+                        placeholder="Write your first name"
+                        handleChange={this.handleChangeForm}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <Input
+                        label="Last name"
+                        type="text"
+                        name="lastName"
+                        placeholder="Write your last name"
+                        handleChange={this.handleChangeForm}
+                      />
+                    </div>
+                  </div>
                   <Input
                     label="Email"
                     type="text"
@@ -110,7 +115,7 @@ class Login extends Component {
                       <Loader type="Circles" color="#00BFFF" />
                     ) : (
                       <button className="btn btn-primary form__btn" type="submit">
-                        Sign In
+                        Sign Up
                       </button>
                     )}
 
@@ -124,7 +129,8 @@ class Login extends Component {
                   Forgot your password? <a href="#">Reset now</a>
                 </p>
 
-                {/* <span className="line">
+                {/* 
+                <span className="line">
                   <h2>or</h2>
                 </span>
 
@@ -175,8 +181,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  login,
-  getUser
+  register
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

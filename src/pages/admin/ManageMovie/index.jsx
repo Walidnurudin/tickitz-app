@@ -4,7 +4,6 @@ import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { getMovie, postMovie, deleteMovie } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
-import { Modal } from "react-bootstrap";
 
 function ManageMovie() {
   const [queryMovie, setQueryMovie] = useState({
