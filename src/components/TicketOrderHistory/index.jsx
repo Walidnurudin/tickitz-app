@@ -1,24 +1,36 @@
 import React from "react";
 import "./index.css";
-import { cineone21 } from "../../assets/img";
+import { cineone21, hiflix, ebvid } from "../../assets/img";
 
-function TicketOrderHistory() {
+function TicketOrderHistory({ date, time, movieName, premiere, statusUsed }) {
   return (
     <div>
       <div className="ticket__oreder__history">
         <div className="d-flex justify-content-between ticket__oreder__history--top">
           <div>
-            <span className="mulish-400 text-secondary">Tuesday, 07 July 2020 - 04:30pm</span>
-            <h1 className="mulish-600">Spider-Man: Homecoming</h1>
+            <span className="mulish-400 text-secondary">
+              {date} - {time}
+            </span>
+            <h1 className="mulish-600">{movieName}</h1>
           </div>
           <div>
-            <img src={cineone21} alt="logo" width="120px" />
+            <img
+              src={premiere === "cineone21" ? cineone21 : premiere === "hiflix" ? hiflix : ebvid}
+              alt="logo"
+              width="120px"
+            />
           </div>
         </div>
         <hr />
         <div className="d-flex justify-content-between ticket__oreder__history--bottom">
           <div>
-            <button className="btn mulish-700">Ticket in active</button>
+            {statusUsed === "Active" ? (
+              <button className="btn mulish-700">Ticket in active</button>
+            ) : statusUsed === "notActive" ? (
+              <button className="btn btn-secondary mulish-700">Ticket used</button>
+            ) : (
+              <button className="btn btn-warning mulish-700">Ticket pending</button>
+            )}
           </div>
           <div>
             <span className="mulish-400 text-secondary">Show Details</span>

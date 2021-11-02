@@ -3,10 +3,13 @@ import { Link, withRouter, useHistory } from "react-router-dom";
 import { tickitz2, menuIcon, noImage } from "../../assets/img";
 import { Search } from "react-bootstrap-icons";
 import { Modal } from "react-bootstrap";
+import { logout } from "../../stores/actions/auth";
+import { useDispatch } from "react-redux";
 import "./index.css";
 
 function Navbar({ imageProfile, isAdmin }) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
 
@@ -14,8 +17,11 @@ function Navbar({ imageProfile, isAdmin }) {
   const handleShow = () => setShow(true);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    history.push("/login");
+    dispatch(logout()).then((res) => {
+      console.log(res);
+      localStorage.removeItem("token");
+      history.push("/login");
+    });
   };
 
   const linkActive = (path) => {

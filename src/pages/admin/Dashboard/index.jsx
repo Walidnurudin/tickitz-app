@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { Navbar, Footer } from "../../../components";
 import { Line } from "react-chartjs-2";
@@ -87,10 +87,10 @@ function Dashboard() {
     });
   };
 
-  useState(() => {
+  useEffect(() => {
     dispatch(getMovie(queryMovie));
     Dashboard(payloadData);
-  }, [data]);
+  }, [payloadData.movieId]);
 
   return (
     <>

@@ -8,7 +8,7 @@ import Pagination from "react-paginate";
 function ManageMovie() {
   const [queryMovie, setQueryMovie] = useState({
     page: 1,
-    limit: 8,
+    limit: 4,
     search: "",
     month: "",
     sort: "name ASC"
@@ -28,10 +28,10 @@ function ManageMovie() {
   });
 
   const movieState = useSelector((state) => state.movie);
-  const Dispath = useDispatch();
+  const Dispatch = useDispatch();
 
   useEffect(() => {
-    Dispath(getMovie(queryMovie)).then((res) => {
+    Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
     });
   }, [queryMovie]);
@@ -69,7 +69,7 @@ function ManageMovie() {
       console.log(data[0] + ", " + data[1]);
     }
 
-    Dispath(postMovie(formData)).then((res) => {
+    Dispatch(postMovie(formData)).then((res) => {
       console.log(res);
     });
   };
@@ -77,9 +77,9 @@ function ManageMovie() {
   // DELETE MOVIE
   const handleDelete = (data) => {
     if (window.confirm("Are you sure you want to delete this movie ?")) {
-      Dispath(deleteMovie(data)).then((res) => {
+      Dispatch(deleteMovie(data)).then((res) => {
         console.log(res);
-        Dispath(getMovie(queryMovie)).then((res) => {
+        Dispatch(getMovie(queryMovie)).then((res) => {
           console.log(res);
         });
       });
@@ -99,7 +99,7 @@ function ManageMovie() {
       page: selectedPage
     });
 
-    Dispath(getMovie(queryMovie)).then((res) => {
+    Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
     });
   };
@@ -111,7 +111,7 @@ function ManageMovie() {
       search: e.target.value
     });
 
-    Dispath(getMovie(queryMovie)).then((res) => {
+    Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
     });
   };
@@ -123,7 +123,7 @@ function ManageMovie() {
       sort: e.target.value
     });
 
-    Dispath(getMovie(queryMovie)).then((res) => {
+    Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
     });
   };

@@ -8,3 +8,10 @@ export const getSchedule = (data) => {
     )
   };
 };
+
+export const deleteSchedule = (data) => {
+  return {
+    type: "DELETE_SCHEDULE",
+    payload: axios.delete(`/schedule/${data}`)
+  };
+};

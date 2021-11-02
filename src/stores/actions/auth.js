@@ -13,3 +13,10 @@ export const register = (data) => {
     payload: axios.post("auth/register", data)
   };
 };
+
+export const logout = () => {
+  return {
+    type: "LOGOUT",
+    payload: axios.post("auth/logout")
+  };
+};

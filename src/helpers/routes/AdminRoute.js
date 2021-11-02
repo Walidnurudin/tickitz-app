@@ -12,7 +12,7 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && userState.data.role === "ADMIN" ? (
+        isAuthenticated && userState.role === "ADMIN" ? (
           <Component {...props} />
         ) : (
           <Redirect to="/" />

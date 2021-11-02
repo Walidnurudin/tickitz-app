@@ -12,9 +12,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && userState.data.role === "USER" ? (
+        isAuthenticated && userState.role === "USER" ? (
           <Component {...props} />
-        ) : isAuthenticated && userState.data.role === "ADMIN" ? (
+        ) : isAuthenticated && userState.role === "ADMIN" ? (
           <Redirect to="/dashboard" />
         ) : (
           <Redirect to="/login" />

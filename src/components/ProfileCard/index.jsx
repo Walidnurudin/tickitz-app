@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { menuProfileIcon, noImage } from "../../assets/img";
 
-function ProfileCard({ image, firstName, lastName, role }) {
+function ProfileCard({ image, firstName, lastName, role, email, phone }) {
   return (
     <>
       <div className="profile__info mulish-400 text-secondary">
@@ -21,13 +21,15 @@ function ProfileCard({ image, firstName, lastName, role }) {
             {firstName} {lastName}
           </h6>
           <span className="mulish-400">{role}</span>
+
+          <h6 className="mulish-600">{email}</h6>
+
+          <h6 className="mulish-600">{phone || "-"}</h6>
         </div>
 
         <hr />
 
-        <div className="profile__info--point">
-          <h6>Loyalty Points</h6>
-        </div>
+        <div className="profile__info--point">{/* <h6>Loyalty Points</h6> */}</div>
       </div>
     </>
   );

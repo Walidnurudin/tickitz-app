@@ -10,12 +10,21 @@ import {
   TicketOrderHistory
 } from "../../../components";
 import { connect } from "react-redux";
-import { getUserBooking } from "../../../stores/actions/user";
+import {
+  getUserBooking,
+  updateProfile,
+  getUser,
+  updatePassword
+} from "../../../stores/actions/user";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // data ticket
+      data: [],
+
+      // form
       form: {
         firstName: "",
         lastName: "",
@@ -30,12 +39,20 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getUserBooking().then((res) => {
-      console.log(res);
-    });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get("booking/user-id")
+  //     .then((res) => {
+  //       this.setState({
+  //         data: res.data.data
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
+  // NAVIGATION
   handleProfile = () => {
     this.setState({
       isOrderComponent: false
@@ -48,6 +65,7 @@ class Profile extends Component {
     });
   };
 
+  // PROFILE
   handleFormInfo = (e) => {
     this.setState(
       {
@@ -62,6 +80,25 @@ class Profile extends Component {
     );
   };
 
+  handleUpdate = () => {
+    this.props.updateProfile(this.state.form).then((res) => {
+      console.log(res);
+      this.props.getUser().then((res) => {
+        console.log(res);
+
+        this.setState({
+          form: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: ""
+          }
+        });
+      });
+    });
+  };
+
+  // PASSWORD
   handleFormPassword = (e) => {
     this.setState(
       {
@@ -76,8 +113,24 @@ class Profile extends Component {
     );
   };
 
+  handlePassword = () => {
+    this.props.updatePassword(this.state.formPassword).then((res) => {
+      console.log(res);
+      this.props.getUser().then((res) => {
+        console.log(res);
+
+        this.setState({
+          formPassword: {
+            newPassword: "",
+            confirmPassword: ""
+          }
+        });
+      });
+    });
+  };
+
   render() {
-    const { isOrderComponent } = this.state;
+    const { isOrderComponent, data } = this.state;
     const user = this.props.user.data;
     return (
       <>
@@ -92,6 +145,8 @@ class Profile extends Component {
                   firstName={user.firstName}
                   lastName={user.lastName}
                   role={user.role}
+                  email={user.email}
+                  phone={user.phoneNumber}
                 />
               </div>
 
@@ -105,7 +160,26 @@ class Profile extends Component {
                   />
 
                   {isOrderComponent ? (
-                    <TicketOrderHistory />
+                    <>
+                      {data.length > 0 ? (
+                        <>
+                          {data.map((item) => (
+                            <TicketOrderHistory
+                              key={item.id}
+                              date={item.dateBooking}
+                              time={item.timeBooking}
+                              movieName={item.movieId}
+                              premiere="cineone21"
+                              statusUsed={item.statusUsed}
+                            />
+                          ))}
+                        </>
+                      ) : (
+                        <h1 className="mulish-600 text-center text-secondary mt-5">
+                          data not found
+                        </h1>
+                      )}
+                    </>
                   ) : (
                     <>
                       <div className="profile__form--detail">
@@ -155,7 +229,10 @@ class Profile extends Component {
                           </div>
 
                           <div className="col-12 col-md-6 profile__form--detail--item">
-                            <button className="btn btn-primary mulish-700 btn__profile--update">
+                            <button
+                              className="btn btn-primary mulish-700 btn__profile--update"
+                              onClick={() => this.handleUpdate()}
+                            >
                               Update changes
                             </button>
                           </div>
@@ -189,7 +266,10 @@ class Profile extends Component {
                           </div>
 
                           <div className="col-12 col-md-6 profile__form--detail--item">
-                            <button className="btn btn-primary mulish-700 btn__profile--update">
+                            <button
+                              className="btn btn-primary mulish-700 btn__profile--update"
+                              onClick={() => this.handlePassword()}
+                            >
                               Update changes
                             </button>
                           </div>
@@ -213,7 +293,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getUserBooking
+  getUserBooking,
+  updateProfile,
+  updatePassword,
+  getUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
