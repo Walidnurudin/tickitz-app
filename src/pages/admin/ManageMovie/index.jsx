@@ -30,6 +30,22 @@ function ManageMovie() {
   const movieState = useSelector((state) => state.movie);
   const Dispatch = useDispatch();
 
+  const resetForm = () => {
+    setFormMovie({
+      name: "",
+      category: "",
+      releaseDate: "",
+      synopsis: "",
+      cast: "",
+      director: "",
+      durationHour: 0,
+      durationMinute: 0,
+      duration: "",
+      image: null
+    });
+    console.log(formMovie, "babi");
+  };
+
   useEffect(() => {
     Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
@@ -136,6 +152,7 @@ function ManageMovie() {
           handleChangeText={changeText}
           handleChangeFile={changeFile}
           handleSubmit={handleSubmit}
+          handleReset={() => resetForm()}
         />
 
         <div className="data__movie--wrap">

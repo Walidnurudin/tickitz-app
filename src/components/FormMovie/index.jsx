@@ -3,7 +3,7 @@ import "./index.css";
 import { noImage } from "../../assets/img";
 import { Input } from "../../components";
 
-function FormMovie({ handleChangeText, handleChangeFile, handleSubmit }) {
+function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleReset }) {
   return (
     <>
       <div className="container">
@@ -111,7 +111,12 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit }) {
 
           <div className="d-flex justify-content-end">
             <div>
-              <button className="btn btn-outline-primary px-5 mulish-700 me-3">Reset</button>
+              <button
+                className="btn btn-outline-primary px-5 mulish-700 me-3"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
               <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
                 Submit
               </button>

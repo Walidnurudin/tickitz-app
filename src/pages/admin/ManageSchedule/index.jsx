@@ -109,6 +109,18 @@ function ManageSchedule() {
     }
   };
 
+  // FILTER
+  const handleFilterMovie = (e) => {
+    setScheduleParams({
+      ...scheduleParams,
+      [e.target.name]: e.target.value
+    });
+
+    dispatch(getSchedule(scheduleParams)).then((res) => {
+      console.log(res);
+    });
+  };
+
   useEffect(() => {
     dispatch(getSchedule(scheduleParams)).then((res) => {
       console.log(res);
@@ -275,15 +287,18 @@ function ManageSchedule() {
                 <select
                   className="input__sort--data--schedule text-secondary mulish-400"
                   defaultValue=""
+                  name="sort"
+                  onChange={handleFilterMovie}
                 >
                   <option value="">Sort</option>
-                  <option value="jakarta">Jakarta</option>
-                  <option value="bandung">Bandung</option>
-                  <option value="indramayu">Indramayu</option>
+                  <option value="price ASC">price ascending</option>
+                  <option value="price DESC">price descending</option>
                 </select>
                 <select
                   className="input__sort--data--movie text-secondary mulish-400"
                   defaultValue=""
+                  name="location"
+                  onChange={handleFilterMovie}
                 >
                   <option value="">Location</option>
                   <option value="jakarta">Jakarta</option>
@@ -294,11 +309,15 @@ function ManageSchedule() {
                 <select
                   className="input__sort--data--movie text-secondary mulish-400"
                   defaultValue=""
+                  name="movieId"
+                  onChange={handleFilterMovie}
                 >
                   <option value="">Movie</option>
-                  <option value="jakarta">Jakarta</option>
-                  <option value="bandung">Bandung</option>
-                  <option value="indramayu">Indramayu</option>
+                  {movieState.data.map((item) => (
+                    <option value={item.id} key={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
