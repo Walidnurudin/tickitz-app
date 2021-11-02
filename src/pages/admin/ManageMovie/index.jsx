@@ -14,6 +14,7 @@ function ManageMovie() {
     sort: "name ASC"
   });
 
+  // DATA FORM
   const [formMovie, setFormMovie] = useState({
     name: "",
     category: "",
@@ -26,6 +27,8 @@ function ManageMovie() {
     duration: "",
     image: null
   });
+  const [showImage, setShowImage] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const movieState = useSelector((state) => state.movie);
   const Dispatch = useDispatch();
@@ -43,9 +46,12 @@ function ManageMovie() {
       duration: "",
       image: null
     });
-    console.log(formMovie, "babi");
+
+    setShowImage("");
+    setIsUpdate(false);
   };
 
+  // LIFECYCLE
   useEffect(() => {
     Dispatch(getMovie(queryMovie)).then((res) => {
       console.log(res);
@@ -66,6 +72,8 @@ function ManageMovie() {
       ...formMovie,
       [event.target.name]: event.target.files[0]
     });
+
+    setShowImage(URL.createObjectURL(event.target.files[0]));
   };
 
   const handleSubmit = () => {
@@ -103,8 +111,29 @@ function ManageMovie() {
   };
 
   // UPDATE MOVIE
-  const handleUpdate = () => {
-    console.log(window.confirm("Yakin?"));
+  const handleUpdate = (data) => {
+    console.log(data);
+    setFormMovie({
+      id: data.id,
+      name: data.name,
+      category: data.category,
+      releaseDate: data.releaseDate,
+      synopsis: data.synopsis,
+      cast: data.cast,
+      director: data.director,
+      durationHour: data.duration.split(":")[0],
+      durationMinute: data.duration.split(":")[1],
+      duration: "",
+      image: data.image
+    });
+
+    setIsUpdate(true);
+  };
+
+  const handleSubmitUpdate = () => {
+    console.log("handleupdate", formMovie);
+    // axios("movie/idMovie", this.state.form)
+    resetForm();
   };
 
   // PAGINATION
@@ -149,10 +178,23 @@ function ManageMovie() {
       <Navbar isAdmin={true} />
       <div className="bg-light movie--wrap">
         <FormMovie
+          image={showImage}
+          isUpdate={isUpdate}
           handleChangeText={changeText}
           handleChangeFile={changeFile}
           handleSubmit={handleSubmit}
           handleReset={() => resetForm()}
+          handleUpdate={handleSubmitUpdate}
+          // value
+          imageValue={formMovie.image}
+          nameValue={formMovie.name}
+          categoryValue={formMovie.category}
+          directorValue={formMovie.director}
+          castValue={formMovie.cast}
+          releaseDateValue={formMovie.releaseDate}
+          durationHourValue={formMovie.durationHour}
+          durationMinuteValue={formMovie.durationMinute}
+          synopsisValue={formMovie.synopsis}
         />
 
         <div className="data__movie--wrap">
@@ -193,7 +235,7 @@ function ManageMovie() {
                         isAdmin={true}
                         image={item.image}
                         handleDelete={() => handleDelete(item.id)}
-                        handleUpdate={() => handleUpdate()}
+                        handleUpdate={() => handleUpdate(item)}
                       />
                     </div>
                   ))}

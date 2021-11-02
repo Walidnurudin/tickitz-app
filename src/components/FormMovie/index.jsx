@@ -3,7 +3,28 @@ import "./index.css";
 import { noImage } from "../../assets/img";
 import { Input } from "../../components";
 
-function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleReset }) {
+function FormMovie({
+  image,
+  isUpdate,
+
+  // function
+  handleChangeText,
+  handleChangeFile,
+  handleSubmit,
+  handleReset,
+  handleUpdate,
+
+  // props value
+  // imageValue,
+  nameValue,
+  categoryValue,
+  directorValue,
+  castValue,
+  releaseDateValue,
+  durationHourValue,
+  durationMinuteValue,
+  synopsisValue
+}) {
   return (
     <>
       <div className="container">
@@ -12,12 +33,13 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
         <div className="row form__movie">
           <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
             <div className="manage__movie--img">
-              <img src={noImage} alt="spiderman" width="177px" />
+              <img src={image ? image : noImage} alt="spiderman" width="177px" />
               <Input
                 label="Movie Image"
                 name="image"
                 placeholder="Input Movie Image"
                 type="file"
+                // value={imageValue}
                 handleChange={handleChangeFile}
               />
             </div>
@@ -31,6 +53,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                   name="name"
                   placeholder="Input Movie Name"
                   type="text"
+                  value={nameValue}
                   handleChange={handleChangeText}
                 />
               </div>
@@ -40,6 +63,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                   name="category"
                   placeholder="Input Category"
                   type="text"
+                  value={categoryValue}
                   handleChange={handleChangeText}
                 />
               </div>
@@ -49,6 +73,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                   name="director"
                   placeholder="Input Director"
                   type="text"
+                  value={directorValue}
                   handleChange={handleChangeText}
                 />
               </div>
@@ -58,6 +83,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                   name="cast"
                   placeholder="Input Casts"
                   type="text"
+                  value={castValue}
                   handleChange={handleChangeText}
                 />
               </div>
@@ -67,6 +93,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                   name="releaseDate"
                   placeholder="Input Release Date"
                   type="date"
+                  value={releaseDateValue}
                   handleChange={handleChangeText}
                 />
               </div>
@@ -78,6 +105,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                       name="durationHour"
                       placeholder="Input Duration Hour"
                       type="number"
+                      value={durationHourValue}
                       handleChange={handleChangeText}
                     />
                   </div>
@@ -87,6 +115,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                       name="durationMinute"
                       placeholder="Input Duration Minute"
                       type="number"
+                      value={durationMinuteValue}
                       handleChange={handleChangeText}
                     />
                   </div>
@@ -104,6 +133,7 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
                 className="form-control textarea__input mulish-400"
                 name="synopsis"
                 placeholder="Input Synopsis"
+                value={synopsisValue}
                 onChange={handleChangeText}
               />
             </div>
@@ -117,9 +147,15 @@ function FormMovie({ handleChangeText, handleChangeFile, handleSubmit, handleRes
               >
                 Reset
               </button>
-              <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
-                Submit
-              </button>
+              {isUpdate ? (
+                <button className="btn btn-primary px-5 mulish-700" onClick={handleUpdate}>
+                  Update
+                </button>
+              ) : (
+                <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </div>

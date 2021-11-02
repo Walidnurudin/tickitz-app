@@ -35,6 +35,7 @@ some technology used in this project.
 - [React paginate](https://www.npmjs.com/package/react-paginate)
 - [Axios](https://www.npmjs.com/package/axios)
 - [Redux](https://redux.js.org/)
+- [ChartJs](https://www.npmjs.com/package/react-chartjs-2)
 
 <!-- GETTING STARTED -->
 
@@ -74,7 +75,6 @@ touch .env
 
 ```
 REACT_APP_API=yourapi
-
 ```
 
 4. Start the project
