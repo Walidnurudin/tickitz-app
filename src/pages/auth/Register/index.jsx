@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Input } from "../../../components";
 import Loader from "react-loader-spinner";
 import { register } from "../../../stores/actions/auth";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -126,7 +127,7 @@ class Login extends Component {
                 </form>
 
                 <p className="inter-500 text-secondary text-center">
-                  Forgot your password? <a href="#">Reset now</a>
+                  Do you already have an account? <Link to="login">Login</Link>
                 </p>
 
                 {/* 

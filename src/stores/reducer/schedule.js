@@ -38,6 +38,54 @@ const schedule = (state = initialState, action) => {
         pageInfo: {}
       };
 
+    // POST
+    case "POST_SCHEDULE_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: ""
+      };
+    case "POST_SCHEDULE_FULFILLED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        msg: action.payload.data.msg
+      };
+
+    case "POST_SCHEDULE_REJECTED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        msg: action.payload.response.data.msg
+      };
+
+    // UPDATE
+    case "UPDATE_SCHEDULE_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: ""
+      };
+    case "UPDATE_SCHEDULE_FULFILLED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        msg: action.payload.data.msg
+      };
+
+    case "UPDATE_SCHEDULE_REJECTED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        msg: action.payload.response.data.msg
+      };
+
     // DELETE
     case "DELETE_SCHEDULE_PENDING":
       return {

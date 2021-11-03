@@ -6,6 +6,7 @@ import { Input } from "../../../components";
 import Loader from "react-loader-spinner";
 import { login } from "../../../stores/actions/auth";
 import { getUser } from "../../../stores/actions/user";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -121,7 +122,8 @@ class Login extends Component {
                 </form>
 
                 <p className="inter-500 text-secondary text-center">
-                  Forgot your password? <a href="#">Reset now</a>
+                  Dont have an account yet?
+                  <Link to="register"> Sign Up</Link>
                 </p>
 
                 {/* <span className="line">

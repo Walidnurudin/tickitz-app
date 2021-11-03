@@ -1,50 +1,105 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { Navbar, Footer } from "../../../components";
 import { download, printer, tickitz1 } from "../../../assets/img";
 import QRCode from "react-qr-code";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function Ticket() {
+function Ticket(props) {
+  const history = useHistory();
+  const userState = useSelector((state) => state.user);
+
+  const [form, setForm] = useState({
+    dateBooking: props.location.state ? props.location.state.dateBooking : "",
+    id: props.location.state ? props.location.state.id : "",
+    name: props.location.state ? props.location.state.name : "",
+    paymentMethod: props.location.state ? props.location.state.paymentMethod : "",
+    price: props.location.state ? props.location.state.price : "",
+    scheduleId: props.location.state ? props.location.state.scheduleId : "",
+    seat: props.location.state ? props.location.state.seat : "",
+    statusPayment: props.location.state ? props.location.state.statusPayment : "",
+    timeBooking: props.location.state ? props.location.state.timeBooking : "",
+    userId: props.location.state ? props.location.state.userId : ""
+  });
+
+  const checkingData = () => {
+    const {
+      dateBooking,
+      id,
+      name,
+      paymentMethod,
+      price,
+      scheduleId,
+      seat,
+      statusPayment,
+      timeBooking,
+      userId
+    } = form;
+    if (
+      !dateBooking ||
+      !id ||
+      !name ||
+      !paymentMethod ||
+      !price ||
+      !scheduleId ||
+      !seat ||
+      !statusPayment ||
+      !timeBooking ||
+      !userId
+    ) {
+      alert("Select Movie !");
+      history.push("/");
+    }
+  };
+
+  useEffect(() => {
+    checkingData();
+  }, []);
+
   return (
     <>
-      <Navbar />
+      <Navbar image={userState.data.image} />
       {/* MOBILE */}
       <div className="ticket__component--mobile d-flex d-md-none justify-content-center bg-primary">
         <div className="ticket__item--mobile">
           <div className="ticket__item--mobile--header row">
             <div className="col-12 text-center">
-              <QRCode value="tes qr code" size={186} />
+              <QRCode
+                value={`${process.env.REACT_APP_LOCAL}booking/used-ticket/${form.id}`}
+                size={186}
+              />
             </div>
           </div>
           <div className="ticket__item--mobile--content row">
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Movie</span>
-              <p className="mulish-600">Spiderman</p>
+              <p className="mulish-600">{form.name}</p>
             </div>
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Category</span>
-              <p className="mulish-600">PG-13</p>
+              <p className="mulish-600">-</p>
             </div>
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Date</span>
-              <p className="mulish-600">07 Jul</p>
+              <p className="mulish-600">{form.dateBooking}</p>
             </div>
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Time</span>
-              <p className="mulish-600">02:00</p>
+              <p className="mulish-600">{form.timeBooking}</p>
             </div>
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Count</span>
-              <p className="mulish-600">3 pcs</p>
+              <p className="mulish-600">{form.seat.length} pcs</p>
             </div>
             <div className="col-6 mb-3">
               <span className="mulish-600 text-secondary">Seats</span>
-              <p className="mulish-600">C1, C2, C3</p>
+              <p className="mulish-600">{form.seat ? form.seat.join(", ") : ""}</p>
             </div>
             <div className="col-12">
               <div className="d-flex justify-content-between ticket__item--mobile--total">
                 <span className="mulish-600">Total</span>
-                <span className="mulish-600">$30.30</span>
+                <span className="mulish-600">${form.price}</span>
               </div>
             </div>
           </div>
@@ -73,49 +128,49 @@ function Ticket() {
               <div className="col-9" style={{ padding: "32px 56px 43px 56px" }}>
                 <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                   <span className="mulish-400 text-secondary">Movie</span>
-                  <span className="mulish-600">Spider-Man: Homecoming</span>
+                  <span className="mulish-600">{form.name}</span>
                 </div>
 
                 <div className="row">
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Date</span>
-                      <span className="mulish-600">07 July</span>
+                      <span className="mulish-600">{form.dateBooking}</span>
                     </div>
                   </div>
 
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Time</span>
-                      <span className="mulish-600">02:00pm</span>
+                      <span className="mulish-600">{form.timeBooking}</span>
                     </div>
                   </div>
 
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Category</span>
-                      <span className="mulish-600">PG-13</span>
+                      <span className="mulish-600">-</span>
                     </div>
                   </div>
 
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Count</span>
-                      <span className="mulish-600">3 pieces</span>
+                      <span className="mulish-600">{form.seat.length} pieces</span>
                     </div>
                   </div>
 
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Seats</span>
-                      <span className="mulish-600">C1, C2, C3</span>
+                      <span className="mulish-600">{form.seat ? form.seat.join(", ") : ""}</span>
                     </div>
                   </div>
 
                   <div className="col-4">
                     <div className="d-flex flex-column" style={{ marginBottom: "16px" }}>
                       <span className="mulish-400 text-secondary">Price</span>
-                      <span className="mulish-700">$30.00</span>
+                      <span className="mulish-700">${form.price}</span>
                     </div>
                   </div>
                 </div>

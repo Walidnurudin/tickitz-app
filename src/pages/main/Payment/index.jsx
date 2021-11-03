@@ -117,18 +117,11 @@ class Payment extends Component {
   };
 
   componentDidMount() {
-    this.checkToken();
     this.getDataUser();
     this.checkingData();
     this.getMovieById();
     this.getScheduleById();
   }
-
-  checkToken = () => {
-    if (!localStorage.getItem("token")) {
-      this.props.history.push("/login");
-    }
-  };
 
   checkingData = () => {
     const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
@@ -145,7 +138,16 @@ class Payment extends Component {
   };
 
   handlePayYourOrder = () => {
-    const { dataUser, scheduleId, timeSchedule, dateSchedule, seat, paymentMethod } = this.state;
+    const {
+      dataUser,
+      dataMovie,
+      dataSchedule,
+      scheduleId,
+      timeSchedule,
+      dateSchedule,
+      seat,
+      paymentMethod
+    } = this.state;
     console.log("DATA USER ID", dataUser);
     if (!paymentMethod) {
       this.setState({
@@ -170,7 +172,18 @@ class Payment extends Component {
         .then((res) => {
           console.log(res);
           alert("Success booking movie");
-          this.props.history.push("/profile");
+          this.props.history.push("/ticket", {
+            id: res.data.data.id,
+            userId: dataUser.id,
+            name: dataMovie.name,
+            price: seat.length * dataSchedule.price,
+            statusPayment: "success",
+            scheduleId,
+            timeBooking: timeSchedule,
+            dateBooking: dateSchedule,
+            paymentMethod,
+            seat
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -196,13 +209,7 @@ class Payment extends Component {
     } = this.state;
     return (
       <>
-        <Navbar
-          imageProfile={
-            dataUser.image
-              ? `${process.env.REACT_APP_LOCAL}uploads/user/${dataUser.image}`
-              : noImage
-          }
-        />
+        <Navbar imageProfile={dataUser.image} />
         <div className="bg-light">
           {/* <!-- mobile --> */}
           <div className="d-block d-md-none">

@@ -158,13 +158,7 @@ class Order extends Component {
     } = this.state;
     return (
       <>
-        <Navbar
-          imageProfile={
-            dataUser.image
-              ? `${process.env.REACT_APP_LOCAL}uploads/user/${dataUser.image}`
-              : noImage
-          }
-        />
+        <Navbar imageProfile={dataUser.image} />
 
         <section className="bg-light">
           <div className="container">

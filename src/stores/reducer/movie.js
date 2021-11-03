@@ -96,6 +96,32 @@ const movie = (state = initialState, action) => {
       };
     }
 
+    // UPDATE
+    case "UPDATE_MOVIE_PENDING": {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: ""
+      };
+    }
+    case "UPDATE_MOVIE_FULFILLED": {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        msg: action.payload.data.msg
+      };
+    }
+    case "UPDATE_MOVIE_REJECTED": {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        msg: action.payload.response.data.msg
+      };
+    }
+
     // DELETE
     case "DELETE_MOVIE_PENDING": {
       return {

@@ -25,6 +25,13 @@ export const postMovie = (data) => {
   };
 };
 
+export const updateMovie = (id, data) => {
+  return {
+    type: "UPDATE_MOVIE",
+    payload: axios.patch(`/movie/${id}`, data)
+  };
+};
+
 export const deleteMovie = (data) => {
   return {
     type: "DELETE_MOVIE",

@@ -92,6 +92,11 @@ function Dashboard() {
     Dashboard(payloadData);
   }, [payloadData.movieId]);
 
+  useEffect(() => {
+    dispatch(getMovie(queryMovie));
+    Dashboard(payloadData);
+  }, []);
+
   return (
     <>
       <Navbar isAdmin={true} />

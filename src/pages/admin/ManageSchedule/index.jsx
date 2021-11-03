@@ -4,7 +4,12 @@ import { noImage, cineone21, hiflix, ebvid } from "../../../assets/img";
 import { Navbar, Footer, ScheduleCard, Input } from "../../../components";
 import Pagination from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
-import { getSchedule, deleteSchedule } from "../../../stores/actions/schedule";
+import {
+  getSchedule,
+  postSchedule,
+  updateSchedule,
+  deleteSchedule
+} from "../../../stores/actions/schedule";
 import { getMovie } from "../../../stores/actions/movie";
 
 function ManageSchedule() {
@@ -24,27 +29,45 @@ function ManageSchedule() {
 
   const [scheduleParams, setScheduleParams] = useState({
     page: 1,
-    limit: 6,
+    limit: 3,
     location: "",
     movieId: "",
     sort: "price ASC"
   });
 
   // SCHEDULE
+  const [isUpdate, setIsUpdate] = useState(false);
   const [dataPremiere, setDataPremiere] = useState([
     { id: 1, name: "cineone21", image: cineone21 },
     { id: 2, name: "hiflix", image: hiflix },
     { id: 3, name: "ebv.id", image: ebvid }
   ]);
+
+  const [idSchedule, setIdSchedule] = useState("");
   const [form, setForm] = useState({
     movieId: "",
     location: "",
-    price: null,
+    price: 0,
     dateStart: "",
     dateEnd: "",
     premiere: "",
     time: []
   });
+
+  // RESET FORM
+  const resetForm = () => {
+    setForm({
+      movieId: "",
+      location: "",
+      price: null,
+      dateStart: "",
+      dateEnd: "",
+      premiere: "",
+      time: []
+    });
+
+    setIsUpdate(false);
+  };
 
   // TIME
   const [showInputTime, setShowInputTime] = useState(false);
@@ -78,8 +101,16 @@ function ManageSchedule() {
     });
   };
 
+  // POST
   const handleSubmit = () => {
     console.log(form);
+
+    dispatch(postSchedule(form)).then((res) => {
+      console.log(res);
+      dispatch(getSchedule(scheduleParams)).then((res) => {
+        console.log(res);
+      });
+    });
   };
 
   // PAGINATION
@@ -90,10 +121,33 @@ function ManageSchedule() {
       ...scheduleParams,
       page: selectedPage
     });
+  };
 
-    dispatch(getSchedule(scheduleParams)).then((res) => {
-      console.log(res);
+  // UPDATE
+  const handleSetUpdate = (data) => {
+    setIdSchedule(data.id);
+    console.log(data);
+    setForm({
+      movieId: data.movieId,
+      location: data.location,
+      price: data.price,
+      dateStart: data.dateStart,
+      dateEnd: data.dateEnd,
+      premiere: data.premiere,
+      time: data.time
     });
+
+    setIsUpdate(true);
+  };
+
+  const handleUpdateSubmit = () => {
+    console.log(form);
+
+    // dispatch(updateSchedule()).then((res) => {
+    //   dispatch(getSchedule(scheduleParams)).then((res) => {
+    //     console.log(res);
+    //   });
+    // });
   };
 
   // DELETE SCHEDULE
@@ -116,11 +170,12 @@ function ManageSchedule() {
       [e.target.name]: e.target.value
     });
 
-    dispatch(getSchedule(scheduleParams)).then((res) => {
-      console.log(res);
-    });
+    // dispatch(getSchedule(scheduleParams)).then((res) => {
+    //   console.log(res);
+    // });
   };
 
+  // lifecycle
   useEffect(() => {
     dispatch(getSchedule(scheduleParams)).then((res) => {
       console.log(res);
@@ -148,6 +203,8 @@ function ManageSchedule() {
             </div>
 
             <div className="col-12 col-md-9">
+              {/* <input type="date" name="dateStart" value={form.dateStart} onChange={changeText} />
+              <input type="number" name="price" value={form.price} onChange={changeText} /> */}
               <div className="row">
                 <div className="col-6">
                   <label htmlFor="Movie" className="mulish-400 text-secondary">
@@ -156,7 +213,7 @@ function ManageSchedule() {
                   <select
                     className="form-select mulish-400 text-secondary dropdown__manage__schedule"
                     aria-label="Default select example"
-                    defaultValue=""
+                    value={form.movieId}
                     name="movieId"
                     onChange={changeText}
                   >
@@ -175,7 +232,7 @@ function ManageSchedule() {
                   <select
                     className="form-select mulish-400 text-secondary dropdown__manage__schedule"
                     aria-label="Default select example"
-                    defaultValue=""
+                    value={form.location}
                     name="location"
                     onChange={changeText}
                   >
@@ -191,6 +248,7 @@ function ManageSchedule() {
                     name="price"
                     placeholder="Input Price"
                     type="number"
+                    // value={form.price}
                     onChange={changeText}
                   />
                 </div>
@@ -202,11 +260,18 @@ function ManageSchedule() {
                         label="Date Start"
                         name="dateStart"
                         type="date"
+                        // value={form.dateStart}
                         onChange={changeText}
                       />
                     </div>
                     <div className="col-6">
-                      <Input label="Date End" name="dateEnd" type="date" onChange={changeText} />
+                      <Input
+                        label="Date End"
+                        name="dateEnd"
+                        type="date"
+                        // value={form.dateEnd}
+                        onChange={changeText}
+                      />
                     </div>
                   </div>
                 </div>
@@ -268,10 +333,24 @@ function ManageSchedule() {
 
               <div className="d-flex justify-content-end mt-4">
                 <div>
-                  <button className="btn btn-outline-primary px-5 mulish-700 me-3">Reset</button>
-                  <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
-                    Submit
+                  <button
+                    className="btn btn-outline-primary px-5 mulish-700 me-3"
+                    onClick={resetForm}
+                  >
+                    Reset
                   </button>
+                  {isUpdate ? (
+                    <button
+                      className="btn btn-primary px-5 mulish-700"
+                      onClick={handleUpdateSubmit}
+                    >
+                      Update
+                    </button>
+                  ) : (
+                    <button className="btn btn-primary px-5 mulish-700" onClick={handleSubmit}>
+                      Submit
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -337,22 +416,11 @@ function ManageSchedule() {
                         scheduleId={item.id}
                         price={item.price}
                         isAdmin={true}
+                        handleUpdate={() => handleSetUpdate(item)}
                         handleDelete={() => handleDelete(item.id)}
                       />
                     </div>
                   ))}
-                </div>
-                <div className="pagination__data__schedule">
-                  <Pagination
-                    previousLabel={"Previous"}
-                    nextLabel={"Next"}
-                    breakLabel={"..."}
-                    pageCount={scheduleState.pageInfo.totalPage}
-                    onPageChange={handlePagination}
-                    containerClassName={"pagination"}
-                    disabledClassName={"pagination__disabled"}
-                    activeClassName={"pagination__active"}
-                  />
                 </div>
               </>
             ) : (
@@ -364,6 +432,19 @@ function ManageSchedule() {
                 <div style={{ height: "100px" }}></div>
               </>
             )}
+
+            <div className="pagination__data__schedule">
+              <Pagination
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={scheduleState.pageInfo.totalPage}
+                onPageChange={handlePagination}
+                containerClassName={"pagination"}
+                disabledClassName={"pagination__disabled"}
+                activeClassName={"pagination__active"}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Input } from "../../components";
 function FormMovie({
   image,
   isUpdate,
+  isError,
 
   // function
   handleChangeText,
@@ -138,6 +139,8 @@ function FormMovie({
               />
             </div>
           </div>
+
+          {isError && <div className="alert alert-danger">Please complete your data input!</div>}
 
           <div className="d-flex justify-content-end">
             <div>

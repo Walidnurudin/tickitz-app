@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovie, postMovie, deleteMovie } from "../../../stores/actions/movie";
+import { getMovie, postMovie, deleteMovie, updateMovie } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
 
 function ManageMovie() {
@@ -15,6 +15,7 @@ function ManageMovie() {
   });
 
   // DATA FORM
+  const [idMovie, setIdMovie] = useState("");
   const [formMovie, setFormMovie] = useState({
     name: "",
     category: "",
@@ -29,6 +30,7 @@ function ManageMovie() {
   });
   const [showImage, setShowImage] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const movieState = useSelector((state) => state.movie);
   const Dispatch = useDispatch();
@@ -73,10 +75,13 @@ function ManageMovie() {
       [event.target.name]: event.target.files[0]
     });
 
-    setShowImage(URL.createObjectURL(event.target.files[0]));
+    if (event.target.files[0]) {
+      setShowImage(URL.createObjectURL(event.target.files[0]));
+    }
   };
 
   const handleSubmit = () => {
+    // VALIDASI
     console.log(formMovie);
 
     const formData = new FormData();
@@ -96,6 +101,8 @@ function ManageMovie() {
     Dispatch(postMovie(formData)).then((res) => {
       console.log(res);
     });
+
+    resetForm();
   };
 
   // DELETE MOVIE
@@ -112,12 +119,11 @@ function ManageMovie() {
 
   // UPDATE MOVIE
   const handleUpdate = (data) => {
-    console.log(data);
+    setIdMovie(data.id);
     setFormMovie({
-      id: data.id,
       name: data.name,
       category: data.category,
-      releaseDate: data.releaseDate,
+      releaseDate: data.releaseDate.slice(0, 10),
       synopsis: data.synopsis,
       cast: data.cast,
       director: data.director,
@@ -132,7 +138,28 @@ function ManageMovie() {
 
   const handleSubmitUpdate = () => {
     console.log("handleupdate", formMovie);
-    // axios("movie/idMovie", this.state.form)
+
+    const formData = new FormData();
+    for (const data in formMovie) {
+      formData.append(data, formMovie[data]);
+    }
+
+    // UNTUK MENGECEK DATA DI DALAM FORMDATA
+    for (const data of formData.entries()) {
+      // [
+      //   [property, value],
+      //   [],
+      // ]
+      console.log(data[0] + ", " + data[1]);
+    }
+
+    Dispatch(updateMovie(idMovie, formData)).then((res) => {
+      console.log(res);
+      Dispatch(getMovie(queryMovie)).then((res) => {
+        console.log(res);
+      });
+    });
+
     resetForm();
   };
 
@@ -180,6 +207,7 @@ function ManageMovie() {
         <FormMovie
           image={showImage}
           isUpdate={isUpdate}
+          isError={isError}
           handleChangeText={changeText}
           handleChangeFile={changeFile}
           handleSubmit={handleSubmit}
@@ -213,7 +241,7 @@ function ManageMovie() {
                   <option value="name DESC">name descending</option>
                 </select>
                 <input
-                  placeholder="Seatch movie name ..."
+                  placeholder="Search movie name ..."
                   type="text"
                   className="input__movie--data--movie mulish-400"
                   onChange={handleSearch}

@@ -9,6 +9,20 @@ export const getSchedule = (data) => {
   };
 };
 
+export const postSchedule = (data) => {
+  return {
+    type: "POST_SCHEDULE",
+    payload: axios.post("/schedule", data)
+  };
+};
+
+export const updateSchedule = (id, data) => {
+  return {
+    type: "UPDATE_SCHEDULE",
+    payload: axios.patch(`/schedule/${id}`, data)
+  };
+};
+
 export const deleteSchedule = (data) => {
   return {
     type: "DELETE_SCHEDULE",
