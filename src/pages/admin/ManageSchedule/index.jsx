@@ -59,7 +59,7 @@ function ManageSchedule() {
     setForm({
       movieId: "",
       location: "",
-      price: null,
+      price: "",
       dateStart: "",
       dateEnd: "",
       premiere: "",
@@ -103,14 +103,20 @@ function ManageSchedule() {
 
   // POST
   const handleSubmit = () => {
-    console.log(form);
+    const newData = {
+      ...form,
+      time: form.item.join()
+    };
 
-    dispatch(postSchedule(form)).then((res) => {
+    console.log(newData);
+    dispatch(postSchedule(newData)).then((res) => {
       console.log(res);
       dispatch(getSchedule(scheduleParams)).then((res) => {
         console.log(res);
       });
     });
+
+    resetForm();
   };
 
   // PAGINATION
@@ -203,8 +209,6 @@ function ManageSchedule() {
             </div>
 
             <div className="col-12 col-md-9">
-              {/* <input type="date" name="dateStart" value={form.dateStart} onChange={changeText} />
-              <input type="number" name="price" value={form.price} onChange={changeText} /> */}
               <div className="row">
                 <div className="col-6">
                   <label htmlFor="Movie" className="mulish-400 text-secondary">
@@ -243,12 +247,21 @@ function ManageSchedule() {
                   </select>
                 </div>
                 <div className="col-6">
-                  <Input
+                  {/* <Input
                     label="Price"
                     name="price"
                     placeholder="Input Price"
                     type="number"
                     // value={form.price}
+                    onChange={changeText}
+                  /> */}
+                  <label className="mulish-400 text-secondary">Price</label>
+                  <input
+                    type="number"
+                    placeholder="Input price"
+                    name="price"
+                    value={form.price}
+                    className="form-control mulish-400 form__input"
                     onChange={changeText}
                   />
                 </div>
@@ -256,20 +269,36 @@ function ManageSchedule() {
                 <div className="col-6">
                   <div className="row">
                     <div className="col-6">
-                      <Input
+                      {/* <Input
                         label="Date Start"
                         name="dateStart"
                         type="date"
                         // value={form.dateStart}
                         onChange={changeText}
+                      /> */}
+                      <label className="mulish-400 text-secondary">Date start</label>
+                      <input
+                        type="date"
+                        name="dateStart"
+                        className="form-control mulish-400 form__input"
+                        value={form.dateStart}
+                        onChange={changeText}
                       />
                     </div>
                     <div className="col-6">
-                      <Input
+                      {/* <Input
                         label="Date End"
                         name="dateEnd"
                         type="date"
                         // value={form.dateEnd}
+                        onChange={changeText}
+                      /> */}
+                      <label className="mulish-400 text-secondary">Date End</label>
+                      <input
+                        type="date"
+                        name="dateEnd"
+                        className="form-control mulish-400 form__input"
+                        value={form.dateEnd}
                         onChange={changeText}
                       />
                     </div>

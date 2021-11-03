@@ -39,18 +39,18 @@ class Profile extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   axios
-  //     .get("booking/user-id")
-  //     .then((res) => {
-  //       this.setState({
-  //         data: res.data.data
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  componentDidMount() {
+    axios
+      .get("booking/user-id")
+      .then((res) => {
+        this.setState({
+          data: res.data.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // NAVIGATION
   handleProfile = () => {
