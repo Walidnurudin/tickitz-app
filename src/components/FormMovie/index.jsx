@@ -7,6 +7,7 @@ function FormMovie({
   image,
   isUpdate,
   isError,
+  isSuccess,
 
   // function
   handleChangeText,
@@ -141,6 +142,7 @@ function FormMovie({
           </div>
 
           {isError && <div className="alert alert-danger">Please complete your data input!</div>}
+          {isSuccess && <div className="alert alert-success">Success create data movie!</div>}
 
           <div className="d-flex justify-content-end">
             <div>

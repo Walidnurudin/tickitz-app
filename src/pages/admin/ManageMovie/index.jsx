@@ -3,7 +3,13 @@ import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getMovie, postMovie, deleteMovie, updateMovie } from "../../../stores/actions/movie";
+import {
+  getMovie,
+  postMovie,
+  deleteMovie,
+  updateMovie,
+  errorFalse
+} from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
 
 function ManageMovie() {
@@ -31,7 +37,7 @@ function ManageMovie() {
   });
   const [showImage, setShowImage] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const history = useHistory();
   const movieState = useSelector((state) => state.movie);
@@ -101,11 +107,16 @@ function ManageMovie() {
     }
 
     Dispatch(postMovie(formData)).then((res) => {
-      console.log(res);
-      alert("Success create movie");
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 3000);
     });
 
     resetForm();
+    setTimeout(() => {
+      Dispatch(errorFalse());
+    }, 3000);
   };
 
   // DELETE MOVIE
@@ -216,7 +227,8 @@ function ManageMovie() {
         <FormMovie
           image={showImage}
           isUpdate={isUpdate}
-          isError={isError}
+          isError={movieState.isError}
+          isSuccess={isSuccess}
           handleChangeText={changeText}
           handleChangeFile={changeFile}
           handleSubmit={handleSubmit}

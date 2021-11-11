@@ -38,3 +38,10 @@ export const deleteMovie = (data) => {
     payload: axios.delete(`/movie/${data}`)
   };
 };
+
+// HELPER
+export const errorFalse = () => {
+  return {
+    type: "ERROR_FALSE"
+  };
+};

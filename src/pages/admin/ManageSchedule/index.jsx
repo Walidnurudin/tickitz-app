@@ -46,6 +46,9 @@ function ManageSchedule() {
     { id: 3, name: "ebv.id", image: ebvid }
   ]);
 
+  const [isError, setIsError] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(true);
+
   const [idSchedule, setIdSchedule] = useState("");
   const [form, setForm] = useState({
     movieId: "",
@@ -364,6 +367,11 @@ function ManageSchedule() {
                   </div>
                 </div>
               </div>
+
+              {isError && (
+                <div className="alert alert-danger">Please complete your data input!</div>
+              )}
+              {isSuccess && <div className="alert alert-success">Success create data movie!</div>}
 
               <div className="d-flex justify-content-end mt-4">
                 <div>

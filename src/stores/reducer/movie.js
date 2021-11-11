@@ -9,6 +9,14 @@ const initialState = {
 
 const movie = (state = initialState, action) => {
   switch (action.type) {
+    // HELPER
+    case "ERROR_FALSE": {
+      return {
+        ...state,
+        isError: false
+      };
+    }
+
     // DASHBOARD
     case "GET_DASHBOARD_PENDING": {
       return {
