@@ -52,6 +52,17 @@ class Profile extends Component {
       });
   }
 
+  resetForm = () => {
+    this.setState({
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: ""
+      }
+    });
+  };
+
   // NAVIGATION
   handleProfile = () => {
     this.setState({
@@ -85,16 +96,9 @@ class Profile extends Component {
       console.log(res);
       this.props.getUser().then((res) => {
         console.log(res);
-
-        this.setState({
-          form: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phoneNumber: ""
-          }
-        });
       });
+
+      this.resetForm();
     });
   };
 

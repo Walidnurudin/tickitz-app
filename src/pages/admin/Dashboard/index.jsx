@@ -3,6 +3,7 @@ import "./index.css";
 import { Navbar, Footer } from "../../../components";
 import { Line } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getDashboard, getMovie } from "../../../stores/actions/movie";
 
 function Dashboard() {
@@ -41,6 +42,7 @@ function Dashboard() {
     }
   };
 
+  const history = useHistory();
   const movie = useSelector((state) => state.movie);
   const dispatch = useDispatch();
 
@@ -66,6 +68,10 @@ function Dashboard() {
   };
 
   const Dashboard = (dataParams) => {
+    history.push(
+      `/dashboard?movieId=${dataParams.movieId}&location=${dataParams.location}&premiere=${dataParams.premiere}`
+    );
+
     dispatch(getDashboard(dataParams)).then((res) => {
       let newData = {
         ...data,
@@ -87,10 +93,10 @@ function Dashboard() {
     });
   };
 
-  useEffect(() => {
-    dispatch(getMovie(queryMovie));
-    Dashboard(payloadData);
-  }, [payloadData.movieId]);
+  // useEffect(() => {
+  //   dispatch(getMovie(queryMovie));
+  //   Dashboard(payloadData);
+  // }, [payloadData.movieId]);
 
   useEffect(() => {
     dispatch(getMovie(queryMovie));
@@ -136,7 +142,7 @@ function Dashboard() {
                     className="form-select mulish-400 dropdown__dashboard"
                     aria-label="Default select example"
                     defaultValue=""
-                    name="location"
+                    name="premiere"
                     onChange={changeText}
                   >
                     <option value="">Select Premiere</option>
@@ -149,7 +155,7 @@ function Dashboard() {
                     className="form-select mulish-400 dropdown__dashboard"
                     aria-label="Default select example"
                     defaultValue=""
-                    name="premiere"
+                    name="location"
                     onChange={changeText}
                   >
                     <option value="">Select Location</option>

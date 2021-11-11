@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getMovie, postMovie, deleteMovie, updateMovie } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
 
@@ -32,6 +33,7 @@ function ManageMovie() {
   const [isUpdate, setIsUpdate] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const history = useHistory();
   const movieState = useSelector((state) => state.movie);
   const Dispatch = useDispatch();
 
@@ -100,6 +102,7 @@ function ManageMovie() {
 
     Dispatch(postMovie(formData)).then((res) => {
       console.log(res);
+      alert("Success create movie");
     });
 
     resetForm();
@@ -172,7 +175,9 @@ function ManageMovie() {
     });
 
     Dispatch(getMovie(queryMovie)).then((res) => {
-      console.log(res);
+      history.push(
+        `/manage-movie?page=${selectedPage}&limit=${queryMovie.limit}&search=${queryMovie.search}&month=${queryMovie.month}&sort=${queryMovie.sort}`
+      );
     });
   };
 
@@ -184,7 +189,9 @@ function ManageMovie() {
     });
 
     Dispatch(getMovie(queryMovie)).then((res) => {
-      console.log(res);
+      history.push(
+        `/manage-movie?page=${queryMovie.page}&limit=${queryMovie.limit}&search=${e.target.value}&month=${queryMovie.month}&sort=${queryMovie.sort}`
+      );
     });
   };
 
@@ -196,7 +203,9 @@ function ManageMovie() {
     });
 
     Dispatch(getMovie(queryMovie)).then((res) => {
-      console.log(res);
+      history.push(
+        `/manage-movie?page=${queryMovie.page}&limit=${queryMovie.limit}&search=${queryMovie.search}&month=${queryMovie.month}&sort=${e.target.value}`
+      );
     });
   };
 

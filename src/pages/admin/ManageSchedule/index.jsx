@@ -4,6 +4,7 @@ import { noImage, cineone21, hiflix, ebvid } from "../../../assets/img";
 import { Navbar, Footer, ScheduleCard, Input } from "../../../components";
 import Pagination from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   getSchedule,
   postSchedule,
@@ -17,6 +18,8 @@ function ManageSchedule() {
   const scheduleState = useSelector((state) => state.schedule);
   const movieState = useSelector((state) => state.movie);
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   // PARAMS
   const [queryMovie, setQueryMovie] = useState({
@@ -184,7 +187,9 @@ function ManageSchedule() {
   // lifecycle
   useEffect(() => {
     dispatch(getSchedule(scheduleParams)).then((res) => {
-      console.log(res);
+      history.push(
+        `/manage-schedule?page=${scheduleParams.page}&limit=${scheduleParams.limit}&searchLocation=${scheduleParams.location}&searchMovieId=${scheduleParams.movieId}&sort=${scheduleParams.sort}`
+      );
     });
   }, [scheduleParams]);
 
