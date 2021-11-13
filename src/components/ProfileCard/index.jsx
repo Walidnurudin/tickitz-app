@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { menuProfileIcon, noImage } from "../../assets/img";
 
-function ProfileCard({ image, firstName, lastName, role, email, phone }) {
+function ProfileCard({ image, firstName, lastName, role, email, phone, onClick }) {
   return (
     <>
       <div className="profile__info mulish-400 text-secondary">
@@ -16,6 +16,7 @@ function ProfileCard({ image, firstName, lastName, role, email, phone }) {
             src={image ? `${process.env.REACT_APP_LOCAL}uploads/user/${image}` : noImage}
             alt="profile"
             width="136px"
+            onClick={onClick}
           />
           <h6 className="mulish-600">
             {firstName} {lastName}

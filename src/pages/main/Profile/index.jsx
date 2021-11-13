@@ -26,10 +26,13 @@ class Profile extends Component {
 
       // form
       form: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: ""
+        firstName: props.user.data.firstName,
+        lastName: props.user.data.lastName,
+        email: props.user.data.email,
+        phoneNumber: props.user.data.phoneNumber
+      },
+      formImage: {
+        image: ""
       },
       formPassword: {
         newPassword: "",
@@ -98,9 +101,54 @@ class Profile extends Component {
         console.log(res);
       });
 
-      this.resetForm();
+      // this.resetForm();
     });
   };
+
+  // UPDATE IMAGE
+  onChangeFile(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const file = event.target.files[0];
+    this.setState(
+      {
+        formImage: {
+          image: file
+        }
+      },
+      () => {
+        console.log(this.state.formImage);
+        if (this.state.formImage.image === null || !this.state.formImage.image) {
+          // notifError("Masukan gambar");
+        } else {
+          const formData = new FormData();
+          for (const data in this.state.formImage) {
+            formData.append(data, this.state.formImage[data]);
+          }
+
+          // UNTUK MENGECEK DATA DI DALAM FORMDATA
+          for (const data of formData.entries()) {
+            // [
+            //   [property, value],
+            //   [],
+            // ]
+            console.log(data[0] + ", " + data[1]);
+          }
+
+          // dispatch(updateUserImage(formData))
+          //   .then((res) => {
+          //     getUserProfile();
+          //     notifSuccess("Berhasil merubah gambar");
+          //   })
+          //   .catch((err) => {
+          //     if (userState.isError) {
+          //       notifError(userState.message);
+          //     }
+          //   });
+        }
+      }
+    );
+  }
 
   // PASSWORD
   handleFormPassword = (e) => {
@@ -134,7 +182,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isOrderComponent, data } = this.state;
+    const { isOrderComponent, data, form } = this.state;
     const user = this.props.user.data;
     return (
       <>
@@ -151,6 +199,16 @@ class Profile extends Component {
                   role={user.role}
                   email={user.email}
                   phone={user.phoneNumber}
+                  onClick={() => {
+                    this.upload.click();
+                  }}
+                />
+
+                <input
+                  type="file"
+                  ref={(ref) => (this.upload = ref)}
+                  style={{ display: "none" }}
+                  onChange={(e) => this.onChangeFile(e)}
                 />
               </div>
 
@@ -199,6 +257,7 @@ class Profile extends Component {
                               name="firstName"
                               placeholder="First Name"
                               handleChange={this.handleFormInfo}
+                              value={form.firstName}
                             />
                           </div>
 
@@ -209,6 +268,7 @@ class Profile extends Component {
                               name="lastName"
                               placeholder="Last Name"
                               handleChange={this.handleFormInfo}
+                              value={form.lastName}
                             />
                           </div>
 
@@ -219,6 +279,7 @@ class Profile extends Component {
                               name="email"
                               placeholder="email@domain.com"
                               handleChange={this.handleFormInfo}
+                              value={form.email}
                             />
                           </div>
 
@@ -229,6 +290,7 @@ class Profile extends Component {
                               name="phoneNumber"
                               placeholder="phone number"
                               handleChange={this.handleFormInfo}
+                              value={form.phoneNumber}
                             />
                           </div>
 
