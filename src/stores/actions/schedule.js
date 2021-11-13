@@ -29,3 +29,10 @@ export const deleteSchedule = (data) => {
     payload: axios.delete(`/schedule/${data}`)
   };
 };
+
+// HELPER
+export const errorFalse = () => {
+  return {
+    type: "ERROR_FALSE"
+  };
+};

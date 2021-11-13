@@ -8,6 +8,14 @@ const initialState = {
 
 const schedule = (state = initialState, action) => {
   switch (action.type) {
+    // HELPER
+    case "ERROR_FALSE": {
+      return {
+        ...state,
+        isError: false
+      };
+    }
+
     // GET
     case "GET_SCHEDULE_PENDING":
       return {

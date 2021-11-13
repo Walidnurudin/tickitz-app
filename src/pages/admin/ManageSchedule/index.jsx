@@ -46,8 +46,10 @@ function ManageSchedule() {
     { id: 3, name: "ebv.id", image: ebvid }
   ]);
 
-  const [isError, setIsError] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(true);
+  // ERROR HANDLING
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const [idSchedule, setIdSchedule] = useState("");
   const [form, setForm] = useState({
@@ -111,16 +113,27 @@ function ManageSchedule() {
   const handleSubmit = () => {
     const newData = {
       ...form,
-      time: form.item.join()
+      time: form.time.join(", ")
     };
 
-    console.log(newData);
-    dispatch(postSchedule(newData)).then((res) => {
-      console.log(res);
-      dispatch(getSchedule(scheduleParams)).then((res) => {
-        console.log(res);
+    dispatch(postSchedule(newData))
+      .then((res) => {
+        setIsSuccess(true);
+        setMsg("Success create schedule!");
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+        dispatch(getSchedule(scheduleParams)).then((res) => {
+          console.log(res);
+        });
+      })
+      .catch((err) => {
+        setIsError(true);
+        setMsg("please fill in all data!");
+        setTimeout(() => {
+          setIsError(false);
+        }, 3000);
       });
-    });
 
     resetForm();
   };
@@ -368,10 +381,13 @@ function ManageSchedule() {
                 </div>
               </div>
 
-              {isError && (
-                <div className="alert alert-danger">Please complete your data input!</div>
+              {isError ? (
+                <div className="alert alert-danger">{msg}</div>
+              ) : isSuccess ? (
+                <div className="alert alert-success">{msg}</div>
+              ) : (
+                <div></div>
               )}
-              {isSuccess && <div className="alert alert-success">Success create data movie!</div>}
 
               <div className="d-flex justify-content-end mt-4">
                 <div>
