@@ -15,7 +15,10 @@
 }
 
 .navbar__profile {
+  border-radius: 100%;
+  object-fit: cover;
   width: 56px;
+  height: 56px;
 }
 
 @media (max-width: 768px) {

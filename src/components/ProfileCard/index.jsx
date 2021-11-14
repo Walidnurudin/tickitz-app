@@ -2,7 +2,18 @@ import React from "react";
 import "./index.css";
 import { menuProfileIcon, noImage } from "../../assets/img";
 
-function ProfileCard({ image, firstName, lastName, role, email, phone, onClick }) {
+function ProfileCard({
+  image,
+  firstName,
+  lastName,
+  role,
+  email,
+  phone,
+  isError,
+  isSuccess,
+  msg,
+  onClick
+}) {
   return (
     <>
       <div className="profile__info mulish-400 text-secondary">
@@ -15,15 +26,23 @@ function ProfileCard({ image, firstName, lastName, role, email, phone, onClick }
           <img
             src={image ? `${process.env.REACT_APP_LOCAL}uploads/user/${image}` : noImage}
             alt="profile"
-            width="136px"
             onClick={onClick}
           />
+
+          {isError ? (
+            <div className="alert alert-danger mt-3">{msg}</div>
+          ) : isSuccess ? (
+            <div className="alert alert-success mt-3">{msg}</div>
+          ) : (
+            <div></div>
+          )}
+
           <h6 className="mulish-600">
             {firstName} {lastName}
           </h6>
           <span className="mulish-400">{role}</span>
 
-          <h6 className="mulish-600">{email}</h6>
+          <p className="mulish-600">{email}</p>
 
           <h6 className="mulish-600">{phone || "-"}</h6>
         </div>

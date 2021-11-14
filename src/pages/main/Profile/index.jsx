@@ -14,13 +14,19 @@ import {
   getUserBooking,
   updateProfile,
   getUser,
-  updatePassword
+  updatePassword,
+  updateImage
 } from "../../../stores/actions/user";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // handling error
+      isError: false,
+      isSuccess: false,
+      msg: "",
+
       // data ticket
       data: [],
 
@@ -135,16 +141,35 @@ class Profile extends Component {
             console.log(data[0] + ", " + data[1]);
           }
 
-          // dispatch(updateUserImage(formData))
-          //   .then((res) => {
-          //     getUserProfile();
-          //     notifSuccess("Berhasil merubah gambar");
-          //   })
-          //   .catch((err) => {
-          //     if (userState.isError) {
-          //       notifError(userState.message);
-          //     }
-          //   });
+          this.props
+            .updateImage(formData)
+            .then((res) => {
+              this.props.getUser();
+              this.setState({
+                isSuccess: true,
+                msg: "Success update image"
+              });
+
+              setTimeout(() => {
+                this.setState({
+                  isSuccess: false,
+                  msg: ""
+                });
+              }, 3000);
+            })
+            .catch((err) => {
+              this.setState({
+                isError: true,
+                msg: this.props.user.msg
+              });
+
+              setTimeout(() => {
+                this.setState({
+                  isError: false,
+                  msg: ""
+                });
+              }, 3000);
+            });
         }
       }
     );
@@ -182,7 +207,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isOrderComponent, data, form } = this.state;
+    const { isOrderComponent, data, form, isError, isSuccess, msg } = this.state;
     const user = this.props.user.data;
     return (
       <>
@@ -193,6 +218,9 @@ class Profile extends Component {
               {/* INFO */}
               <div className="col-12 col-md-3 profile__page">
                 <ProfileCard
+                  isError={isError}
+                  isSuccess={isSuccess}
+                  msg={msg}
                   image={user.image}
                   firstName={user.firstName}
                   lastName={user.lastName}
@@ -362,7 +390,8 @@ const mapDispatchToProps = {
   getUserBooking,
   updateProfile,
   updatePassword,
-  getUser
+  getUser,
+  updateImage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
