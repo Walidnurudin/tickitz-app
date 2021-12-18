@@ -12,12 +12,14 @@ function MovieCard({ image, name, category, isAdmin, handleDetail, handleUpdate,
           width="160px"
         />
         <div>
-          <span className="mulish-700" style={{ margin: "24px 0px 10px 0px", fontSize: "18px" }}>
-            {name}
-          </span>
-          <span className="text-secondary" style={{ fontSize: "12px", marginBottom: "40px" }}>
-            {category}
-          </span>
+          <div style={{ width: "160px" }}>
+            <p className="mulish-700" style={{ margin: "24px 0px 10px 0px", fontSize: "18px" }}>
+              {name}
+            </p>
+            <p className="text-secondary" style={{ fontSize: "12px", marginBottom: "40px" }}>
+              {category}
+            </p>
+          </div>
 
           {isAdmin ? (
             <>

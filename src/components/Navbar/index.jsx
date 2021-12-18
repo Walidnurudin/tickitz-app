@@ -18,7 +18,6 @@ function Navbar({ imageProfile, isAdmin }) {
 
   const handleLogout = () => {
     dispatch(logout()).then((res) => {
-      console.log(res);
       localStorage.removeItem("token");
       history.push("/login");
     });
@@ -98,7 +97,7 @@ function Navbar({ imageProfile, isAdmin }) {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item navbar__app--list--item">
+                {/* <li className="nav-item navbar__app--list--item">
                   <a
                     className={`nav-link mulish-600 ${linkActive("/payment")}`}
                     style={{ fontSize: "16px" }}
@@ -106,7 +105,7 @@ function Navbar({ imageProfile, isAdmin }) {
                   >
                     Payment
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item navbar__app--list--item">
                   <Link
                     className={`nav-link mulish-600 ${linkActive("/profile")}`}
@@ -120,7 +119,7 @@ function Navbar({ imageProfile, isAdmin }) {
             )}
 
             <div className="d-flex flex-column flex-md-row">
-              <div className="nav-item navbar__app--list--item dropdown">
+              {/* <div className="nav-item navbar__app--list--item dropdown">
                 <a
                   className="nav-link dropdown-toggle mulish-600 text-black"
                   style={{ fontSize: "16px" }}
@@ -149,7 +148,7 @@ function Navbar({ imageProfile, isAdmin }) {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               <input
                 className="form-control me-2 navbar__input text-secondary mulish-600"
                 type="search"

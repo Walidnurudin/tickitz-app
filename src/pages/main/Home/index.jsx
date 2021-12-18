@@ -15,32 +15,36 @@ class Home extends Component {
       limit: 0,
       search: "",
       sort: "name ASC",
-      pageInfo: {}
+      pageInfo: {},
+
+      // BY MONTH
+      getDataMonth: [],
+      dataMonth: [
+        { label: "September", value: 9 },
+        { label: "Ocktober", value: 10 },
+        { label: "November", value: 11 },
+        { label: "December", value: 12 },
+        { label: "January", value: 1 },
+        { label: "February", value: 2 },
+        { label: "March", value: 3 },
+        { label: "April", value: 4 },
+        { label: "May", value: 5 },
+        { label: "June", value: 6 },
+        { label: "July", value: 7 },
+        { label: "August", value: 8 }
+      ],
+      month: { label: "September", value: 9 }
     };
   }
 
-  checkToken = () => {
-    if (!localStorage.getItem("token")) {
-      this.props.history.push("/login");
-    }
-  };
-
   componentDidMount() {
-    this.checkToken();
-    // this.getDataUser();
     this.getDataMovie();
   }
-
-  // getDataUser = () => {
-  //   this.props.getUser().then((res) => {
-  //     console.log(res);
-  //   });
-  // };
 
   getDataMovie = () => {
     axios
       .get(
-        `/movie?page=${this.state.page}&limit=${this.state.limit}&search=${this.state.search}&sort=${this.state.sort}`
+        `/movie?page=${this.state.page}&limit=${this.state.limit}&search=${this.state.search}&month=&sort=${this.state.sort}`
       )
       .then((res) => {
         this.setState({
@@ -51,12 +55,29 @@ class Home extends Component {
       .catch((err) => console.log(err));
   };
 
+  handleMonth = (data) => {
+    this.setState({
+      month: data
+    });
+
+    axios
+      .get(`/movie?page=&limit=&search=&month=${data.value}&sort=name ASC`)
+      .then((res) => {
+        this.setState({
+          getDataMonth: res.data.data
+        });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   handleDetail = (id) => {
     this.props.history.push(`/movie-detail/${id}`);
   };
 
   render() {
-    const { data } = this.state;
+    const { data, getDataMonth, dataMonth, month } = this.state;
     return (
       <>
         <Navbar imageProfile={this.props.user.data.image} />
@@ -123,30 +144,39 @@ class Home extends Component {
             </div>
 
             <div className="up__coming--month">
-              <button className="btn btn-primary mulish-700">September</button>
-              <button className="btn btn-outline-primary mulish-700">October</button>
-              <button className="btn btn-outline-primary mulish-700">November</button>
-              <button className="btn btn-outline-primary mulish-700">December</button>
-              <button className="btn btn-outline-primary mulish-700">January</button>
-              <button className="btn btn-outline-primary mulish-700">February</button>
-              <button className="btn btn-outline-primary mulish-700">March</button>
-              <button className="btn btn-outline-primary mulish-700">April</button>
-              <button className="btn btn-outline-primary mulish-700">May</button>
-              <button className="btn btn-outline-primary mulish-700">June</button>
-              <button className="btn btn-outline-primary mulish-700">July</button>
-              <button className="btn btn-outline-primary mulish-700">August</button>
+              {dataMonth.map((item) => (
+                <button
+                  className={`btn ${
+                    month.value === item.value ? "btn-primary" : "btn-outline-primary"
+                  }  mulish-700`}
+                  key={item.value}
+                  onClick={() => this.handleMonth(item)}
+                >
+                  {item.label}
+                </button>
+              ))}
             </div>
 
             <div className="up__coming--movie">
-              {data.map((item) => (
-                <MovieCard
-                  key={item.id}
-                  name={item.name}
-                  image={item.image}
-                  category={item.category}
-                  handleDetail={() => this.handleDetail(item.id)}
-                />
-              ))}
+              {getDataMonth.length > 0 ? (
+                <>
+                  {getDataMonth.map((item) => (
+                    <MovieCard
+                      key={item.id}
+                      name={item.name}
+                      image={item.image}
+                      category={item.category}
+                      handleDetail={() => this.handleDetail(item.id)}
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <p className="text-center mulish-700">
+                    Movie upcoming by month {month.label} not found!
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>

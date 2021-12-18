@@ -43,23 +43,23 @@
   border-radius: 8px;
 }
 
-.now__showing--img div {
+/* .now__showing--img div {
   display: none;
   width: 160px;
   text-align: center;
-}
+} */
 
-.now__showing--img:hover {
+/* .now__showing--img {
   cursor: pointer;
   background-color: white;
   position: absolute;
   box-shadow: 0px 8px 30px rgba(186, 186, 186, 0.25);
   border-radius: 8px;
   border: 2px solid #dedede;
-  /* box-sizing: border-box; */
-}
+} */
 
-.now__showing--img:hover div {
+.now__showing--img div {
+  text-align: center;
   display: flex;
   flex-direction: column;
   width: 160px;
