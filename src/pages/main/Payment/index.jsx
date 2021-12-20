@@ -341,14 +341,14 @@ class Payment extends Component {
                         </div>
                       ))}
                     </div>
-                    <span className="line">
+                    {/* <span className="line">
                       <h2>or</h2>
                     </span>
 
                     <div className="text-center" style={{ marginTop: "24px" }}>
                       <span className="mulish-400 text-secondary">Pay via cash. </span>
                       <span className="mulish-600 text-primary">See how it work</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -387,7 +387,7 @@ class Payment extends Component {
                       disabled
                     />
 
-                    <div
+                    {/* <div
                       style={{
                         padding: "20px 32px",
                         background: "rgba(244, 183, 64, 0.3)",
@@ -402,7 +402,7 @@ class Payment extends Component {
                       >
                         Fill your data correctly.
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

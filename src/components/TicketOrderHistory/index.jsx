@@ -9,7 +9,7 @@ function TicketOrderHistory({ date, time, movieName, premiere, statusUsed }) {
         <div className="d-flex justify-content-between ticket__oreder__history--top">
           <div>
             <span className="mulish-400 text-secondary">
-              {date} - {time}
+              {date.split("T")[0] || "-"} - {time}
             </span>
             <h1 className="mulish-600">{movieName}</h1>
           </div>

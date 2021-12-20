@@ -129,19 +129,15 @@ class Order extends Component {
   };
 
   handleBooking = () => {
-    if (this.state.selectedSeat.length < 1) {
-      alert("Please Select Seat !");
-    } else {
-      const { movieId, scheduleId, dateSchedule, timeSchedule, selectedSeat } = this.state;
-      const setData = {
-        movieId,
-        scheduleId,
-        dateSchedule,
-        timeSchedule,
-        seat: selectedSeat
-      };
-      this.props.history.push("/payment", setData);
-    }
+    const { movieId, scheduleId, dateSchedule, timeSchedule, selectedSeat } = this.state;
+    const setData = {
+      movieId,
+      scheduleId,
+      dateSchedule,
+      timeSchedule,
+      seat: selectedSeat
+    };
+    this.props.history.push("/payment", setData);
   };
 
   render() {
@@ -356,6 +352,7 @@ class Order extends Component {
                 <button
                   className="btn btn-primary mulish-700 choose__btn"
                   onClick={this.handleBooking}
+                  disabled={selectedSeat.length === 0}
                 >
                   Checkout now
                 </button>

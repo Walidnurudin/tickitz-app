@@ -22,7 +22,7 @@
   text-align: center;
 }
 
-.profile__info--name img {
+.profile__info--name--img {
   border-radius: 100%;
   object-fit: cover;
   width: 136px;

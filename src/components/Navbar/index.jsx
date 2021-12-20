@@ -118,7 +118,7 @@ function Navbar({ imageProfile, isAdmin }) {
               </ul>
             )}
 
-            <div className="d-flex flex-column flex-md-row">
+            <div className="d-flex flex-column flex-md-row align-items-center">
               {/* <div className="nav-item navbar__app--list--item dropdown">
                 <a
                   className="nav-link dropdown-toggle mulish-600 text-black"
@@ -150,12 +150,12 @@ function Navbar({ imageProfile, isAdmin }) {
                 </ul>
               </div> */}
               <input
-                className="form-control me-2 navbar__input text-secondary mulish-600"
+                className="form-control me-2 navbar__input text-secondary mulish-600 me-md-5 m-0"
                 type="search"
                 placeholder="Search..."
                 aria-label="Search"
               />
-              <Search className="mx-5 my-auto navbar__search" />
+              {/* <Search className="mx-5 my-auto navbar__search" /> */}
               {/* <i className="bi bi-search mx-5 my-auto navbar__search"></i> */}
               {/* <button className="btn btn-primary btn__sign_in" type="button">
                   Sign Up
@@ -170,7 +170,10 @@ function Navbar({ imageProfile, isAdmin }) {
                 className="navbar__profile"
               />
 
-              <button className="btn btn-danger mulish-600 px-2 py-1 ms-5" onClick={handleShow}>
+              <button
+                className="btn btn-danger mulish-600 px-2 py-1 ms-md-5 ms-0 mt-3 mt-md-0"
+                onClick={handleShow}
+              >
                 Logout
               </button>
 

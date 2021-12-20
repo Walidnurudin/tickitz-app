@@ -120,10 +120,15 @@ class Home extends Component {
                     <button
                       className="btn btn-outline-primary mulish-400"
                       style={{ margin: "45px 0px 16px 0px", fontSize: "14px" }}
+                      onClick={() => this.handleDetail(item.id)}
                     >
                       Details
                     </button>
-                    <button className="btn btn-primary mulish-400" style={{ fontSize: "14px" }}>
+                    <button
+                      className="btn btn-primary mulish-400"
+                      style={{ fontSize: "14px" }}
+                      onClick={() => this.handleDetail(item.id)}
+                    >
                       Book now
                     </button>
                   </div>

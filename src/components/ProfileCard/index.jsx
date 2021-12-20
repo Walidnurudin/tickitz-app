@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { menuProfileIcon, noImage } from "../../assets/img";
+import { menuProfileIcon, noImage, editProfile } from "../../assets/img";
 
 function ProfileCard({
   image,
@@ -12,7 +12,8 @@ function ProfileCard({
   isError,
   isSuccess,
   msg,
-  onClick
+  onClick,
+  handleDelete
 }) {
   return (
     <>
@@ -24,10 +25,34 @@ function ProfileCard({
 
         <div className="profile__info--name">
           <img
+            className="profile__info--name--img"
             src={image ? `${process.env.REACT_APP_LOCAL}uploads/user/${image}` : noImage}
             alt="profile"
             onClick={onClick}
           />
+
+          <div style={{ marginTop: "10px", cursor: "pointer" }} onClick={onClick}>
+            <img src={editProfile} alt="user" width="11px" />
+
+            <span className="font-secondary ms-2">Edit</span>
+          </div>
+
+          <button
+            className="nunito-400"
+            style={{
+              marginTop: "10px",
+              backgroundColor: "#DC3545",
+              padding: "10px 5px",
+              color: "white",
+              border: "none",
+              width: "130px",
+              borderRadius: "12px",
+              outline: "none"
+            }}
+            onClick={handleDelete}
+          >
+            delete image
+          </button>
 
           {isError ? (
             <div className="alert alert-danger mt-3">{msg}</div>

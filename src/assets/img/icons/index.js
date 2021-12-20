@@ -7,6 +7,7 @@ import warningIcon from "./warning.png";
 import ytIcon from "./yt.png";
 import download from "./download.png";
 import printer from "./printer.png";
+import editProfile from "./edit-profile.png";
 
 export {
   fbIcon,
@@ -17,5 +18,6 @@ export {
   warningIcon,
   ytIcon,
   download,
-  printer
+  printer,
+  editProfile
 };

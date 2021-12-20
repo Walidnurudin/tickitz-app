@@ -17,6 +17,7 @@ import {
   updatePassword,
   updateImage
 } from "../../../stores/actions/user";
+import { version } from "react-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -37,6 +38,11 @@ class Profile extends Component {
         email: props.user.data.email,
         phoneNumber: props.user.data.phoneNumber
       },
+      responProfile: {
+        isError: false,
+        isSuccess: false,
+        msg: ""
+      },
       formImage: {
         image: ""
       },
@@ -44,13 +50,18 @@ class Profile extends Component {
         newPassword: "",
         confirmPassword: ""
       },
+      responPassword: {
+        isError: false,
+        isSuccess: false,
+        msg: ""
+      },
       isOrderComponent: false
     };
   }
 
   componentDidMount() {
     axios
-      .get("booking/user-id")
+      .get("user/ticket-history")
       .then((res) => {
         this.setState({
           data: res.data.data
@@ -87,28 +98,52 @@ class Profile extends Component {
 
   // PROFILE
   handleFormInfo = (e) => {
-    this.setState(
-      {
-        form: {
-          ...this.state.form,
-          [e.target.name]: e.target.value
-        }
-      },
-      () => {
-        console.log(this.state.form);
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value
       }
-    );
+    });
   };
 
   handleUpdate = () => {
-    this.props.updateProfile(this.state.form).then((res) => {
-      console.log(res);
-      this.props.getUser().then((res) => {
-        console.log(res);
-      });
+    this.props
+      .updateProfile(this.state.form)
+      .then((res) => {
+        this.setState({
+          responProfile: {
+            isSuccess: true,
+            msg: res.value.data.msg
+          }
+        });
 
-      // this.resetForm();
-    });
+        setTimeout(() => {
+          this.setState({
+            responProfile: {
+              isSuccess: false,
+              msg: ""
+            }
+          });
+        }, 3000);
+        this.props.getUser();
+      })
+      .catch((err) => {
+        this.setState({
+          responProfile: {
+            isError: true,
+            msg: err.response.data.msg
+          }
+        });
+
+        setTimeout(() => {
+          this.setState({
+            responProfile: {
+              isError: false,
+              msg: ""
+            }
+          });
+        }, 3000);
+      });
   };
 
   // UPDATE IMAGE
@@ -123,7 +158,6 @@ class Profile extends Component {
         }
       },
       () => {
-        console.log(this.state.formImage);
         if (this.state.formImage.image === null || !this.state.formImage.image) {
           // notifError("Masukan gambar");
         } else {
@@ -175,39 +209,96 @@ class Profile extends Component {
     );
   }
 
+  deleteImage = () => {
+    this.props
+      .updateImage({})
+      .then((res) => {
+        this.props.getUser();
+        this.setState({
+          isSuccess: true,
+          msg: "Success delete image"
+        });
+
+        setTimeout(() => {
+          this.setState({
+            isSuccess: false,
+            msg: ""
+          });
+        }, 3000);
+      })
+      .catch((err) => {
+        this.setState({
+          isError: true,
+          msg: this.props.user.msg
+        });
+
+        setTimeout(() => {
+          this.setState({
+            isError: false,
+            msg: ""
+          });
+        }, 3000);
+      });
+  };
+
   // PASSWORD
   handleFormPassword = (e) => {
-    this.setState(
-      {
-        formPassword: {
-          ...this.state.formPassword,
-          [e.target.name]: e.target.value
-        }
-      },
-      () => {
-        console.log(this.state.formPassword);
+    this.setState({
+      formPassword: {
+        ...this.state.formPassword,
+        [e.target.name]: e.target.value
       }
-    );
+    });
   };
 
   handlePassword = () => {
-    this.props.updatePassword(this.state.formPassword).then((res) => {
-      console.log(res);
-      this.props.getUser().then((res) => {
-        console.log(res);
-
+    this.props
+      .updatePassword(this.state.formPassword)
+      .then((res) => {
         this.setState({
           formPassword: {
             newPassword: "",
             confirmPassword: ""
+          },
+          responPassword: {
+            isSuccess: true,
+            msg: res.value.data.msg
           }
         });
+
+        setTimeout(() => {
+          this.setState({
+            responPassword: {
+              isSuccess: false,
+              msg: ""
+            }
+          });
+        }, 3000);
+
+        this.props.getUser();
+      })
+      .catch((err) => {
+        this.setState({
+          responPassword: {
+            isError: true,
+            msg: err.response.data.msg
+          }
+        });
+
+        setTimeout(() => {
+          this.setState({
+            responPassword: {
+              isError: false,
+              msg: ""
+            }
+          });
+        }, 3000);
       });
-    });
   };
 
   render() {
-    const { isOrderComponent, data, form, isError, isSuccess, msg } = this.state;
+    const { isOrderComponent, data, form, isError, isSuccess, msg, responProfile, responPassword } =
+      this.state;
     const user = this.props.user.data;
     return (
       <>
@@ -230,6 +321,7 @@ class Profile extends Component {
                   onClick={() => {
                     this.upload.click();
                   }}
+                  handleDelete={this.deleteImage}
                 />
 
                 <input
@@ -258,8 +350,8 @@ class Profile extends Component {
                               key={item.id}
                               date={item.dateBooking}
                               time={item.timeBooking}
-                              movieName={item.movieId}
-                              premiere="cineone21"
+                              movieName={item.name}
+                              premiere={item.premiere}
                               statusUsed={item.statusUsed}
                             />
                           ))}
@@ -322,6 +414,14 @@ class Profile extends Component {
                             />
                           </div>
 
+                          {responProfile.isError ? (
+                            <div className="alert alert-danger mt-3">{responProfile.msg}</div>
+                          ) : responProfile.isSuccess ? (
+                            <div className="alert alert-success mt-3">{responProfile.msg}</div>
+                          ) : (
+                            <div></div>
+                          )}
+
                           <div className="col-12 col-md-6 profile__form--detail--item">
                             <button
                               className="btn btn-primary mulish-700 btn__profile--update"
@@ -358,6 +458,14 @@ class Profile extends Component {
                               handleChange={this.handleFormPassword}
                             />
                           </div>
+
+                          {responPassword.isError ? (
+                            <div className="alert alert-danger mt-3">{responPassword.msg}</div>
+                          ) : responPassword.isSuccess ? (
+                            <div className="alert alert-success mt-3">{responPassword.msg}</div>
+                          ) : (
+                            <div></div>
+                          )}
 
                           <div className="col-12 col-md-6 profile__form--detail--item">
                             <button
