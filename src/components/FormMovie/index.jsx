@@ -8,6 +8,7 @@ function FormMovie({
   isUpdate,
   isError,
   isSuccess,
+  msg,
 
   // function
   handleChangeText,
@@ -49,7 +50,7 @@ function FormMovie({
 
           <div className="col-12 col-md-9">
             <div className="row">
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <Input
                   label="Movie Name"
                   name="name"
@@ -59,7 +60,7 @@ function FormMovie({
                   handleChange={handleChangeText}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <Input
                   label="Category"
                   name="category"
@@ -69,7 +70,7 @@ function FormMovie({
                   handleChange={handleChangeText}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <Input
                   label="Director"
                   name="director"
@@ -79,7 +80,7 @@ function FormMovie({
                   handleChange={handleChangeText}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <Input
                   label="Casts"
                   name="cast"
@@ -89,7 +90,7 @@ function FormMovie({
                   handleChange={handleChangeText}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <Input
                   label="Release Date"
                   name="releaseDate"
@@ -99,7 +100,7 @@ function FormMovie({
                   handleChange={handleChangeText}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <div className="row">
                   <div className="col-6">
                     <Input
@@ -141,7 +142,11 @@ function FormMovie({
             </div>
           </div>
 
-          {isError && <div className="alert alert-danger">Please complete your data input!</div>}
+          {isError && (
+            <div className="alert alert-danger">
+              {msg.includes("Bad request") ? "Please complete your data input!" : msg}
+            </div>
+          )}
           {isSuccess && <div className="alert alert-success">Success create data movie!</div>}
 
           <div className="d-flex justify-content-end">

@@ -143,7 +143,6 @@ class MovieDetail extends Component {
 
   render() {
     const { data, schedule, scheduleId, timeSchedule, ticketInfo } = this.state;
-    console.log("USER PERSIST", this.props.user);
     return (
       <>
         <Navbar imageProfile={this.props.user.data.image} />

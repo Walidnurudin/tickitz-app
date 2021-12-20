@@ -11,6 +11,7 @@ import {
   errorFalse
 } from "../../../stores/actions/movie";
 import Pagination from "react-paginate";
+import { Modal } from "react-bootstrap";
 
 function ManageMovie() {
   const [queryMovie, setQueryMovie] = useState({
@@ -38,6 +39,8 @@ function ManageMovie() {
   const [showImage, setShowImage] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [msgError, setMsgError] = useState("");
 
   const history = useHistory();
   const movieState = useSelector((state) => state.movie);
@@ -106,29 +109,40 @@ function ManageMovie() {
       console.log(data[0] + ", " + data[1]);
     }
 
-    Dispatch(postMovie(formData)).then((res) => {
-      setIsSuccess(true);
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
-    });
+    Dispatch(postMovie(formData))
+      .then((res) => {
+        setIsSuccess(true);
+        resetForm();
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+      })
+      .catch((err) => {
+        console.log(err.response.data.msg);
+        setIsError(true);
+        setMsgError(err.response.data.msg);
 
-    resetForm();
-    setTimeout(() => {
-      Dispatch(errorFalse());
-    }, 3000);
+        setTimeout(() => {
+          setIsError(false);
+          setMsgError("");
+        }, 3000);
+      });
   };
 
   // DELETE MOVIE
-  const handleDelete = (data) => {
-    if (window.confirm("Are you sure you want to delete this movie ?")) {
-      Dispatch(deleteMovie(data)).then((res) => {
-        console.log(res);
-        Dispatch(getMovie(queryMovie)).then((res) => {
-          console.log(res);
-        });
-      });
-    }
+  const [show, setShow] = useState({
+    data: null,
+    show: false
+  });
+
+  const handleClose = () => setShow({ data: null, show: false });
+  const handleShow = (id) => setShow({ data: id, show: true });
+
+  const handleDelete = () => {
+    Dispatch(deleteMovie(show.data)).then((res) => {
+      Dispatch(getMovie(queryMovie));
+      handleClose();
+    });
   };
 
   // UPDATE MOVIE
@@ -227,8 +241,9 @@ function ManageMovie() {
         <FormMovie
           image={showImage}
           isUpdate={isUpdate}
-          isError={movieState.isError}
+          isError={isError}
           isSuccess={isSuccess}
+          msg={msgError}
           handleChangeText={changeText}
           handleChangeFile={changeFile}
           handleSubmit={handleSubmit}
@@ -275,7 +290,7 @@ function ManageMovie() {
                 <div className="row data__movie">
                   {movieState.data.map((item) => (
                     <div
-                      className="col-12 col-md-3 mb-4 d-flex justify-content-center"
+                      className="col-12 col-sm-6 col-md-3 mb-4 d-flex justify-content-center"
                       key={item.id}
                     >
                       <MovieCard
@@ -283,7 +298,7 @@ function ManageMovie() {
                         category={item.category}
                         isAdmin={true}
                         image={item.image}
-                        handleDelete={() => handleDelete(item.id)}
+                        handleDelete={() => handleShow(item.id)}
                         handleUpdate={() => handleUpdate(item)}
                       />
                     </div>
@@ -315,6 +330,20 @@ function ManageMovie() {
         </div>
       </div>
       <Footer />
+
+      <Modal show={show.show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title className="mulish-600">Are you sure want to delete this movie?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <button className="btn btn-secondary mulish-600 px-2 py-1 ms-5" onClick={handleClose}>
+            Cancel
+          </button>
+          <button className="btn btn-danger mulish-600 px-2 py-1 ms-5" onClick={handleDelete}>
+            Delete
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

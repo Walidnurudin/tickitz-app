@@ -11,7 +11,9 @@ import {
   updateSchedule,
   deleteSchedule
 } from "../../../stores/actions/schedule";
+import axios from "../../../utils/axios";
 import { getMovie } from "../../../stores/actions/movie";
+import { Modal } from "react-bootstrap";
 
 function ManageSchedule() {
   // REDUX
@@ -62,6 +64,8 @@ function ManageSchedule() {
     time: []
   });
 
+  const [showImage, setShowImage] = useState(null);
+
   // RESET FORM
   const resetForm = () => {
     setForm({
@@ -107,6 +111,17 @@ function ManageSchedule() {
       ...form,
       [event.target.name]: event.target.value
     });
+
+    if (event.target.name === "movieId") {
+      axios
+        .get(`/movie/${event.target.value}`)
+        .then((res) => {
+          setShowImage(res.data.data[0].image);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   // POST
@@ -123,9 +138,8 @@ function ManageSchedule() {
         setTimeout(() => {
           setIsSuccess(false);
         }, 3000);
-        dispatch(getSchedule(scheduleParams)).then((res) => {
-          console.log(res);
-        });
+        setShowImage(null);
+        dispatch(getSchedule(scheduleParams));
       })
       .catch((err) => {
         setIsError(true);
@@ -176,16 +190,20 @@ function ManageSchedule() {
   };
 
   // DELETE SCHEDULE
+  const [show, setShow] = useState({
+    data: null,
+    show: false
+  });
+
+  const handleClose = () => setShow({ data: null, show: false });
+  const handleShow = (id) => setShow({ data: id, show: true });
+
   const handleDelete = (data) => {
     console.log(data);
-    if (window.confirm("Are you sure you want to delete this schedule ?")) {
-      dispatch(deleteSchedule(data)).then((res) => {
-        console.log(res);
-        dispatch(getSchedule(scheduleParams)).then((res) => {
-          console.log(res);
-        });
-      });
-    }
+    dispatch(deleteSchedule(data)).then((res) => {
+      dispatch(getSchedule(scheduleParams));
+      handleClose();
+    });
   };
 
   // FILTER
@@ -225,13 +243,19 @@ function ManageSchedule() {
           <div className="row form__schedule">
             <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div className="manage__schedule--img">
-                <img src={noImage} alt="spiderman" width="177px" />
+                <img
+                  src={
+                    showImage ? `${process.env.REACT_APP_LOCAL}uploads/movie/${showImage}` : noImage
+                  }
+                  alt="spiderman"
+                  width="177px"
+                />
               </div>
             </div>
 
             <div className="col-12 col-md-9">
               <div className="row">
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="Movie" className="mulish-400 text-secondary">
                     Movie
                   </label>
@@ -250,7 +274,7 @@ function ManageSchedule() {
                     ))}
                   </select>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="Location" className="mulish-400 text-secondary">
                     Location
                   </label>
@@ -267,7 +291,7 @@ function ManageSchedule() {
                     <option value="indramayu">Indramayu</option>
                   </select>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                   {/* <Input
                     label="Price"
                     name="price"
@@ -287,7 +311,7 @@ function ManageSchedule() {
                   />
                 </div>
 
-                <div className="col-6">
+                <div className="col-12 col-md-6 mt-4 mt-md-0">
                   <div className="row">
                     <div className="col-6">
                       {/* <Input
@@ -326,7 +350,7 @@ function ManageSchedule() {
                   </div>
                 </div>
 
-                <div className="col-6">
+                <div className="col-12 col-md-6 mt-4 mt-md-0">
                   <label htmlFor="Premiere" className="mulish-400 text-secondary">
                     Premiere
                   </label>
@@ -347,7 +371,7 @@ function ManageSchedule() {
                     ))}
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6 mt-3 mt-md-0">
                   <label htmlFor="Time" className="mulish-400 text-secondary">
                     Time
                   </label>
@@ -420,7 +444,7 @@ function ManageSchedule() {
             <div className="d-flex flex-column flex-md-row justify-content-between">
               <h1 className="mulish-700 data__schedule--title">Data schedule</h1>
 
-              <div className="d-flex align-self-center">
+              <div className="d-flex flex-column flex-md-row align-self-center gap-2">
                 <select
                   className="input__sort--data--schedule text-secondary mulish-400"
                   defaultValue=""
@@ -475,10 +499,22 @@ function ManageSchedule() {
                         price={item.price}
                         isAdmin={true}
                         handleUpdate={() => handleSetUpdate(item)}
-                        handleDelete={() => handleDelete(item.id)}
+                        handleDelete={() => handleShow(item.id)}
                       />
                     </div>
                   ))}
+                </div>
+                <div className="pagination__data__schedule">
+                  <Pagination
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={scheduleState.pageInfo.totalPage}
+                    onPageChange={handlePagination}
+                    containerClassName={"pagination"}
+                    disabledClassName={"pagination__disabled"}
+                    activeClassName={"pagination__active"}
+                  />
                 </div>
               </>
             ) : (
@@ -490,23 +526,26 @@ function ManageSchedule() {
                 <div style={{ height: "100px" }}></div>
               </>
             )}
-
-            <div className="pagination__data__schedule">
-              <Pagination
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                pageCount={scheduleState.pageInfo.totalPage}
-                onPageChange={handlePagination}
-                containerClassName={"pagination"}
-                disabledClassName={"pagination__disabled"}
-                activeClassName={"pagination__active"}
-              />
-            </div>
           </div>
         </div>
       </div>
       <Footer />
+
+      <Modal show={show.show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title className="mulish-600">
+            Are you sure want to delete this schedule?
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <button className="btn btn-secondary mulish-600 px-2 py-1 ms-5" onClick={handleClose}>
+            Cancel
+          </button>
+          <button className="btn btn-danger mulish-600 px-2 py-1 ms-5" onClick={handleDelete}>
+            Delete
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
