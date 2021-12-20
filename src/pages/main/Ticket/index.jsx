@@ -48,7 +48,6 @@ function Ticket(props) {
       !timeBooking ||
       !userId
     ) {
-      alert("Select Movie !");
       history.push("/");
     }
   };

@@ -102,7 +102,6 @@ class Order extends Component {
   checkingData = () => {
     const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
     if (!movieId || !scheduleId || !timeSchedule || !dateSchedule) {
-      alert("Select Movie !");
       this.props.history.push("/");
     }
   };
@@ -112,8 +111,6 @@ class Order extends Component {
   };
 
   selectedSeat = (data) => {
-    // console.log("user select seat");
-    // console.log(data);
     if (this.state.selectedSeat.includes(data)) {
       const deleteSeat = this.state.selectedSeat.filter((el) => {
         return el !== data;

@@ -126,7 +126,6 @@ class Payment extends Component {
   checkingData = () => {
     const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
     if (!movieId || !scheduleId || !timeSchedule || !dateSchedule) {
-      alert("Select Movie !");
       this.props.history.push("/");
     }
   };
@@ -148,7 +147,6 @@ class Payment extends Component {
       seat,
       paymentMethod
     } = this.state;
-    console.log("DATA USER ID", dataUser);
     if (!paymentMethod) {
       this.setState({
         isError: true
@@ -170,8 +168,6 @@ class Payment extends Component {
           seat
         })
         .then((res) => {
-          console.log(res);
-          alert("Success booking movie");
           this.props.history.push("/ticket", {
             id: res.data.data.id,
             userId: dataUser.id,

@@ -84,7 +84,7 @@ function Dashboard() {
         ]
       };
 
-      movie.dashboard.map((item) => {
+      res.value.data.data.map((item) => {
         newData.labels.push(item.month);
         newData.datasets[0].data.push(item.total);
       });
@@ -92,11 +92,6 @@ function Dashboard() {
       setData(newData);
     });
   };
-
-  // useEffect(() => {
-  //   dispatch(getMovie(queryMovie));
-  //   Dashboard(payloadData);
-  // }, [payloadData.movieId]);
 
   useEffect(() => {
     dispatch(getMovie(queryMovie));
