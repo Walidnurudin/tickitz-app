@@ -17,7 +17,6 @@ import {
   updatePassword,
   updateImage
 } from "../../../stores/actions/user";
-import { version } from "react-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -93,6 +92,21 @@ class Profile extends Component {
   handleOrderHistory = () => {
     this.setState({
       isOrderComponent: true
+    });
+  };
+
+  showDetail = (item) => {
+    this.props.history.push("/ticket", {
+      id: item.id,
+      userId: item.userId,
+      name: item.name,
+      price: item.totalPayment,
+      statusPayment: item.statusPayment,
+      scheduleId: item.scheduleId,
+      timeBooking: item.timeBooking,
+      dateBooking: item.dateBooking,
+      paymentMethod: item.paymentMethod,
+      seat: item.seat
     });
   };
 
@@ -353,6 +367,7 @@ class Profile extends Component {
                               movieName={item.name}
                               premiere={item.premiere}
                               statusUsed={item.statusUsed}
+                              onClick={() => this.showDetail(item)}
                             />
                           ))}
                         </>

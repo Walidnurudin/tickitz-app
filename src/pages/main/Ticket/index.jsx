@@ -23,6 +23,10 @@ function Ticket(props) {
     userId: props.location.state ? props.location.state.userId : ""
   });
 
+  const [value, setValue] = useState(
+    `${process.env.REACT_APP_LOCAL}booking/used-ticket/${form.id}`
+  );
+
   const checkingData = () => {
     const {
       dateBooking,
@@ -54,6 +58,7 @@ function Ticket(props) {
 
   useEffect(() => {
     checkingData();
+    console.log(value);
   }, []);
 
   return (
@@ -64,10 +69,7 @@ function Ticket(props) {
         <div className="ticket__item--mobile">
           <div className="ticket__item--mobile--header row">
             <div className="col-12 text-center">
-              <QRCode
-                value={`${process.env.REACT_APP_LOCAL}booking/used-ticket/${form.id}`}
-                size={186}
-              />
+              <QRCode value={value} size={186} />
             </div>
           </div>
           <div className="ticket__item--mobile--content row">

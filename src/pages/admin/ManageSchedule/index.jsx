@@ -113,14 +113,18 @@ function ManageSchedule() {
     });
 
     if (event.target.name === "movieId") {
-      axios
-        .get(`/movie/${event.target.value}`)
-        .then((res) => {
-          setShowImage(res.data.data[0].image);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (event.target.value === "") {
+        setShowImage(null);
+      } else {
+        axios
+          .get(`/movie/${event.target.value}`)
+          .then((res) => {
+            setShowImage(res.data.data[0].image);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 

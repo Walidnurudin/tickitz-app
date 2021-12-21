@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { cineone21, hiflix, ebvid } from "../../assets/img";
 
-function TicketOrderHistory({ date, time, movieName, premiere, statusUsed }) {
+function TicketOrderHistory({ date, time, movieName, premiere, statusUsed, onClick }) {
   return (
     <div>
       <div className="ticket__oreder__history">
@@ -23,7 +23,7 @@ function TicketOrderHistory({ date, time, movieName, premiere, statusUsed }) {
         </div>
         <hr />
         <div className="d-flex justify-content-between ticket__oreder__history--bottom">
-          <div>
+          <div onClick={onClick}>
             {statusUsed === "Active" ? (
               <button className="btn mulish-700">Ticket in active</button>
             ) : statusUsed === "notActive" ? (
@@ -33,7 +33,13 @@ function TicketOrderHistory({ date, time, movieName, premiere, statusUsed }) {
             )}
           </div>
           <div>
-            <span className="mulish-400 text-secondary">Show Details</span>
+            <span
+              className="mulish-400 text-secondary"
+              style={{ cursor: "pointer" }}
+              onClick={onClick}
+            >
+              Show Details
+            </span>
           </div>
         </div>
       </div>
