@@ -8,6 +8,7 @@ import ytIcon from "./yt.png";
 import download from "./download.png";
 import printer from "./printer.png";
 import editProfile from "./edit-profile.png";
+import failed from "./failed.png";
 
 export {
   fbIcon,
@@ -19,5 +20,6 @@ export {
   ytIcon,
   download,
   printer,
-  editProfile
+  editProfile,
+  failed
 };

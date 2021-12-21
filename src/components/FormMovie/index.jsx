@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { noImage } from "../../assets/img";
+import { noImage, editProfile } from "../../assets/img";
 import { Input } from "../../components";
 
 function FormMovie({
@@ -12,10 +12,10 @@ function FormMovie({
 
   // function
   handleChangeText,
-  handleChangeFile,
   handleSubmit,
   handleReset,
   handleUpdate,
+  onClick,
 
   // props value
   // imageValue,
@@ -36,15 +36,22 @@ function FormMovie({
         <div className="row form__movie">
           <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
             <div className="manage__movie--img">
-              <img src={image ? image : noImage} alt="spiderman" width="177px" />
-              <Input
-                label="Movie Image"
-                name="image"
-                placeholder="Input Movie Image"
-                type="file"
-                // value={imageValue}
-                handleChange={handleChangeFile}
+              <img
+                src={image ? image : noImage}
+                alt="spiderman"
+                width="177px"
+                style={{ cursor: "pointer" }}
+                onClick={onClick}
               />
+
+              <div
+                style={{ marginTop: "10px", cursor: "pointer", textAlign: "center" }}
+                onClick={onClick}
+              >
+                <img src={editProfile} alt="user" width="11px" />
+
+                <span className="font-secondary ms-2">Edit</span>
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { noImage, cineone21, hiflix, ebvid } from "../../../assets/img";
+import { noImage, cineone21, hiflix, ebvid, failed } from "../../../assets/img";
 import { Navbar, Footer, ScheduleCard, Input } from "../../../components";
 import Pagination from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
@@ -68,6 +68,7 @@ function ManageSchedule() {
 
   // RESET FORM
   const resetForm = () => {
+    setShowImage(null);
     setForm({
       movieId: "",
       location: "",
@@ -97,6 +98,16 @@ function ManageSchedule() {
       });
       setShowInputTime(false);
     }
+  };
+
+  const deleteTime = (index) => {
+    let temp = form.time;
+    temp.splice(index, 1);
+
+    setForm({
+      ...form,
+      time: temp
+    });
   };
 
   const handleDataPayment = (name) => {
@@ -168,14 +179,29 @@ function ManageSchedule() {
 
   // UPDATE
   const handleSetUpdate = (data) => {
+    window.scrollTo(0, 0);
+    axios
+      .get(`/movie/${data.movieId}`)
+      .then((res) => {
+        setShowImage(res.data.data[0].image);
+      })
+      .catch((err) => {
+        setIsError(true);
+        setMsg(err.response.data.msg + " please delete the schedule");
+
+        setTimeout(() => {
+          setIsError(false);
+          setMsg("");
+        }, 5000);
+      });
+
     setIdSchedule(data.id);
-    console.log(data);
     setForm({
       movieId: data.movieId,
       location: data.location,
       price: data.price,
-      dateStart: data.dateStart,
-      dateEnd: data.dateEnd,
+      dateStart: data.dateStart.split("T")[0],
+      dateEnd: data.dateEnd.split("T")[0],
       premiere: data.premiere,
       time: data.time
     });
@@ -184,13 +210,42 @@ function ManageSchedule() {
   };
 
   const handleUpdateSubmit = () => {
-    console.log(form);
+    if (form.time.length < 1) {
+      setIsError(true);
+      setMsg("please fill in all data!");
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    } else {
+      let newData = {
+        ...form,
+        time: form.time.join(",")
+      };
 
-    // dispatch(updateSchedule()).then((res) => {
-    //   dispatch(getSchedule(scheduleParams)).then((res) => {
-    //     console.log(res);
-    //   });
-    // });
+      console.log(form, newData);
+
+      dispatch(updateSchedule(idSchedule, newData))
+        .then((res) => {
+          console.log(res);
+          dispatch(getSchedule(scheduleParams));
+          setIsSuccess(true);
+          setMsg("Success update schedule!");
+          setTimeout(() => {
+            setIsSuccess(false);
+            setMsg("");
+          }, 3000);
+        })
+        .catch((err) => {
+          setIsError(true);
+          setMsg(err.response.data.msg);
+          setTimeout(() => {
+            setIsError(false);
+            setMsg("");
+          }, 3000);
+        });
+
+      resetForm();
+    }
   };
 
   // DELETE SCHEDULE
@@ -203,7 +258,6 @@ function ManageSchedule() {
   const handleShow = (id) => setShow({ data: id, show: true });
 
   const handleDelete = (data) => {
-    console.log(data);
     dispatch(deleteSchedule(data)).then((res) => {
       dispatch(getSchedule(scheduleParams));
       handleClose();
@@ -216,10 +270,6 @@ function ManageSchedule() {
       ...scheduleParams,
       [e.target.name]: e.target.value
     });
-
-    // dispatch(getSchedule(scheduleParams)).then((res) => {
-    //   console.log(res);
-    // });
   };
 
   // lifecycle
@@ -232,9 +282,7 @@ function ManageSchedule() {
   }, [scheduleParams]);
 
   useEffect(() => {
-    dispatch(getMovie(queryMovie)).then((res) => {
-      console.log(res);
-    });
+    dispatch(getMovie(queryMovie));
   }, []);
 
   return (
@@ -354,7 +402,7 @@ function ManageSchedule() {
                   </div>
                 </div>
 
-                <div className="col-12 col-md-6 mt-4 mt-md-0">
+                <div className="col-12 col-md-6 mt-4">
                   <label htmlFor="Premiere" className="mulish-400 text-secondary">
                     Premiere
                   </label>
@@ -375,7 +423,7 @@ function ManageSchedule() {
                     ))}
                   </div>
                 </div>
-                <div className="col-12 col-md-6 mt-3 mt-md-0">
+                <div className="col-12 col-md-6 mt-3">
                   <label htmlFor="Time" className="mulish-400 text-secondary">
                     Time
                   </label>
@@ -397,22 +445,29 @@ function ManageSchedule() {
                     )}
 
                     {form.time.map((item, index) => (
-                      <button
-                        key={index}
-                        className="mulish-600 text-secondary btn btn-outline-primary"
-                        style={{ margin: "8px 12px", fontSize: "13px" }}
-                      >
-                        {item}
-                      </button>
+                      <div key={index}>
+                        <button
+                          className="mulish-600 text-secondary btn btn-outline-primary"
+                          style={{ margin: "8px 12px", fontSize: "13px" }}
+                        >
+                          {item}
+                        </button>
+                        <img
+                          src={failed}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => deleteTime(index)}
+                          width={30}
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
 
               {isError ? (
-                <div className="alert alert-danger">{msg}</div>
+                <div className="alert alert-danger mt-3">{msg}</div>
               ) : isSuccess ? (
-                <div className="alert alert-success">{msg}</div>
+                <div className="alert alert-success mt-3">{msg}</div>
               ) : (
                 <div></div>
               )}
@@ -508,18 +563,6 @@ function ManageSchedule() {
                     </div>
                   ))}
                 </div>
-                <div className="pagination__data__schedule">
-                  <Pagination
-                    previousLabel={"Previous"}
-                    nextLabel={"Next"}
-                    breakLabel={"..."}
-                    pageCount={scheduleState.pageInfo.totalPage}
-                    onPageChange={handlePagination}
-                    containerClassName={"pagination"}
-                    disabledClassName={"pagination__disabled"}
-                    activeClassName={"pagination__active"}
-                  />
-                </div>
               </>
             ) : (
               <>
@@ -531,6 +574,19 @@ function ManageSchedule() {
               </>
             )}
           </div>
+        </div>
+
+        <div className="pagination__data__schedule">
+          <Pagination
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            breakLabel={"..."}
+            pageCount={scheduleState.pageInfo.totalPage}
+            onPageChange={handlePagination}
+            containerClassName={"pagination"}
+            disabledClassName={"pagination__disabled"}
+            activeClassName={"pagination__active"}
+          />
         </div>
       </div>
       <Footer />

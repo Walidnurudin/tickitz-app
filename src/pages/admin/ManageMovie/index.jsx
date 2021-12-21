@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./index.css";
 import { Navbar, Footer, FormMovie, MovieCard } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
@@ -42,6 +42,7 @@ function ManageMovie() {
   const [isError, setIsError] = useState(false);
   const [msgError, setMsgError] = useState("");
 
+  const inputFile = useRef(null);
   const history = useHistory();
   const movieState = useSelector((state) => state.movie);
   const Dispatch = useDispatch();
@@ -80,6 +81,11 @@ function ManageMovie() {
     });
   };
 
+  const onButtonClick = () => {
+    // `current` points to the mounted file input element
+    inputFile.current.click();
+  };
+
   const changeFile = (event) => {
     setFormMovie({
       ...formMovie,
@@ -111,6 +117,7 @@ function ManageMovie() {
 
     Dispatch(postMovie(formData))
       .then((res) => {
+        Dispatch(getMovie(queryMovie));
         setIsSuccess(true);
         resetForm();
         setTimeout(() => {
@@ -118,7 +125,6 @@ function ManageMovie() {
         }, 3000);
       })
       .catch((err) => {
-        console.log(err.response.data.msg);
         setIsError(true);
         setMsgError(err.response.data.msg);
 
@@ -182,10 +188,7 @@ function ManageMovie() {
     }
 
     Dispatch(updateMovie(idMovie, formData)).then((res) => {
-      console.log(res);
-      Dispatch(getMovie(queryMovie)).then((res) => {
-        console.log(res);
-      });
+      Dispatch(getMovie(queryMovie));
     });
 
     resetForm();
@@ -245,7 +248,7 @@ function ManageMovie() {
           isSuccess={isSuccess}
           msg={msgError}
           handleChangeText={changeText}
-          handleChangeFile={changeFile}
+          onClick={onButtonClick}
           handleSubmit={handleSubmit}
           handleReset={() => resetForm()}
           handleUpdate={handleSubmitUpdate}
@@ -259,6 +262,14 @@ function ManageMovie() {
           durationHourValue={formMovie.durationHour}
           durationMinuteValue={formMovie.durationMinute}
           synopsisValue={formMovie.synopsis}
+        />
+
+        <input
+          name="image"
+          type="file"
+          style={{ display: "none" }}
+          ref={inputFile}
+          onChange={changeFile}
         />
 
         <div className="data__movie--wrap">
