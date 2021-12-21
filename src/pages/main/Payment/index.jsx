@@ -160,7 +160,7 @@ class Payment extends Component {
       axios
         .post("/booking", {
           userId: dataUser.id,
-          statusPayment: "success",
+          // statusPayment: "success",
           scheduleId,
           timeBooking: timeSchedule,
           dateBooking: dateSchedule,
@@ -168,18 +168,20 @@ class Payment extends Component {
           seat
         })
         .then((res) => {
-          this.props.history.push("/ticket", {
-            id: res.data.data.id,
-            userId: dataUser.id,
-            name: dataMovie.name,
-            price: seat.length * dataSchedule.price,
-            statusPayment: "success",
-            scheduleId,
-            timeBooking: timeSchedule,
-            dateBooking: dateSchedule,
-            paymentMethod,
-            seat
-          });
+          window.location.assign(`${res.data.data.urlRedirect}`);
+
+          // this.props.history.push("/ticket", {
+          //   id: res.data.data.id,
+          //   userId: dataUser.id,
+          //   name: dataMovie.name,
+          //   price: seat.length * dataSchedule.price,
+          //   statusPayment: "success",
+          //   scheduleId,
+          //   timeBooking: timeSchedule,
+          //   dateBooking: dateSchedule,
+          //   paymentMethod,
+          //   seat
+          // });
         })
         .catch((err) => {
           console.log(err);
