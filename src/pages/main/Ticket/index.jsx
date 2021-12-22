@@ -5,6 +5,7 @@ import { download, printer, tickitz1 } from "../../../assets/img";
 import QRCode from "react-qr-code";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "../../../utils/axios";
 
 function Ticket(props) {
   const history = useHistory();
@@ -54,6 +55,18 @@ function Ticket(props) {
     ) {
       history.push("/");
     }
+  };
+
+  const ticketPdf = () => {
+    axios
+      .get(`/booking/ticket/${form.id}`)
+      .then((res) => {
+        console.log(res);
+        window.open(`${res.data.data.url}`, "_blank", "noreferrer noopenner");
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -183,14 +196,14 @@ function Ticket(props) {
           </div>
 
           <div className="d-flex gap-3 justify-content-center">
-            <button className="btn btn-outline-secondary px-4">
+            <button className="btn btn-outline-secondary px-4" onClick={() => ticketPdf()}>
               <img src={download} alt="download" width="20px" />
               <span className="ms-3">Download</span>
             </button>
-            <button className="btn btn-outline-secondary px-4">
+            {/* <button className="btn btn-outline-secondary px-4">
               <img src={printer} alt="printer" width="20px" />
               <span className="ms-3">Print</span>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

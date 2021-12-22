@@ -96,6 +96,7 @@ class Profile extends Component {
   };
 
   showDetail = (item) => {
+    console.log(item);
     this.props.history.push("/ticket", {
       id: item.id,
       userId: item.userId,

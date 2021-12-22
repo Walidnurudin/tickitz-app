@@ -23,7 +23,7 @@ function TicketOrderHistory({ date, time, movieName, premiere, statusUsed, onCli
         </div>
         <hr />
         <div className="d-flex justify-content-between ticket__oreder__history--bottom">
-          <div onClick={onClick}>
+          <div>
             {statusUsed === "Active" ? (
               <button className="btn mulish-700">Ticket in active</button>
             ) : statusUsed === "notActive" ? (

@@ -18,7 +18,7 @@ function FormMovie({
   onClick,
 
   // props value
-  // imageValue,
+  imageValue,
   nameValue,
   categoryValue,
   directorValue,
@@ -37,7 +37,13 @@ function FormMovie({
           <div className="col-12 col-md-3 d-flex justify-content-center align-items-center">
             <div className="manage__movie--img">
               <img
-                src={image ? image : noImage}
+                src={
+                  image
+                    ? image
+                    : imageValue
+                    ? `${process.env.REACT_APP_LOCAL}uploads/movie/${imageValue}`
+                    : noImage
+                }
                 alt="spiderman"
                 width="177px"
                 style={{ cursor: "pointer" }}

@@ -16,6 +16,11 @@ class Login extends Component {
         lastname: "",
         email: "",
         password: ""
+      },
+      response: {
+        isLoading: false,
+        isError: false,
+        msg: ""
       }
     };
   }
@@ -31,12 +36,44 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.register(this.state.form).then((res) => {
-      this.props.history.push("/login");
+    this.setState({
+      ...this.state,
+      response: {
+        isLoading: true,
+        isError: false,
+        msg: ""
+      }
     });
+    this.props
+      .register(this.state.form)
+      .then((res) => {
+        this.props.history.push("/login");
+      })
+      .catch((err) => {
+        this.setState({
+          ...this.state,
+          response: {
+            isLoading: false,
+            isError: true,
+            msg: err.response.data.msg
+          }
+        });
+
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            response: {
+              isLoading: false,
+              isError: false,
+              msg: ""
+            }
+          });
+        }, 3000);
+      });
   };
 
   render() {
+    const { response } = this.state;
     return (
       <>
         <div className="container-fluid">
@@ -112,17 +149,17 @@ class Login extends Component {
                   />
 
                   <div className="d-grid">
-                    {this.props.auth.isLoading ? (
-                      <Loader type="Circles" color="#00BFFF" />
+                    {response.isLoading ? (
+                      <button className="btn btn-primary form__btn" type="submit" disabled={true}>
+                        <Loader type="TailSpin" color="white" height={50} />
+                      </button>
                     ) : (
                       <button className="btn btn-primary form__btn" type="submit">
                         Sign Up
                       </button>
                     )}
 
-                    {this.props.auth.isError && (
-                      <div className="alert alert-danger">{this.props.auth.msg}</div>
-                    )}
+                    {response.isError && <div className="alert alert-danger">{response.msg}</div>}
                   </div>
                 </form>
 

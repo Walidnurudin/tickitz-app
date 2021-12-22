@@ -15,18 +15,13 @@ class Login extends Component {
       form: {
         email: "",
         password: ""
+      },
+      response: {
+        isLoading: false,
+        isError: false,
+        msg: ""
       }
     };
-  }
-
-  checkToken = () => {
-    if (localStorage.getItem("token")) {
-      this.props.history.push("/");
-    }
-  };
-
-  componentDidMount() {
-    this.checkToken();
   }
 
   handleChangeForm = (e) => {
@@ -40,17 +35,48 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.form).then((res) => {
-      localStorage.setItem("token", res.value.data.data.token);
-      this.props.getUser().then((res) => {
-        console.log(res.value.data.data[0].role);
-        if (res.value.data.data[0].role === "ADMIN") this.props.history.push("/dashboard");
-        else this.props.history.push("/");
-      });
+    this.setState({
+      ...this.state,
+      response: {
+        isLoading: true,
+        isError: false,
+        msg: ""
+      }
     });
+    this.props
+      .login(this.state.form)
+      .then((res) => {
+        localStorage.setItem("token", res.value.data.data.token);
+        this.props.getUser().then((res) => {
+          if (res.value.data.data[0].role === "ADMIN") this.props.history.push("/dashboard");
+          else this.props.history.push("/");
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          ...this.state,
+          response: {
+            isLoading: false,
+            isError: true,
+            msg: err.response.data.msg
+          }
+        });
+
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            response: {
+              isLoading: false,
+              isError: false,
+              msg: ""
+            }
+          });
+        }, 3000);
+      });
   };
 
   render() {
+    const { response } = this.state;
     return (
       <>
         <div className="container-fluid">
@@ -107,17 +133,17 @@ class Login extends Component {
                   />
 
                   <div className="d-grid">
-                    {this.props.auth.isLoading ? (
-                      <Loader type="Circles" color="#00BFFF" />
+                    {response.isLoading ? (
+                      <button className="btn btn-primary form__btn" type="submit" disabled={true}>
+                        <Loader type="TailSpin" color="white" height={50} />
+                      </button>
                     ) : (
                       <button className="btn btn-primary form__btn" type="submit">
                         Sign In
                       </button>
                     )}
 
-                    {this.props.auth.isError && (
-                      <div className="alert alert-danger">{this.props.auth.msg}</div>
-                    )}
+                    {response.isError && <div className="alert alert-danger">{response.msg}</div>}
                   </div>
                 </form>
 

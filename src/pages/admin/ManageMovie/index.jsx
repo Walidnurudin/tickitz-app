@@ -99,40 +99,51 @@ function ManageMovie() {
 
   const handleSubmit = () => {
     // VALIDASI
-    console.log(formMovie);
+    console.log(formMovie.synopsis.length);
+    if (formMovie.synopsis.length > 255) {
+      setIsError(true);
+      setMsgError(
+        `Synopsis too many letters (${formMovie.synopsis.length}), maximum only 255 letters`
+      );
 
-    const formData = new FormData();
-    for (const data in formMovie) {
-      formData.append(data, formMovie[data]);
+      setTimeout(() => {
+        setIsError(false);
+        setMsgError("");
+      }, 3000);
+    } else {
+      const formData = new FormData();
+      for (const data in formMovie) {
+        formData.append(data, formMovie[data]);
+      }
+
+      // UNTUK MENGECEK DATA DI DALAM FORMDATA
+      for (const data of formData.entries()) {
+        // [
+        //   [property, value],
+        //   [],
+        // ]
+        console.log(data[0] + ", " + data[1]);
+      }
+
+      Dispatch(postMovie(formData))
+        .then((res) => {
+          Dispatch(getMovie(queryMovie));
+          setIsSuccess(true);
+          resetForm();
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 3000);
+        })
+        .catch((err) => {
+          setIsError(true);
+          setMsgError(err.response.data.msg);
+
+          setTimeout(() => {
+            setIsError(false);
+            setMsgError("");
+          }, 3000);
+        });
     }
-
-    // UNTUK MENGECEK DATA DI DALAM FORMDATA
-    for (const data of formData.entries()) {
-      // [
-      //   [property, value],
-      //   [],
-      // ]
-      console.log(data[0] + ", " + data[1]);
-    }
-
-    Dispatch(postMovie(formData))
-      .then((res) => {
-        Dispatch(getMovie(queryMovie));
-        setIsSuccess(true);
-        resetForm();
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
-      })
-      .catch((err) => {
-        setIsError(true);
-        setMsgError(err.response.data.msg);
-
-        setTimeout(() => {
-          setIsError(false);
-          setMsgError("");
-        }, 3000);
-      });
   };
 
   // DELETE MOVIE
@@ -153,6 +164,7 @@ function ManageMovie() {
 
   // UPDATE MOVIE
   const handleUpdate = (data) => {
+    setShowImage("");
     setIdMovie(data.id);
     setFormMovie({
       name: data.name,
@@ -187,11 +199,24 @@ function ManageMovie() {
       console.log(data[0] + ", " + data[1]);
     }
 
-    Dispatch(updateMovie(idMovie, formData)).then((res) => {
-      Dispatch(getMovie(queryMovie));
-    });
+    Dispatch(updateMovie(idMovie, formData))
+      .then((res) => {
+        Dispatch(getMovie(queryMovie));
+        setIsSuccess(true);
+        resetForm();
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+      })
+      .catch((err) => {
+        setIsError(true);
+        setMsgError(err.response.data.msg);
 
-    resetForm();
+        setTimeout(() => {
+          setIsError(false);
+          setMsgError("");
+        }, 3000);
+      });
   };
 
   // PAGINATION

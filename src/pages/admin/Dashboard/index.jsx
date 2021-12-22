@@ -72,25 +72,29 @@ function Dashboard() {
       `/dashboard?movieId=${dataParams.movieId}&location=${dataParams.location}&premiere=${dataParams.premiere}`
     );
 
-    dispatch(getDashboard(dataParams)).then((res) => {
-      let newData = {
-        ...data,
-        labels: [],
-        datasets: [
-          {
-            ...data.datasets[0],
-            data: []
-          }
-        ]
-      };
+    dispatch(getDashboard(dataParams))
+      .then((res) => {
+        let newData = {
+          ...data,
+          labels: [],
+          datasets: [
+            {
+              ...data.datasets[0],
+              data: []
+            }
+          ]
+        };
 
-      res.value.data.data.map((item) => {
-        newData.labels.push(item.month);
-        newData.datasets[0].data.push(item.total);
+        res.value.data.data.map((item) => {
+          newData.labels.push(item.month);
+          newData.datasets[0].data.push(item.total);
+        });
+
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err.response);
       });
-
-      setData(newData);
-    });
   };
 
   useEffect(() => {

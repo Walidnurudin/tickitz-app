@@ -149,14 +149,14 @@ function Navbar({ imageProfile, isAdmin }) {
                   </li>
                 </ul>
               </div> */}
-              {!isAdmin && (
+              {/* {!isAdmin && (
                 <input
                   className="form-control me-2 navbar__input text-secondary mulish-600 me-md-5 m-0"
                   type="search"
                   placeholder="Search..."
                   aria-label="Search"
                 />
-              )}
+              )} */}
               {/* <Search className="mx-5 my-auto navbar__search" /> */}
               {/* <i className="bi bi-search mx-5 my-auto navbar__search"></i> */}
               {/* <button className="btn btn-primary btn__sign_in" type="button">

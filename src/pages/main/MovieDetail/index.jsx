@@ -51,7 +51,7 @@ class MovieDetail extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -64,7 +64,7 @@ class MovieDetail extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
