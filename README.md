@@ -123,3 +123,5 @@ npm start
 Walid Nurudin - [@walidnurudin](https://www.linkedin.com/in/walidnurudin/) - walidnurudin47@gmail.com
 
 Project Link: [https://github.com/Walidnurudin/tickitz-app](https://github.com/Walidnurudin/tickitz-app)
+
+API Repository: [https://github.com/Walidnurudin/tickitz](https://github.com/Walidnurudin/tickitz)
