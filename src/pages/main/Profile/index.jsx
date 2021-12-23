@@ -423,6 +423,7 @@ class Profile extends Component {
                               placeholder="email@domain.com"
                               handleChange={this.handleFormInfo}
                               value={form.email}
+                              disabled={true}
                             />
                           </div>
 
