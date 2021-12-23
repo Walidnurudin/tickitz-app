@@ -11,6 +11,13 @@ online movie ticket booking app
       </ul>
     </li>
     <li>
+      <a href="#demo">Demo</a>
+      <ul>
+        <li><a href="#link">Link</a></li>
+        <li><a href="#screenshot">Screenshot</a></li>
+      </ul>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -36,6 +43,32 @@ some technology used in this project.
 - [Axios](https://www.npmjs.com/package/axios)
 - [Redux](https://redux.js.org/)
 - [ChartJs](https://www.npmjs.com/package/react-chartjs-2)
+
+<!-- DEMO -->
+
+## Demo
+
+### Link
+
+Web app [https://tickitzapp.netlify.app/](https://tickitzapp.netlify.app/)
+
+### Screenshot
+
+- Login page
+
+![login](https://user-images.githubusercontent.com/59267364/147222399-f8154610-827d-4057-a056-924cebf49dd5.png)
+
+- Home page
+
+![home](https://user-images.githubusercontent.com/59267364/147222413-dd497e3f-57c3-43a4-9ace-dc6820b85c0d.png)
+
+- Movie Detail page
+
+![movie-detail](https://user-images.githubusercontent.com/59267364/147222416-b8aad7c7-fb81-4fef-851c-5fe631614deb.png)
+
+- Order page
+
+![order](https://user-images.githubusercontent.com/59267364/147222420-c2b631e4-c142-46d9-9253-7a054528ebc8.png)
 
 <!-- GETTING STARTED -->
 
