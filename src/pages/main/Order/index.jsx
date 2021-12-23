@@ -73,6 +73,7 @@ class Order extends Component {
         `/seat/?scheduleId=${scheduleId}&movieId=${movieId}&dateBooking=${dateSchedule}&timeBooking=${timeSchedule}`
       )
       .then((res) => {
+        console.log(res.data.data);
         const newReserved = [];
         res.data.data.map((item) => newReserved.push(item.seat));
         this.setState({

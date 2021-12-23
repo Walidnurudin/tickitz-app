@@ -2,7 +2,15 @@ import React from "react";
 import "./index.css";
 import { cineone21, hiflix, ebvid } from "../../assets/img";
 
-function TicketOrderHistory({ date, time, movieName, premiere, statusUsed, onClick }) {
+function TicketOrderHistory({
+  date,
+  time,
+  movieName,
+  premiere,
+  statusUsed,
+  onClick,
+  onClickPayment
+}) {
   return (
     <div>
       <div className="ticket__oreder__history">
@@ -33,13 +41,23 @@ function TicketOrderHistory({ date, time, movieName, premiere, statusUsed, onCli
             )}
           </div>
           <div>
-            <span
-              className="mulish-400 text-secondary"
-              style={{ cursor: "pointer" }}
-              onClick={onClick}
-            >
-              Show Details
-            </span>
+            {statusUsed === "inProcess" ? (
+              <span
+                className="mulish-400 text-secondary"
+                style={{ cursor: "pointer" }}
+                onClick={onClickPayment}
+              >
+                Continue Payment
+              </span>
+            ) : (
+              <span
+                className="mulish-400 text-secondary"
+                style={{ cursor: "pointer" }}
+                onClick={onClick}
+              >
+                Show Ticket
+              </span>
+            )}
           </div>
         </div>
       </div>

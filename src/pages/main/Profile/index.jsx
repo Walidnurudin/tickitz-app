@@ -62,6 +62,7 @@ class Profile extends Component {
     axios
       .get("user/ticket-history")
       .then((res) => {
+        console.log(res);
         this.setState({
           data: res.data.data
         });
@@ -80,6 +81,11 @@ class Profile extends Component {
         phoneNumber: ""
       }
     });
+  };
+
+  // PAYMENT
+  continuePayment = (payment) => {
+    window.location.assign(`${payment}`);
   };
 
   // NAVIGATION
@@ -369,6 +375,7 @@ class Profile extends Component {
                               premiere={item.premiere}
                               statusUsed={item.statusUsed}
                               onClick={() => this.showDetail(item)}
+                              onClickPayment={() => this.continuePayment(item.payment)}
                             />
                           ))}
                         </>

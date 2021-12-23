@@ -12,7 +12,7 @@ function Ticket(props) {
   const userState = useSelector((state) => state.user);
 
   const [form, setForm] = useState({
-    dateBooking: props.location.state ? props.location.state.dateBooking : "",
+    dateBooking: props.location.state ? props.location.state.dateBooking.split("T")[0] : "",
     id: props.location.state ? props.location.state.id : "",
     name: props.location.state ? props.location.state.name : "",
     paymentMethod: props.location.state ? props.location.state.paymentMethod : "",
@@ -71,7 +71,6 @@ function Ticket(props) {
 
   useEffect(() => {
     checkingData();
-    console.log(value);
   }, []);
 
   return (

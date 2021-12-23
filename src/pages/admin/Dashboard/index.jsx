@@ -98,7 +98,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    dispatch(getMovie(queryMovie));
+    // dispatch(getMovie(queryMovie));
     Dashboard(payloadData);
   }, []);
 
