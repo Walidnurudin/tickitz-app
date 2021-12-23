@@ -97,15 +97,23 @@ class Home extends Component {
             <div className="now__showing--movie">
               {data.map((item) => (
                 <div className="now__showing--img" key={item.id}>
-                  <img
-                    src={
-                      item.image
-                        ? `${process.env.REACT_APP_LOCAL}uploads/movie/${item.image}`
-                        : noImage
-                    }
-                    alt={item.name}
-                    width="160px"
-                  />
+                  <div style={{ width: "160px", height: "250px" }}>
+                    <img
+                      style={{
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 6
+                      }}
+                      src={
+                        item.image
+                          ? `${process.env.REACT_APP_LOCAL}uploads/movie/${item.image}`
+                          : noImage
+                      }
+                      alt={item.name}
+                      // width="160px"
+                    />
+                  </div>
                   <div>
                     <p
                       className="mulish-700"
