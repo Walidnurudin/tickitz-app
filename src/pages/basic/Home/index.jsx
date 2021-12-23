@@ -51,7 +51,6 @@ class Home extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.form);
     const formData = new FormData();
     for (const data in this.state.form) {
       formData.append(data, this.state.form[data]);
@@ -63,18 +62,6 @@ class Home extends Component {
     }
 
     // axios.post("movie", formData);
-  };
-
-  setUpdate = () => {
-    console.log("setUpdate");
-  };
-
-  handleUpdate = () => {
-    console.log("hendleUpdate");
-  };
-
-  handleUpdate = () => {
-    console.log("handleDelete");
   };
 
   getDataMovie = () => {

@@ -6,8 +6,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = localStorage.getItem("token");
   const userState = useSelector((state) => state.user);
 
-  console.log(userState);
-
   return (
     <Route
       {...rest}

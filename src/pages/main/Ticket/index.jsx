@@ -61,7 +61,6 @@ function Ticket(props) {
     axios
       .get(`/booking/ticket/${form.id}`)
       .then((res) => {
-        console.log(res);
         window.open(`${res.data.data.url}`, "_blank", "noreferrer noopenner");
       })
       .catch((err) => {

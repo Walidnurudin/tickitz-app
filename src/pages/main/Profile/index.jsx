@@ -62,13 +62,12 @@ class Profile extends Component {
     axios
       .get("user/ticket-history")
       .then((res) => {
-        console.log(res);
         this.setState({
           data: res.data.data
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   }
 
@@ -102,7 +101,6 @@ class Profile extends Component {
   };
 
   showDetail = (item) => {
-    console.log(item);
     this.props.history.push("/ticket", {
       id: item.id,
       userId: item.userId,

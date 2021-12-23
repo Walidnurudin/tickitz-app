@@ -133,7 +133,7 @@ function ManageSchedule() {
             setShowImage(res.data.data[0].image);
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err.response);
           });
       }
     }
@@ -222,11 +222,8 @@ function ManageSchedule() {
         time: form.time.join(",")
       };
 
-      console.log(form, newData);
-
       dispatch(updateSchedule(idSchedule, newData))
         .then((res) => {
-          console.log(res);
           dispatch(getSchedule(scheduleParams));
           setIsSuccess(true);
           setMsg("Success update schedule!");

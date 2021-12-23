@@ -17,23 +17,6 @@ export default function CounterFunc() {
     setCount(0);
   };
 
-  // didMount
-  useEffect(() => {
-    console.log("Didmount is run");
-  }, []);
-
-  // didUpdate
-  useEffect(() => {
-    console.log("Didupdate is run");
-  }, [count]);
-
-  // willUnmount
-  useEffect(() => {
-    return () => {
-      console.log("Willunmount is run");
-    };
-  }, []);
-
   return (
     <Container className="text-center">
       <h2>Counter App</h2>

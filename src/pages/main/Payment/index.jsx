@@ -82,12 +82,11 @@ class Payment extends Component {
     axios
       .get("/user")
       .then((res) => {
-        console.log(res.data.data[0]);
         this.setState({
           dataUser: res.data.data[0]
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
   };
 
   getMovieById = () => {
@@ -99,7 +98,7 @@ class Payment extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -112,7 +111,7 @@ class Payment extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -184,7 +183,7 @@ class Payment extends Component {
           // });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.response);
         });
     }
   };
@@ -194,7 +193,6 @@ class Payment extends Component {
   };
 
   render() {
-    console.log(this.state);
     const {
       dataUser,
       dataPaymentMethods,

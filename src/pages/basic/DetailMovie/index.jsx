@@ -8,14 +8,6 @@ class DetailMovie extends Component {
       movieId: props.match.params.movieId
     };
   }
-  componentDidMount() {
-    // [1]
-    // const urlParams = qs.parse(this.props.location.search);
-    // [2]
-    // console.log(this.props.location.state);
-    // [3]
-    console.log(this.props.match.params.movieId);
-  }
 
   render() {
     return (

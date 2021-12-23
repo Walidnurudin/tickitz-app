@@ -29,10 +29,6 @@ class CounterClass extends Component {
   //   });
   // };
 
-  componentDidMount() {
-    console.log(this.props.counter);
-  }
-
   render() {
     const { count } = this.props.counter;
     return (

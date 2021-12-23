@@ -33,7 +33,7 @@ function TicketOrderHistory({
         <div className="d-flex justify-content-between ticket__oreder__history--bottom">
           <div>
             {statusUsed === "Active" ? (
-              <button className="btn mulish-700">Ticket in active</button>
+              <button className="btn btn-green mulish-700">Ticket in active</button>
             ) : statusUsed === "notActive" ? (
               <button className="btn btn-secondary mulish-700">Ticket used</button>
             ) : (

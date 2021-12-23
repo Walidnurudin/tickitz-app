@@ -44,7 +44,6 @@ class MovieDetail extends Component {
         }&searchMovieId=${this.state.movieId}`
       )
       .then((res) => {
-        console.log(res.data);
         this.setState({
           schedule: res.data.data,
           ticketInfo: res.data.pagination
@@ -117,7 +116,6 @@ class MovieDetail extends Component {
         },
         () => {
           const { movieId, scheduleId, timeSchedule, dateSchedule } = this.state;
-          console.log(movieId, scheduleId, timeSchedule, dateSchedule);
           this.props.history.push("/order", {
             movieId,
             scheduleId,

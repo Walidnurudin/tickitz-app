@@ -32,9 +32,6 @@ class BasicReact extends Component {
   };
 
   changeText = (e) => {
-    console.log(e.target.value);
-    console.log(e);
-
     this.setState({
       search: e.target.value
     });
@@ -42,7 +39,6 @@ class BasicReact extends Component {
 
   handleSearch = (event) => {
     if (event.key === "Enter") {
-      console.log("User press enter");
       this.setState({
         search: event.target.value
       });

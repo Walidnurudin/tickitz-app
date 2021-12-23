@@ -67,9 +67,7 @@ function ManageMovie() {
 
   // LIFECYCLE
   useEffect(() => {
-    Dispatch(getMovie(queryMovie)).then((res) => {
-      console.log(res);
-    });
+    Dispatch(getMovie(queryMovie));
   }, [queryMovie]);
 
   // CREATE MOVIE
@@ -99,7 +97,6 @@ function ManageMovie() {
 
   const handleSubmit = () => {
     // VALIDASI
-    console.log(formMovie.synopsis.length);
     if (formMovie.synopsis.length > 255) {
       setIsError(true);
       setMsgError(
@@ -183,8 +180,6 @@ function ManageMovie() {
   };
 
   const handleSubmitUpdate = () => {
-    console.log("handleupdate", formMovie);
-
     const formData = new FormData();
     for (const data in formMovie) {
       formData.append(data, formMovie[data]);
