@@ -38,7 +38,7 @@ This application is a web-based online movie booking application for the Fronten
 some technology used in this project.
 
 - [React](https://reactjs.org/)
-- [Bootstrap](https://https://getbootstrap.com)
+- [Bootstrap](https://getbootstrap.com)
 - [React paginate](https://www.npmjs.com/package/react-paginate)
 - [Axios](https://www.npmjs.com/package/axios)
 - [Redux](https://redux.js.org/)

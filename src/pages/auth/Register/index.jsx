@@ -20,6 +20,7 @@ class Login extends Component {
       response: {
         isLoading: false,
         isError: false,
+        isSuccess: false,
         msg: ""
       }
     };
@@ -47,7 +48,28 @@ class Login extends Component {
     this.props
       .register(this.state.form)
       .then((res) => {
-        this.props.history.push("/login");
+        this.setState({
+          ...this.state,
+          response: {
+            isLoading: false,
+            isError: false,
+            isSuccess: true,
+            msg: res.value.data.msg
+          }
+        });
+
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            response: {
+              isLoading: false,
+              isError: false,
+              isSuccess: false,
+              msg: ""
+            }
+          });
+          this.props.history.push("/login");
+        }, 3500);
       })
       .catch((err) => {
         this.setState({
@@ -148,6 +170,9 @@ class Login extends Component {
                     inputPassword={true}
                   />
 
+                  {response.isError && <div className="alert alert-danger">{response.msg}</div>}
+                  {response.isSuccess && <div className="alert alert-success">{response.msg}</div>}
+
                   <div className="d-grid">
                     {response.isLoading ? (
                       <button className="btn btn-primary form__btn" type="submit" disabled={true}>
@@ -158,8 +183,6 @@ class Login extends Component {
                         Sign Up
                       </button>
                     )}
-
-                    {response.isError && <div className="alert alert-danger">{response.msg}</div>}
                   </div>
                 </form>
 

@@ -83,7 +83,7 @@ class Login extends Component {
           {/* <!-- RESET PADDING --> */}
           <div className="row p-0">
             {/* <!-- RESET PADDING --> */}
-            <div className="col-md-7 d-none d-md-inline-block p-0">
+            <div className="col-md-7 d-none d-md-block p-0">
               <div style={{ position: "relative", width: "100%" }}>
                 <div className="banner__overlay">
                   <img src={tickitz1} alt="logo" className="banner__logo" />
@@ -132,6 +132,8 @@ class Login extends Component {
                     inputPassword={true}
                   />
 
+                  {response.isError && <div className="alert alert-danger">{response.msg}</div>}
+
                   <div className="d-grid">
                     {response.isLoading ? (
                       <button className="btn btn-primary form__btn" type="submit" disabled={true}>
@@ -142,8 +144,6 @@ class Login extends Component {
                         Sign In
                       </button>
                     )}
-
-                    {response.isError && <div className="alert alert-danger">{response.msg}</div>}
                   </div>
                 </form>
 
